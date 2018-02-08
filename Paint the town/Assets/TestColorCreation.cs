@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class TestColorCreation : MonoBehaviour {
 
-    string localURL = "http://localhost:9090/api/colors";
+    string localURL = "https://paint-the-town.herokuapp.com/api/colors";
 
     // Use this for initialization
     IEnumerator Start () {

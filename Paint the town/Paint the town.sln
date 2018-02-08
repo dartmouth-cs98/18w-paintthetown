@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
@@ -31,40 +30,3 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
-=======
-﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town", "Assembly-CSharp-firstpass.csproj", "{37246C50-0D0B-5254-4BCC-03AD55E93153}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town", "Assembly-CSharp.csproj", "{480C1EF6-A64B-C173-CEEA-1F05A504E574}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town", "Assembly-CSharp-Editor-firstpass.csproj", "{AA376D2C-5E42-A8E9-CFE6-E1AE91D5D229}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{37246C50-0D0B-5254-4BCC-03AD55E93153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37246C50-0D0B-5254-4BCC-03AD55E93153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37246C50-0D0B-5254-4BCC-03AD55E93153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37246C50-0D0B-5254-4BCC-03AD55E93153}.Release|Any CPU.Build.0 = Release|Any CPU
-		{480C1EF6-A64B-C173-CEEA-1F05A504E574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{480C1EF6-A64B-C173-CEEA-1F05A504E574}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{480C1EF6-A64B-C173-CEEA-1F05A504E574}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{480C1EF6-A64B-C173-CEEA-1F05A504E574}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA376D2C-5E42-A8E9-CFE6-E1AE91D5D229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA376D2C-5E42-A8E9-CFE6-E1AE91D5D229}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA376D2C-5E42-A8E9-CFE6-E1AE91D5D229}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA376D2C-5E42-A8E9-CFE6-E1AE91D5D229}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
-	EndGlobalSection
-EndGlobal
->>>>>>> f520d48204eef6306c7a9f7adb8576399f4d2c70
