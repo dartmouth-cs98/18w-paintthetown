@@ -155,9 +155,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_streamingCamera: {fileID: 1581490410}
   m_apiKey: 9ae291280fe0f7533f5e93062b6e7cd5
-  m_latitudeDegrees: 37.78580093383789
-  m_longitudeDegrees: -122.4010009765625
-  m_distanceToInterest: 1781
+  m_latitudeDegrees: 43.70220184326172
+  m_longitudeDegrees: -72.28959655761719
+  m_distanceToInterest: 781
   m_headingDegrees: 0
   m_coordSystem: 0
   m_streamingLodBasedOnDistance: 0

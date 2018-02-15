@@ -306,10 +306,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\createUser.cs" />
+    <Compile Include="Assets\Scripts\Login Scene\testLoginScreen.cs" />
+    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\TestColorCreation.cs" />
+    <Compile Include="Assets\Scripts\TestTeamCreation.cs" />
     <Compile Include="Assets\Scripts\WW.cs" />
-    <Compile Include="Assets\TestColorCreation.cs" />
-    <Compile Include="Assets\TestTeamCreation.cs" />
     <Compile Include="Assets\Wrld\API\Api.cs" />
     <Compile Include="Assets\Wrld\API\WrldMap.cs" />
     <Compile Include="Assets\Wrld\Demo\Buildings\Scripts\BuildingAltitudePicking.cs" />
