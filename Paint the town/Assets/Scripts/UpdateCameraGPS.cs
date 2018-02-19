@@ -8,12 +8,22 @@ using Wrld.Space;
 
 public class UpdateCameraGPS : MonoBehaviour {
 
+    bool isUnityRemote = true;
+
     IEnumerator Start()
     {
+        // wait for the unity remote to connect, if applicable 
+        if (isUnityRemote)
+        {
+            print("waiting for remote!");
+            yield return new WaitForSeconds(5);
+        }
+
         // First, check if user has location service enabled
-        if (!Input.location.isEnabledByUser)
+        if (!Input.location.isEnabledByUser) {
             print("location is not enabled!");
             yield break;
+        }
 
         // Start service before querying location
         Input.location.Start((float)6.0, (float)6.0);
