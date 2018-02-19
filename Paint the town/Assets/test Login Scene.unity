@@ -444,7 +444,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1773216263}
-        m_MethodName: RegisterButton
+        m_MethodName: workAroundSignUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1357,7 +1357,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1773216263}
-        m_MethodName: SigninButton
+        m_MethodName: workAroundSignIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2036,7 +2036,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Sign up
 --- !u!222 &1907931315
 CanvasRenderer:
   m_ObjectHideFlags: 0

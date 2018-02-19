@@ -21,33 +21,55 @@ public class testLoginScreen : MonoBehaviour {
 	private string SignupPassword;
 
 	public IEnumerator SigninButton(){
-		print ("You want to sign in!");
 
-		WWWForm signinform = new WWWForm();
+		WWWForm f = new WWWForm();
 
-		signinform.AddField("email", Username);
-		signinform.AddField("password", Password);
+		f.AddField("email", Username);
+		f.AddField("password", Password);
 
-		var signin = UnityWebRequest.Post(signinURL, signinform);
+		var test = UnityWebRequest.Post(signinURL, f);
 
 		// Wait until the download is done
-		yield return signin.SendWebRequest();
+		yield return test.SendWebRequest();
 
-		if (signin.isNetworkError || signin.isHttpError)
-		{
-			print("Error downloading: " + signin.error);
-		}
-		else
-		{
+		if (test.isNetworkError || test.isHttpError) {
+			print ("Error downloading: " + test.error);
+		} else {
 			// show the highscores
-			print("user signed in!");
-			string token = signin.downloadHandler.text;
+			print ("user posted!");
+			string token = test.downloadHandler.text;
 			string[] subStrings = token.Split ('"');
 
-			print(subStrings[3]);
-			// if we want to do something with the token
-			// string getToken = "JWT " + subStrings[3];
+			print (subStrings [3]);
 		}
+
+//		print ("You want to sign in!");
+//
+//		WWWForm signinform = new WWWForm();
+//
+//		signinform.AddField("email", Username);
+//		signinform.AddField("password", Password);
+//
+//		var signin = UnityWebRequest.Post(signinURL, signinform);
+//
+//		// Wait until the download is done
+//		yield return signin.SendWebRequest();
+//
+//		if (signin.isNetworkError || signin.isHttpError)
+//		{
+//			print("Error downloading: " + signin.error);
+//		}
+//		else
+//		{
+//			// show the highscores
+//			print("user signed in!");
+//			string token = signin.downloadHandler.text;
+//			string[] subStrings = token.Split ('"');
+//
+//			print(subStrings[3]);
+//			// if we want to do something with the token
+//			// string getToken = "JWT " + subStrings[3];
+//		}
 
 	}
 		
@@ -82,13 +104,23 @@ public class testLoginScreen : MonoBehaviour {
 
 	}
 
+	public void workAroundSignIn() {
+		StartCoroutine("SigninButton");
+	}
+
+	public void workAroundSignUp() {
+		StartCoroutine("RegisterButton");
+	}
+
 	public void Update() {
 		
 		if (Input.GetKeyDown (KeyCode.Return)) {
+			print ("haha");
 			if (Password != "" && Username != "") {
-				SigninButton();
+				print ("hello!");
+				StartCoroutine("SigninButton");
 			}else if (SignupPassword != "" && SignupUsername != "") {
-				RegisterButton();
+				StartCoroutine("RegisterButton");
 			}
 		}
 
