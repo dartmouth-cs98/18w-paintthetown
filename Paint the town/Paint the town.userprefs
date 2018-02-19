@@ -1,8 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Login Scene/testLoginScreen.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Assets/Scripts/Login Scene/testLoginScreen.cs" Line="7" Column="29" />
+      <File FileName="Assets/Scripts/Login Scene/testLoginScreen.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/createUser.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

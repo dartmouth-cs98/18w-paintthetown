@@ -1,70 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class testLoginScreen : MonoBehaviour {
-	public GUIText  gt;
 
-	string userURL = "https://paint-the-town.herokuapp.com/api/signin";
-	string localURL= "https://paint-the-town.herokuapp.com/api/signup";
+	// the two URL strings that we need to use
+	//	string userURL = "https://paint-the-town.herokuapp.com/api/signin";
+	//	string localURL= "https://paint-the-town.herokuapp.com/api/signup";
 
-	void Start()
-	{
-		gt = GetComponent<GUIText>();
+	public GameObject username;
+	public GameObject password;
+	private string Username;
+	private string Password;
+	public GameObject signupUsername;
+	public GameObject signupPassword;
+	private string SignupUsername;
+	private string SignupPassword;
+
+	public void SigninButton(){
+		print ("You want to sign in!");
 	}
-
-	public void changemenuscene(string scenename){
-
-
-
-		Application.LoadLevel (scenename);
-
+		
+	public void RegisterButton(){
+		print ("You want to register!");
 	}
-
-	public void getUserPassword()
-	{
-		foreach (char c in Input.inputString)
-		{
-			if (c == '\b') // has backspace/delete been pressed?
-			{
-				if (gt.text.Length != 0)
-				{
-					gt.text = gt.text.Substring(0, gt.text.Length - 1);
-				}
-			}
-			else if ((c == '\n') || (c == '\r')) // enter/return
-			{
-				print("User entered: " + gt.text);
-
-			}
-			else
-			{
-				gt.text += c;
+	public void Update() {
+		
+		if (Input.GetKeyDown (KeyCode.Return)) {
+			if (Password != "" && Username != "") {
+				SigninButton ();
+			}else if (SignupPassword != "" && SignupUsername != "") {
+				RegisterButton();
 			}
 		}
+
+		Username = username.GetComponent<InputField> ().text;
+		Password = password.GetComponent<InputField> ().text;
+		SignupUsername = signupUsername.GetComponent<InputField> ().text;
+		SignupPassword = signupPassword.GetComponent<InputField> ().text;
+
 	}
-
-	public void getUserUsername()
-	{
-		foreach (char c in Input.inputString)
-		{
-			if (c == '\b') // has backspace/delete been pressed?
-			{
-				if (gt.text.Length != 0)
-				{
-					gt.text = gt.text.Substring(0, gt.text.Length - 1);
-				}
-			}
-			else if ((c == '\n') || (c == '\r')) // enter/return
-			{
-				print("User entered: " + gt.text);
-
-			}
-			else
-			{
-				gt.text += c;
-			}
-		}
-	}
-
 }
