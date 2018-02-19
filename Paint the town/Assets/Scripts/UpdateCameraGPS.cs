@@ -12,10 +12,11 @@ public class UpdateCameraGPS : MonoBehaviour {
     {
         // First, check if user has location service enabled
         if (!Input.location.isEnabledByUser)
+            print("location is not enabled!");
             yield break;
 
         // Start service before querying location
-        Input.location.Start();
+        Input.location.Start((float)6.0, (float)6.0);
 
         // Wait until service initializes
         int maxWait = 20;
