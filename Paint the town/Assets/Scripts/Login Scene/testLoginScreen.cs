@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class testLoginScreen : MonoBehaviour {
 
 	// the two URL strings that we need to use
-	string signinURL = "https://paint-the-town.herokuapp.com/api/users";
+	string signinURL = "https://paint-the-town.herokuapp.com/api/signin";
 	string signupURL= "https://paint-the-town.herokuapp.com/api/signup";
 
 	public GameObject username;
@@ -28,7 +28,6 @@ public class testLoginScreen : MonoBehaviour {
 	public IEnumerator SigninButton(){
 
 		WWWForm f = new WWWForm();
-
 		f.AddField("email", Username);
 		f.AddField("password", Password);
 
@@ -43,14 +42,13 @@ public class testLoginScreen : MonoBehaviour {
 		if (test.isNetworkError || test.isHttpError) {
 			print ("Error downloading: " + test.error);
 		} else {
-			// show the highscores
+
 			print ("user posted!");
 			string token = test.downloadHandler.text;
 			string[] subStrings = token.Split ('"');
-
 			print (subStrings [3]);
+			SceneManager.LoadScene("FirstScene");
 		}
-
 	}
 
 	public IEnumerator RegisterButton(){
@@ -74,7 +72,6 @@ public class testLoginScreen : MonoBehaviour {
 		}
 		else
 		{
-			// show the highscores
 			print("user signed up!");
 			string token = signup.downloadHandler.text;
 			string[] subStrings = token.Split ('"');
