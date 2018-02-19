@@ -13,7 +13,7 @@ public class createUser : MonoBehaviour {
 	// Use this for initialization
 
 	IEnumerator Start () {
-		
+
 		WWWForm f = new WWWForm();
 
 		myText = GetComponent<Text>();

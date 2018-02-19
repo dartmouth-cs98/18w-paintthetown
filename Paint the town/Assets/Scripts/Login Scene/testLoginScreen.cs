@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
 
 public class testLoginScreen : MonoBehaviour {
 
 	// the two URL strings that we need to use
-	string signinURL = "https://paint-the-town.herokuapp.com/api/signin";
+	string signinURL = "https://paint-the-town.herokuapp.com/api/users";
 	string signupURL= "https://paint-the-town.herokuapp.com/api/signup";
 
 	public GameObject username;
@@ -39,7 +40,6 @@ public class testLoginScreen : MonoBehaviour {
 		// Wait until the download is done
 		yield return test.SendWebRequest();
 
-		print (test.isHttpError);
 		if (test.isNetworkError || test.isHttpError) {
 			print ("Error downloading: " + test.error);
 		} else {
@@ -52,7 +52,7 @@ public class testLoginScreen : MonoBehaviour {
 		}
 
 	}
-		
+
 	public IEnumerator RegisterButton(){
 		print ("You want to register!");
 
@@ -82,8 +82,9 @@ public class testLoginScreen : MonoBehaviour {
 			print(subStrings[3]);
 			// if we want to do something with the token
 			// string getToken = "JWT " + subStrings[3];
-		}
 
+			SceneManager.LoadScene("FirstScene");
+		}
 	}
 
 	public void workAroundSignIn() {
@@ -95,7 +96,7 @@ public class testLoginScreen : MonoBehaviour {
 	}
 
 	public void Update() {
-		
+
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			print ("haha");
 			if (Password != "" && Username != "") {

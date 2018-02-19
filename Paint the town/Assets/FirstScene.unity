@@ -167,7 +167,6 @@ GameObject:
   - component: {fileID: 356313917}
   - component: {fileID: 356313916}
   - component: {fileID: 356313915}
-  - component: {fileID: 356313920}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Player
@@ -257,17 +256,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &356313920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 356313914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c379eb6835a3d402b9d39bbf10059724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &601906144
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,7 +905,6 @@ GameObject:
   - component: {fileID: 1968524354}
   - component: {fileID: 1968524353}
   - component: {fileID: 1968524352}
-  - component: {fileID: 1968524356}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1001,17 +988,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1968524356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1968524351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c379eb6835a3d402b9d39bbf10059724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1998896975
 GameObject:
   m_ObjectHideFlags: 0
