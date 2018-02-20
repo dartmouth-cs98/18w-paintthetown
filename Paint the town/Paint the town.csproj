@@ -307,6 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\createUser.cs" />
+    <Compile Include="Assets\Scripts\HighlightBuildingOnClick.cs" />
     <Compile Include="Assets\Scripts\Login Scene\testLoginScreen.cs" />
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\TestColorCreation.cs" />
