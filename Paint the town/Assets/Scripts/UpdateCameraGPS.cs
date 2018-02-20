@@ -6,9 +6,12 @@ using Wrld.Space;
 
 // based on tutorials at https://docs.unity3d.com/ScriptReference/LocationService.Start.html and https://wrld3d.com/unity/latest/docs/examples/moving-the-camera/
 
+
+
 public class UpdateCameraGPS : MonoBehaviour {
 
-    bool isUnityRemote = true;
+    public bool isUnityRemote;
+    public Camera setCam;
 
     IEnumerator Start()
     {
@@ -52,20 +55,20 @@ public class UpdateCameraGPS : MonoBehaviour {
         else
         {
             // Access granted and location value could be retrieved
-            print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
+            // print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
         }
 
         // Stop service if there is no need to query location updates continuously
         // Input.location.Stop();
 
         // Set the camera for the Wrld3d map
-        Api.Instance.CameraApi.SetControlledCamera(Camera.current);
+        Api.Instance.CameraApi.SetControlledCamera(setCam);
     }
 
     // Update is called once per frame
     void Update () {
 
-        print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
+        //print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
 
         // take the lastData and put it into the camera api from wrld3d
         var currentLocation = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);

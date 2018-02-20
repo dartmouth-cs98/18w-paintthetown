@@ -52,4 +52,17 @@ public class HighlightBuildingOnClick : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         Api.Instance.BuildingsApi.ClearHighlight(highlight);
     }
+
+    // set the desired material for the highlight
+    public void OnRedClick()
+    {
+        //highlightMaterial = Resources.Load("RedMaterial") as Material;
+        highlightMaterial.color = Color.red;
+    }
+
+    public void OnBlueClick()
+    {
+        //highlightMaterial = Resources.Load("BlueMaterial") as Material;
+        highlightMaterial.color = Color.blue;
+    }
 }
