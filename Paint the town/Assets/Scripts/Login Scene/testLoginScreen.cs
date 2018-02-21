@@ -137,7 +137,6 @@ public class testLoginScreen : MonoBehaviour {
 		{
 			showPopUp = false;
 		}
-
 	}
 
 }
