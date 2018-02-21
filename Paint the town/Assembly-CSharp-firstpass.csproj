@@ -97,6 +97,7 @@
      <Compile Include="Assets\Standard Assets\Utility\WaypointProgressTracker.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
  <Reference Include="UnityEngine.UIAutomation">
@@ -170,6 +171,33 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Editor">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Gameroom">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
+ </Reference>
+ <Reference Include="FacebookNamedPipeClient">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Settings">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.IOSResolver_v1.2.59.0">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.59.0.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.JarResolver_v1.2.59.0">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.59.0.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.VersionHandler">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.VersionHandlerImpl_v1.2.59.0">
+ <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.59.0.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>

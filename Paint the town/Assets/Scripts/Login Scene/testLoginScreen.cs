@@ -25,6 +25,9 @@ public class testLoginScreen : MonoBehaviour {
 	private string SignupName;
 	private string SignupLastName;
 
+	private bool showPopUp = false;
+
+
 	public IEnumerator SigninButton(){
 
 		WWWForm f = new WWWForm();
@@ -41,6 +44,7 @@ public class testLoginScreen : MonoBehaviour {
 
 		if (test.isNetworkError || test.isHttpError) {
 			print ("Error downloading: " + test.error);
+			showPopUp = true;
 		} else {
 
 			print ("user posted!");
@@ -69,6 +73,7 @@ public class testLoginScreen : MonoBehaviour {
 		if (signup.isNetworkError || signup.isHttpError)
 		{
 			print("Error downloading: " + signup.error);
+			showPopUp = true;
 		}
 		else
 		{
@@ -95,9 +100,7 @@ public class testLoginScreen : MonoBehaviour {
 	public void Update() {
 
 		if (Input.GetKeyDown (KeyCode.Return)) {
-			print ("haha");
 			if (Password != "" && Username != "") {
-				print ("hello!");
 				StartCoroutine("SigninButton");
 			}else if (SignupPassword != "" && SignupUsername != "") {
 				StartCoroutine("RegisterButton");
@@ -112,4 +115,30 @@ public class testLoginScreen : MonoBehaviour {
 		SignupLastName = signupLastName.GetComponent<InputField> ().text;
 
 	}
+
+
+
+	void OnGUI(){
+		if (showPopUp) {
+			GUI.Window(0, new Rect((Screen.width/2)-150, (Screen.height/2)-75
+				, 250, 200), ShowGUI, "Signin Error");
+
+		}
+	}
+
+	void ShowGUI(int windowID) {
+		// You may put a label to show a message to the player
+
+		GUI.Label(new Rect(45, 40, 200, 30), "Invalid username or password");
+
+		// You may put a button to close the pop up too
+
+		if (GUI.Button(new Rect(90, (Screen.height/2) - 100, 75, 30), "OK"))
+		{
+			showPopUp = false;
+		}
+	}
+
 }
+
+
