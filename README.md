@@ -7,3 +7,7 @@ We use Wrld3d's API for 3d geolocation-enabled maps and make use of facebook and
 
 # Frontend
 We are building our entire frontend in Unity3d, including all UI elements and features like GPS location.
+
+# Setup
+Build and run with Unity 5 (gpu supporting DirectX 9 or higher required)
+
