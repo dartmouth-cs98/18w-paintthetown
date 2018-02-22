@@ -133,7 +133,7 @@ public class testLoginScreen : MonoBehaviour {
 
 		// You may put a button to close the pop up too
 
-		if (GUI.Button(new Rect(90, (Screen.height/2) - 100, 75, 30), "OK"))
+		if (GUI.Button(new Rect(90, (Screen.height/2) - 150, 75, 30), "OK"))
 		{
 			showPopUp = false;
 		}
