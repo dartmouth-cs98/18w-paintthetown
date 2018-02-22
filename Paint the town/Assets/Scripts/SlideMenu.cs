@@ -17,7 +17,7 @@ public class SlideMenu : MonoBehaviour {
 	void Start()
 	{
 		MenuButton.onClick.AddListener(slideMenu);
-		ReturnToPlayButton.onClick.AddListener(slideMenu);
+		ReturnToPlayButton.onClick.AddListener(goToPlay);
 		ShopSceneButton.onClick.AddListener(goToShop);
 		SettingsSceneButton.onClick.AddListener(goToSettings);
 	
@@ -38,15 +38,30 @@ public class SlideMenu : MonoBehaviour {
 	void goToShop(){
 		SlidePanelAnim.Play ("SlidePanelOut");
 		menuIn = false;
-		//SceneManager.LoadScene("ShopScene");
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "ShopScene") {
+			SceneManager.LoadScene ("ShopScene");
+		}
 
 	}
 
 	void goToSettings() {
 		SlidePanelAnim.Play ("SlidePanelOut");
 		menuIn = false;
-		//SceneManager.LoadScene("SettingsScene");
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "SettingsScene") {
+			SceneManager.LoadScene ("SettingsScene");
+		}
 
+	}
+
+	void goToPlay() {
+		SlidePanelAnim.Play ("SlidePanelOut");
+		menuIn = false;
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "FirstScene") {
+			SceneManager.LoadScene ("FirstScene");
+		}
 	}
 
 }
