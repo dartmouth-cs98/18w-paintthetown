@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\Login Scene\fbLogin.cs" />
      <Compile Include="Assets\Scripts\Login Scene\testLoginScreen.cs" />
      <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\SlideMenu.cs" />
      <Compile Include="Assets\Scripts\TestColorCreation.cs" />
      <Compile Include="Assets\Scripts\TestTeamCreation.cs" />
      <Compile Include="Assets\Scripts\UpdateCameraGPS.cs" />
