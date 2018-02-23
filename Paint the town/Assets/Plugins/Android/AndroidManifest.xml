@@ -17,7 +17,7 @@
     <activity android:name="com.facebook.unity.FBUnityCreateGameGroupActivity" />
     <activity android:name="com.facebook.unity.FBUnityJoinGameGroupActivity" />
     <activity android:name="com.facebook.unity.AppInviteDialogActivity" />
-    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb1341134132699712" />
-    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider1341134132699712" android:exported="true" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb209544746293164" />
+    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider209544746293164" android:exported="true" />
   </application>
 </manifest>
