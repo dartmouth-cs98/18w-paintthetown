@@ -10,6 +10,8 @@ public class SlideMenu : MonoBehaviour {
 	public Button ReturnToPlayButton;
 	public Button ShopSceneButton;
 	public Button SettingsSceneButton;
+	public Button ChallengesSceneButton;
+	public Button ProfileSceneButton;
 
 	public Animation SlidePanelAnim;
 	public bool menuIn = false;
@@ -20,7 +22,9 @@ public class SlideMenu : MonoBehaviour {
 		ReturnToPlayButton.onClick.AddListener(goToPlay);
 		ShopSceneButton.onClick.AddListener(goToShop);
 		SettingsSceneButton.onClick.AddListener(goToSettings);
-	
+		ChallengesSceneButton.onClick.AddListener(goToChallenges);
+		ProfileSceneButton.onClick.AddListener(goToProfile);
+
 	}
 
 	void slideMenu()
@@ -61,6 +65,24 @@ public class SlideMenu : MonoBehaviour {
 		// if we aren't already in that scene, load it
 		if (SceneManager.GetActiveScene ().name != "FirstScene") {
 			SceneManager.LoadScene ("FirstScene");
+		}
+	}
+
+	void goToChallenges() {
+		SlidePanelAnim.Play ("SlidePanelOut");
+		menuIn = false;
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "ChallengesScene") {
+			SceneManager.LoadScene ("ChallengesScene");
+		}
+	}
+
+	void goToProfile() {
+		SlidePanelAnim.Play ("SlidePanelOut");
+		menuIn = false;
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "ProfileScene") {
+			SceneManager.LoadScene ("ProfileScene");
 		}
 	}
 
