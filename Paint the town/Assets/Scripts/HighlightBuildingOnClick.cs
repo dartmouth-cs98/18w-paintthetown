@@ -34,6 +34,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
                 var latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
+                Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
                 Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
             }
         }
@@ -45,6 +46,15 @@ public class HighlightBuildingOnClick : MonoBehaviour
         {
             StartCoroutine(ClearHighlight(highlight));
         }
+    }
+
+    void OnBuildingRecieved(bool success, Building b)
+    {
+        if(success)
+        {
+            print(b.BuildingId);
+        }
+        
     }
 
     IEnumerator ClearHighlight(Highlight highlight)

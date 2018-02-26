@@ -30,6 +30,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
         // Start service before querying location
         Input.location.Start((float)6.0, (float)6.0);
+        Input.compass.enabled = true;
 
         // Wait until service initializes
         int maxWait = 20;
@@ -72,8 +73,9 @@ public class UpdateCameraGPS : MonoBehaviour {
 
         // take the lastData and put it into the camera api from wrld3d
         var currentLocation = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
-        Api.Instance.CameraApi.AnimateTo(currentLocation, distanceFromInterest: 300, headingDegrees: 0, tiltDegrees: 50);
-        // Api.Instance.StreamResourcesForCamera(Camera.current);
+        print(Input.compass.trueHeading);
+        Api.Instance.CameraApi.AnimateTo(currentLocation, distanceFromInterest: 300, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+        Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 	}
 }
