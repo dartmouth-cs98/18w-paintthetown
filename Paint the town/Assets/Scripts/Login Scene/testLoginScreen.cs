@@ -45,12 +45,18 @@ public class testLoginScreen : MonoBehaviour {
 		if (test.isNetworkError || test.isHttpError) {
 			print ("Error downloading: " + test.error);
 			showPopUp = true;
+
 		} else {
 
 			print ("user posted!");
 			string token = test.downloadHandler.text;
 			string[] subStrings = token.Split ('"');
-			print (subStrings [3]);
+			print(subStrings[3]);
+			PlayerPrefs.SetString("token", subStrings[3]);
+			PlayerPrefs.Save();
+
+
+
 			SceneManager.LoadScene("FirstScene");
 		}
 	}
@@ -80,8 +86,10 @@ public class testLoginScreen : MonoBehaviour {
 			print("user signed up!");
 			string token = signup.downloadHandler.text;
 			string[] subStrings = token.Split ('"');
-
 			print(subStrings[3]);
+			PlayerPrefs.SetString("token", subStrings[3]);
+			PlayerPrefs.Save();
+
 			// if we want to do something with the token
 			// string getToken = "JWT " + subStrings[3];
 
@@ -140,5 +148,3 @@ public class testLoginScreen : MonoBehaviour {
 	}
 
 }
-
-

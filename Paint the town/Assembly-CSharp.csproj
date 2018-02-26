@@ -64,6 +64,7 @@
      <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\MainMenu.cs" />
      <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\Pay.cs" />
      <Compile Include="Assets\Scripts\createUser.cs" />
+     <Compile Include="Assets\Scripts\GameServerCommunication.cs" />
      <Compile Include="Assets\Scripts\HighlightBuildingOnClick.cs" />
      <Compile Include="Assets\Scripts\Login Scene\fbLogin.cs" />
      <Compile Include="Assets\Scripts\Login Scene\fbLoginServerCommunication.cs" />

@@ -86,6 +86,11 @@ public class fbLogin : MonoBehaviour {
 					if(www.error == null){
 
 						print(www.text);
+
+						string token = www.text;
+						string[] subStrings = token.Split ('"');
+						print(subStrings[3]);
+
 						SceneManager.LoadScene("FirstScene");
 					}else{
 						print("you have a problem");
