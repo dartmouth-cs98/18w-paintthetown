@@ -11,3 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/FirstScene.unity
     guid: 91d2ef72b714ae84ab2983d51c00e098
+  - enabled: 1
+    path: Assets/SettingsScene.unity
+    guid: 42477566958264214ab06e6e8b16db4a
+  - enabled: 1
+    path: Assets/ShopScene.unity
+    guid: 8f014c7566fe24cf49304fb9b4bb94b4
+  - enabled: 1
+    path: Assets/ProfileScene.unity
+    guid: 38286e5ee2121440c81c37dea5791b9e
+  - enabled: 1
+    path: Assets/ChallengesScene.unity
+    guid: ea44d35d3cbc4449ab9175fee14b477a
