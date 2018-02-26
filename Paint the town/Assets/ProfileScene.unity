@@ -1451,6 +1451,8 @@ GameObject:
   - component: {fileID: 1709763161}
   - component: {fileID: 1709763160}
   - component: {fileID: 1709763164}
+  - component: {fileID: 1709763166}
+  - component: {fileID: 1709763165}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1566,6 +1568,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userName: 
+--- !u!114 &1709763165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1709763158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 1bc30f5343c334d3583a1a059e780717, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1709763166
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1709763158}
 --- !u!1 &2011811886
 GameObject:
   m_ObjectHideFlags: 0

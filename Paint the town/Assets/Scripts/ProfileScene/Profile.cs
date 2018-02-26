@@ -15,6 +15,7 @@ public class Profile : MonoBehaviour {
 	}
 	
 	void OnGUI() {
+		GUI.contentColor = Color.black;
 		GUI.Label(new Rect(200, 50, 100, 20), userName);
 	}
 }
