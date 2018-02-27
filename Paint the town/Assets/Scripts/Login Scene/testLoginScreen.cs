@@ -69,7 +69,7 @@ public class testLoginScreen : MonoBehaviour {
 		signupform.AddField("email", SignupUsername);
 		signupform.AddField("password", SignupPassword);
 		signupform.AddField("name", SignupName);
-		signupform.AddField("lastName", SignupName);
+		signupform.AddField("lastName", SignupLastName);
 
 		var signup = UnityWebRequest.Post(signupURL, signupform);
 
