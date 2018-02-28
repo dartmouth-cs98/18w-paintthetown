@@ -232,6 +232,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 166950964}
   m_Mesh: {fileID: 4300002, guid: a7f31dd7724818348b1e1f3b423c2c13, type: 3}
+--- !u!198 &265059507 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198173702689317468, guid: d7a3f6022ba2e3741970c943ee381130,
+    type: 2}
+  m_PrefabInternal: {fileID: 853535985}
 --- !u!1001 &567463000
 Prefab:
   m_ObjectHideFlags: 0
@@ -318,6 +323,11 @@ Prefab:
       propertyPath: randomSeed
       value: -508497188
       objectReference: {fileID: 0}
+    - target: {fileID: 114370898830266510, guid: d7a3f6022ba2e3741970c943ee381130,
+        type: 2}
+      propertyPath: dropletDecalPool
+      value: 
+      objectReference: {fileID: 1457270403}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7a3f6022ba2e3741970c943ee381130, type: 2}
   m_IsPrefabParent: 0
@@ -419,6 +429,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1123677928 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114987531973104224, guid: 76e31a1fc2789e545bbc050acb3b27c9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1301079132}
+  m_Script: {fileID: 11500000, guid: 982eb43c61759e54f919cc807ff4fcb8, type: 3}
 --- !u!1001 &1301079132
 Prefab:
   m_ObjectHideFlags: 0
@@ -645,6 +661,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1374755585}
   m_Mesh: {fileID: 4300010, guid: a7f31dd7724818348b1e1f3b423c2c13, type: 3}
+--- !u!114 &1457270403 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114967317334858938, guid: 5649d3fd1a675bd4db128510cd61a719,
+    type: 2}
+  m_PrefabInternal: {fileID: 567463000}
+  m_Script: {fileID: 11500000, guid: 982eb43c61759e54f919cc807ff4fcb8, type: 3}
 --- !u!1 &1619103319
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,6 +880,21 @@ Prefab:
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 23395203977131126, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114153936756657580, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: splatterParticles
+      value: 
+      objectReference: {fileID: 265059507}
+    - target: {fileID: 114153936756657580, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: PDP
+      value: 
+      objectReference: {fileID: 1123677928}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff5eded233b11354abc5fa81665a2548, type: 2}
   m_IsPrefabParent: 0
