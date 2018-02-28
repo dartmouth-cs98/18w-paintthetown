@@ -72,6 +72,13 @@ SketchUpImporter:
     4300008: Mesh Group 11
     4300010: Mesh Group 13
     4300012: Mesh Door-SglExtHeaderWLite 3'-0x6'-8
+    6400000: Door-SglExtHeaderWLite 3'-0x6'-8
+    6400002: Google Earth Snapshot
+    6400004: Google Earth Terrain
+    6400006: Group 11
+    6400008: Group 13
+    6400010: Group 6
+    6400012: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -189,7 +196,7 @@ SketchUpImporter:
     lODScreenPercentages: []
     globalScale: 0.0254
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
