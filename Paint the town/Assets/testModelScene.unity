@@ -328,6 +328,11 @@ Prefab:
       propertyPath: dropletDecalPool
       value: 
       objectReference: {fileID: 1457270403}
+    - target: {fileID: 199212539775121098, guid: d7a3f6022ba2e3741970c943ee381130,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7a3f6022ba2e3741970c943ee381130, type: 2}
   m_IsPrefabParent: 0
@@ -478,6 +483,16 @@ Prefab:
         type: 2}
       propertyPath: randomSeed
       value: -923718838
+      objectReference: {fileID: 0}
+    - target: {fileID: 198894092041981414, guid: 76e31a1fc2789e545bbc050acb3b27c9,
+        type: 2}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199633365654947968, guid: 76e31a1fc2789e545bbc050acb3b27c9,
+        type: 2}
+      propertyPath: m_RenderAlignment
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76e31a1fc2789e545bbc050acb3b27c9, type: 2}
@@ -883,7 +898,7 @@ Prefab:
     - target: {fileID: 23395203977131126, guid: ff5eded233b11354abc5fa81665a2548,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114153936756657580, guid: ff5eded233b11354abc5fa81665a2548,
         type: 2}
