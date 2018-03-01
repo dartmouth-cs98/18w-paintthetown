@@ -910,9 +910,48 @@ Prefab:
       propertyPath: PDP
       value: 
       objectReference: {fileID: 1123677928}
+    - target: {fileID: 114001511311868210, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114001511311868210, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: m_JumpSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 143825981585263246, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff5eded233b11354abc5fa81665a2548, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1863654074 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1381349797033158, guid: ff5eded233b11354abc5fa81665a2548,
+    type: 2}
+  m_PrefabInternal: {fileID: 1695763971}
+--- !u!114 &1863654080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1863654074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db8efaedbf899a4095f940c56b1f308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 871190148}
+  distance: 50
+  xSpeed: 60
+  ySpeed: 60
+  yMinLimit: -20
+  yMaxLimit: 80
+  distanceMin: 15
+  distanceMax: 100
 --- !u!1 &1892453256
 GameObject:
   m_ObjectHideFlags: 0
