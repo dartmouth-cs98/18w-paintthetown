@@ -19,6 +19,8 @@ public class orbitCamera : MonoBehaviour {
 
     private Rigidbody rigidb;
 
+    private Touch t;
+
     float x = 0.0f;
     float y = 0.0f;
 
@@ -40,21 +42,25 @@ public class orbitCamera : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (target)
+        if (target && Input.touchCount > 0)
         {
-            x += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
-            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+            //x += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
+            //y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+            t = Input.GetTouch(0);
+
+            x += t.deltaPosition.x * xSpeed * distance * 0.002f;
+            y += t.deltaPosition.y * ySpeed * 0.002f;
 
             y = ClampAngle(y, yMinLimit, yMaxLimit);
 
             Quaternion rotation = Quaternion.Euler(y, x, 0);
 
-            distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
+            // distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
 
             RaycastHit hit;
             if (Physics.Linecast(target.position, transform.position, out hit))
             {
-                distance -= hit.distance;
+                //distance -= hit.distance;
             }
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
