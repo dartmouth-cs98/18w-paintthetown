@@ -1,0 +1,547 @@
+fileFormatVersion: 2
+guid: d938f191ca405d343b7742eb784686c5
+timeCreated: 1519683411
+licenseType: Free
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 00000000010000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b000000
+  assetHash:
+    serializedVersion: 2
+    Hash: 5989d0e7ce1a22c762dccd73f5382539
+  longitude: -72.288162435599
+  latitude: 43.70527227418
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: -169.51805, y: 32.64597, z: -0.9739096}
+      lookAt: {x: -27.498241, y: 16.009975, z: 5.061523}
+      up: {x: 0.11613474, y: 0.9932212, z: 0.0049353917}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: BackWindow
+    100004: BackWindow 1
+    100006: BackWindow 10
+    100008: BackWindow 11
+    100010: BackWindow 12
+    100012: BackWindow 13
+    100014: BackWindow 14
+    100016: BackWindow 2
+    100018: BackWindow 3
+    100020: BackWindow 4
+    100022: BackWindow 5
+    100024: BackWindow 6
+    100026: BackWindow 7
+    100028: BackWindow 8
+    100030: BackWindow 9
+    100032: Google Earth Terrain
+    100034: Group 12
+    100036: 465dfa316808d
+    400000: //RootNode
+    400002: BackWindow
+    400004: BackWindow 1
+    400006: BackWindow 10
+    400008: BackWindow 11
+    400010: BackWindow 12
+    400012: BackWindow 13
+    400014: BackWindow 14
+    400016: BackWindow 2
+    400018: BackWindow 3
+    400020: BackWindow 4
+    400022: BackWindow 5
+    400024: BackWindow 6
+    400026: BackWindow 7
+    400028: BackWindow 8
+    400030: BackWindow 9
+    400032: Google Earth Terrain
+    400034: Group 12
+    400036: 465dfa316808d
+    2100000: _defaultMat
+    2100002: Google Earth Snapshot5
+    2100004: Roofing_Shingles_Asphalt
+    2100006: Baker library 033-3
+    2100008: Baker library 030
+    2100010: Baker library 002-3 brick
+    2100012: Baker library 030x
+    2100014: Baker USEEE library 037-2
+    2100016: Baker library 007-2 USEEEEEE
+    2100018: Baker library 032
+    2100020: Baker library 033-2
+    2100022: Baker library 033-1
+    2100024: Cladding_Stucco_White
+    2100026: Baker tower-1
+    2100028: Edit this
+    2100030: USE Sanborn 004-1
+    2100032: Baker library 010-1 USE
+    2100034: USE Sanborn 004-2
+    2100036: Color_F14
+    2100038: Color_G04
+    2100040: Baker USE library 008-1
+    2100042: Baker library 002-1b
+    2100044: Baker library 025
+    2100046: Baker library 020-1
+    2100048: Baker library 064
+    2100050: Baker library 031
+    2100052: Baker library 002-3 use
+    2100054: Baker library 072
+    2100056: Carp USE Baker library 027-3
+    2100058: Baker library 050
+    2100060: useee Baker library 029-1
+    2100062: Cladding_Stucco_White_Rough
+    2100064: window
+    2100066: Cladding_Siding_White
+    2100068: _1
+    2300000: //RootNode
+    2300002: BackWindow
+    2300004: BackWindow 1
+    2300006: BackWindow 10
+    2300008: BackWindow 11
+    2300010: BackWindow 12
+    2300012: BackWindow 13
+    2300014: BackWindow 14
+    2300016: BackWindow 2
+    2300018: BackWindow 3
+    2300020: BackWindow 4
+    2300022: BackWindow 5
+    2300024: BackWindow 6
+    2300026: BackWindow 7
+    2300028: BackWindow 8
+    2300030: BackWindow 9
+    2300032: Google Earth Terrain
+    2300034: Group 12
+    2300036: 465dfa316808d
+    3300000: //RootNode
+    3300002: BackWindow
+    3300004: BackWindow 1
+    3300006: BackWindow 10
+    3300008: BackWindow 11
+    3300010: BackWindow 12
+    3300012: BackWindow 13
+    3300014: BackWindow 14
+    3300016: BackWindow 2
+    3300018: BackWindow 3
+    3300020: BackWindow 4
+    3300022: BackWindow 5
+    3300024: BackWindow 6
+    3300026: BackWindow 7
+    3300028: BackWindow 8
+    3300030: BackWindow 9
+    3300032: Google Earth Terrain
+    3300034: Group 12
+    3300036: 465dfa316808d
+    4300000: Mesh 465dfa316808d
+    4300002: Mesh Google Earth Terrain
+    4300004: Mesh Group 12
+    4300006: Mesh BackWindow
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker USE library 008-1
+    second: {fileID: 2100000, guid: c4431f2b2a5687e45b57c7c8a9ef279c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker USEEE library 037-2
+    second: {fileID: 2100000, guid: e30480eb4a7d3c44a9e66c8bfa24990e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 002-1b
+    second: {fileID: 2100000, guid: 1be92630e91977443ad820a6334cfc8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 002-3 brick
+    second: {fileID: 2100000, guid: c4da3bf1289e2f948835bc62eb5f8ccc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 002-3 use
+    second: {fileID: 2100000, guid: 591bfef1dbcf28e48b3af02b62a24638, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 007-2 USEEEEEE
+    second: {fileID: 2100000, guid: 56646c687b837bb4da2241c75184c2c4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 010-1 USE
+    second: {fileID: 2100000, guid: c1942dfb6d1a8274ebd83a4b7d34dc51, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 020-1
+    second: {fileID: 2100000, guid: 6e70e58b9bf34d8499a7985fddc020ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 025
+    second: {fileID: 2100000, guid: 982b8506f2ab23c44891cdb6b7032ab6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 030
+    second: {fileID: 2100000, guid: 1a974b89285ffbe43ae50dc8881ce929, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 030x
+    second: {fileID: 2100000, guid: ff0da79f95a040d48806c58655e0523d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 031
+    second: {fileID: 2100000, guid: 49f6f4f165d9ff64490616e1d2775860, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 032
+    second: {fileID: 2100000, guid: f89dbb52837ab2c4f902cfdafe9fd7ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 033-1
+    second: {fileID: 2100000, guid: e70c43d975dd78742a090b244926c3f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 033-2
+    second: {fileID: 2100000, guid: ce1b0e1f468aaa1498adc2b28d576250, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 033-3
+    second: {fileID: 2100000, guid: fc2f7075a9579954982d8da22f28e1c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 050
+    second: {fileID: 2100000, guid: 7f8e7bb296c4db04394102860520f7b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 064
+    second: {fileID: 2100000, guid: 9979c40383c1a8c4bae5b94d9ab2d3ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker library 072
+    second: {fileID: 2100000, guid: 676f3a1257c526a4ca1709b5febc7b3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baker tower-1
+    second: {fileID: 2100000, guid: 5c9bd7c4efb2cbe40a985e8f981a3c76, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Carp USE Baker library 027-3
+    second: {fileID: 2100000, guid: fd8b1b9915ceb524590e9ab7273e7738, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cladding_Siding_White
+    second: {fileID: 2100000, guid: 4b6e38969ed969342a3eabce7c1a6b7b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cladding_Stucco_White
+    second: {fileID: 2100000, guid: aa8981042ac9e784c82553e917b2d653, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cladding_Stucco_White_Rough
+    second: {fileID: 2100000, guid: 9d6cc36dea8ad20469bea08c2a90fa7d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Color_F14
+    second: {fileID: 2100000, guid: 9b2c28284284d1c48914f5519a5373b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Color_G04
+    second: {fileID: 2100000, guid: 1fbcabf2d838a2f44ae824162c8855ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Edit this
+    second: {fileID: 2100000, guid: 16b504b3cd3f4a741abd774fe875eaac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Google Earth Snapshot5
+    second: {fileID: 2100000, guid: caf1ee97c242b044998a4b2dc06f5bca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roofing_Shingles_Asphalt
+    second: {fileID: 2100000, guid: 8bee293ea2a9b9a4dab02ee732cbe6d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: USE Sanborn 004-1
+    second: {fileID: 2100000, guid: 8c072394a3896fc4294d975859d14bcf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: USE Sanborn 004-2
+    second: {fileID: 2100000, guid: b964e39a802929343835199be5fe7f60, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1
+    second: {fileID: 2100000, guid: 6e977e24543523a43acc3336a589ae7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _defaultMat
+    second: {fileID: 2100000, guid: 77947c2714270f0428c82bc7caafd1c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: useee Baker library 029-1
+    second: {fileID: 2100000, guid: 50209017af07b404592606259608454b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window
+    second: {fileID: 2100000, guid: 27bd96ea7e809234781ba642d3e28c94, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker USE library 008-1
+    second: {fileID: 2800000, guid: c753168b4bcd3c24993d6ed69a642c7f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker USEEE library 037-2
+    second: {fileID: 2800000, guid: f36dc179fe96eb548af8849fa208c9bd, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 002-1b
+    second: {fileID: 2800000, guid: 7022455e33f528041b66c9b3f4086023, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 002-3 brick
+    second: {fileID: 2800000, guid: ccfb3026372df9d4a878c42755c0bbfb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 002-3 use
+    second: {fileID: 2800000, guid: 0f2ed71e8a3fd27489e6e8c7dd27d602, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 007-2 USEEEEEE
+    second: {fileID: 2800000, guid: 7fcfe08b6f099474d84dc33f1b67b033, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 010-1 USE
+    second: {fileID: 2800000, guid: 4d37c5fefaeaf444d924a4b7e2ef7b87, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 020-1
+    second: {fileID: 2800000, guid: 529110d4e0679544a85bd7f634ccb5d5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 025
+    second: {fileID: 2800000, guid: 03bb7fe7b7fac144984d5d3614f6006f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 030
+    second: {fileID: 2800000, guid: 1e3d8885454ce3b46800bba1498cf2c1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 030x
+    second: {fileID: 2800000, guid: 5290a985a1d0a8a4b95d97eb3dfaee41, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 031
+    second: {fileID: 2800000, guid: f463bd39d277bf341a755bae593d1f78, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 032
+    second: {fileID: 2800000, guid: ba2aa122ec4eb3a4cbe94d48f56052a4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 033-1
+    second: {fileID: 2800000, guid: 498f1777edbfa784588e78b81ec5c56e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 033-2
+    second: {fileID: 2800000, guid: d5773fc6989c0804e997052eff05ac50, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 033-3
+    second: {fileID: 2800000, guid: 26fc17d77d28e5f47b11d4785860056e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 050
+    second: {fileID: 2800000, guid: ef205d25c9b5a2d43989a4ab65fd4d06, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 064
+    second: {fileID: 2800000, guid: 858d9ca242b26974c9eeb13f10243c85, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker library 072
+    second: {fileID: 2800000, guid: 643d253dc679c4c46b375e5e27e67be2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Baker tower-1
+    second: {fileID: 2800000, guid: 7f9eeb2924f45874ca4ded655d580e98, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Carp USE Baker library 027-3
+    second: {fileID: 2800000, guid: 13c0a0e3d520cee488ec4aeef3645789, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Cladding_Siding_White
+    second: {fileID: 2800000, guid: 1fb85104f23498a4e9e11c3c25c8d068, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Cladding_Stucco_White
+    second: {fileID: 2800000, guid: ed2a7d5d832ad314bb6d6881fcc7c807, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Cladding_Stucco_White_Rough
+    second: {fileID: 2800000, guid: 664e47a2529dccb40a26b5da2dbd5dd1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Edit this
+    second: {fileID: 2800000, guid: 19dbedd092f447b4c8a1c962b9f5541f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Roofing_Shingles_Asphalt
+    second: {fileID: 2800000, guid: 56a23997e4fbd8547a0b24e3900de1bb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: USE Sanborn 004-2
+    second: {fileID: 2800000, guid: ea6557b323843d14ab24a98d3bd32935, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: tmp.23.b3M3uS
+    second: {fileID: 2800000, guid: 64e70e65196b0094db3172dea71f3a4d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: useee Baker library 029-1
+    second: {fileID: 2800000, guid: badb6adeca7347f4d87a6101714e890b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: window
+    second: {fileID: 2800000, guid: fdf8904bfd493cc48be873057beb6552, type: 3}
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 0
+    keepQuads: 1
+    weldVertices: 0
+    preserveHierarchy: 1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
