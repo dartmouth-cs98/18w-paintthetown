@@ -360,7 +360,7 @@ RectTransform:
   m_Children:
   - {fileID: 46529231}
   m_Father: {fileID: 1526220074}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -475,7 +475,7 @@ RectTransform:
   - {fileID: 1956271288}
   - {fileID: 1005671995}
   m_Father: {fileID: 1526220074}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1299,7 +1299,7 @@ RectTransform:
   - {fileID: 1548055094}
   - {fileID: 281659440}
   m_Father: {fileID: 1526220074}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1492,7 +1492,7 @@ RectTransform:
   m_Children:
   - {fileID: 300823694}
   m_Father: {fileID: 1526220074}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1676,7 +1676,7 @@ RectTransform:
   - {fileID: 101997039}
   - {fileID: 2003094306}
   m_Father: {fileID: 1526220074}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2083,12 +2083,12 @@ RectTransform:
   m_Children:
   - {fileID: 1789518755}
   - {fileID: 771222739}
-  - {fileID: 172182295}
-  - {fileID: 2137219704}
   - {fileID: 880795059}
   - {fileID: 1101348602}
   - {fileID: 117895429}
   - {fileID: 1056674718}
+  - {fileID: 172182295}
+  - {fileID: 2137219704}
   m_Father: {fileID: 552484079}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2220,7 +2220,7 @@ MonoBehaviour:
   NotificationsToggle: {fileID: 880795060}
   SoundsToggle: {fileID: 1101348603}
   DisconnectFacebookButton: {fileID: 117895430}
-  SignOutButton: {fileID: 0}
+  SignOutButton: {fileID: 1056674719}
 --- !u!1 &1548055093
 GameObject:
   m_ObjectHideFlags: 0
@@ -2826,7 +2826,7 @@ RectTransform:
   m_Children:
   - {fileID: 308294247}
   m_Father: {fileID: 1526220074}
-  m_RootOrder: 3
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
