@@ -32,9 +32,6 @@ public class Profile : MonoBehaviour {
 		// user data we can use for this scene
 		returnData = www.text;
 		subReturnStrings = returnData.Split(',');
-		foreach(var item in subReturnStrings) {
-				print(item.ToString());
-		}
 
 		getName ();
 		getTeam ();
@@ -60,13 +57,12 @@ public class Profile : MonoBehaviour {
 	void getTeam() {
 		// grab team / color
 		string[] teamItem = subReturnStrings[8].Split(':');
-		if (teamItem [1] == "") {
-			print ("not assigned to a team");
-			team = "not assigned";
+
+		if (teamItem [1] == "null") {
+			team = "You are not assigned to a team yet!";
 		} else {
 			team = teamItem [1];
 			team = team.Replace("\"", "");
-			print ("team: " + team);
 		}
 
 	}
@@ -75,10 +71,7 @@ public class Profile : MonoBehaviour {
 		// grab friends
 		string[] friendsItem = subReturnStrings[9].Split(':');
 
-		if (friendsItem[1] == "[]") {
-			print ("You have no friends");
-			//friendsList = new string[]{"jim bob", "mary sue", "plain jane"};
-		} else {
+		if (friendsItem[1] != "[]") {
 			string friendsListString = friendsItem [1];
 			friendsListString.Replace ("[", "");
 			friendsListString.Replace ("]", "");
@@ -99,7 +92,7 @@ public class Profile : MonoBehaviour {
 
 		// set font color to team color?
 		//print team in top right corner
-		GUI.Label(new Rect(500, 50, 100, 20), team);
+		GUI.Label(new Rect(500, 50, 700, 20), team);
 
 		// set font color to black
 		GUI.contentColor = Color.black;
