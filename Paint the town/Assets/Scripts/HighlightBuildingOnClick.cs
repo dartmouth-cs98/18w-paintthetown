@@ -11,11 +11,13 @@ public class HighlightBuildingOnClick : MonoBehaviour
 {
     public Material highlightMaterial;
     private Vector3 mouseDownPosition;
-
+    public string buildingOwnershipURL = "https://paint-the-town.herokuapp.com/api/buildings/getTeam?id=";
+    public string buildingID = "";
+    public string token;
 
     void OnEnable()
     {
-       
+
     }
 
     void Update()
@@ -34,10 +36,17 @@ public class HighlightBuildingOnClick : MonoBehaviour
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
                 var latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
-                Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
+                Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt, GetBuildingCallback);
                 Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+
             }
         }
+    }
+
+    void GetBuildingCallback(bool success, Building building)
+    {
+      print("this is your building ID " + building.BuildingId);
+      getBuildingIDStart(building.BuildingId);
     }
 
     void OnHighlightReceived(bool success, Highlight highlight)
@@ -46,15 +55,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
         {
             StartCoroutine(ClearHighlight(highlight));
         }
-    }
-
-    void OnBuildingRecieved(bool success, Building b)
-    {
-        if(success)
-        {
-            print(b.BuildingId);
-        }
-        
     }
 
     IEnumerator ClearHighlight(Highlight highlight)
@@ -75,4 +75,39 @@ public class HighlightBuildingOnClick : MonoBehaviour
         //highlightMaterial = Resources.Load("BlueMaterial") as Material;
         highlightMaterial.color = Color.blue;
     }
+
+    public IEnumerator getBuildingID()
+    {
+      Hashtable headers = new Hashtable();
+      headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+      WWW www = new WWW(buildingOwnershipURL, null, headers);
+      yield return www;
+
+      string returnData = www.text;
+      print(returnData);
+      // returnData = returnData.Split(',');
+      // foreach(var item in returnData) {
+      //     print(item.ToString());
+      // }
+    		// print("hello!");
+    		// 	using (WWW www = new WWW(buildingOwnershipURL + buildingID))
+    		// 	{
+    		// 			yield return www;
+    		// 			if(www.error == null){
+        //
+    		// 				print(www.text);
+        //
+    		// 			}else{
+    		// 				print("you have a problem");
+    		// 				print(www.error);
+    		// 			}
+    		// 	}
+    	}
+
+      public void getBuildingIDStart(string ID)
+      {
+        buildingOwnershipURL = buildingOwnershipURL + ID;
+        StartCoroutine("getBuildingID");
+      }
+
 }
