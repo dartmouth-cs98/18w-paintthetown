@@ -4,6 +4,7 @@ using UnityEngine;
 using Facebook.Unity;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public class fbLogin : MonoBehaviour {
 
@@ -14,6 +15,10 @@ public class fbLogin : MonoBehaviour {
 	public GameObject DialogUsername;
 
 	public string url;
+	public string token;
+	public string returnData;
+	public string userURL = "https://paint-the-town.herokuapp.com/api/users";
+	public string[] subReturnStrings;
 
 
 	// Use this for initialization
@@ -90,13 +95,38 @@ public class fbLogin : MonoBehaviour {
 						string token = www.text;
 						string[] subStrings = token.Split ('"');
 						print(subStrings[3]);
+						PlayerPrefs.SetString("token", subStrings[3]);
+						PlayerPrefs.Save();
+						startIsThereATeam();
 
 						SceneManager.LoadScene("FirstScene");
+
 					}else{
 						print("you have a problem");
 						print(www.error);
 					}
 			}
+	}
+
+	public IEnumerator isThereATeam()
+	{
+		Hashtable headers = new Hashtable();
+		headers.Add("Authorization", token);
+		WWW www = new WWW(userURL, null, headers);
+		yield return www;
+
+		// user data we can use for this scene
+		returnData = www.text;
+		subReturnStrings = returnData.Split(',');
+		foreach(var item in subReturnStrings) {
+				print(item.ToString());
+		}
+	}
+
+	public void startIsThereATeam()
+	{
+		token = PlayerPrefs.GetString("token", "no token");
+		StartCoroutine("getBuildingID");
 	}
 
 	void FacebookMenus(bool isLoggedIn)
