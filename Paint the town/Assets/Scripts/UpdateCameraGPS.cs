@@ -15,7 +15,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
     IEnumerator Start()
     {
-        // wait for the unity remote to connect, if applicable 
+        // wait for the unity remote to connect, if applicable
         if (isUnityRemote)
         {
             print("waiting for remote!");
@@ -73,7 +73,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
         // take the lastData and put it into the camera api from wrld3d
         var currentLocation = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
-        print(Input.compass.trueHeading);
+        //print(Input.compass.trueHeading);
         Api.Instance.CameraApi.AnimateTo(currentLocation, distanceFromInterest: 300, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
