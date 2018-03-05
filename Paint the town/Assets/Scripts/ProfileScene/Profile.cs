@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using System;
 
 
 
@@ -14,7 +15,7 @@ public class Profile : MonoBehaviour {
 	public string[] subReturnStrings;
 	public string name;
 	public string team;
-	public string[] friendsList;
+	public string[] friendsList = new string[0];
 	public string token = "";
 
 	// Use this for initialization
@@ -43,12 +44,12 @@ public class Profile : MonoBehaviour {
 
 	void getName() {
 		// grab first name
-		string[] firstNameItems = subReturnStrings[2].Split(':');
+		string[] firstNameItems = subReturnStrings[3].Split(':');
 		string firstName = firstNameItems [1];
 		firstName = firstName.Replace("\"", "");
 
 		// grab last name
-		string[] lastNameItems = subReturnStrings[1].Split(':');
+		string[] lastNameItems = subReturnStrings[2].Split(':');
 		string lastName = lastNameItems [1];
 		lastName = lastName.Replace("\"", "");
 
@@ -58,7 +59,7 @@ public class Profile : MonoBehaviour {
 
 	void getTeam() {
 		// grab team / color
-		string[] teamItem = subReturnStrings[7].Split(':');
+		string[] teamItem = subReturnStrings[8].Split(':');
 		if (teamItem [1] == "") {
 			print ("not assigned to a team");
 			team = "not assigned";
@@ -72,24 +73,21 @@ public class Profile : MonoBehaviour {
 
 	void getFriends() {
 		// grab friends
-		string[] friendsItem = subReturnStrings[8].Split(':');
-		if (friendsItem[1] == null || friendsItem[1].Length == 0) {
+		string[] friendsItem = subReturnStrings[9].Split(':');
+
+		if (friendsItem[1] == "[]") {
 			print ("You have no friends");
-			friendsList [0] = "jo shmo";
-			friendsList [1] = "billy bob";
-			friendsList [2] = "hey you";
-			foreach (var friend in friendsList) {
+			//friendsList = new string[]{"jim bob", "mary sue", "plain jane"};
+		} else {
+			string friendsListString = friendsItem [1];
+			friendsListString.Replace ("[", "");
+			friendsListString.Replace ("]", "");
+			friendsList = friendsListString.Split (',');
+
+			foreach (string friend in friendsList) {
 				friend.Replace("\"", "");
 				print ("friend: " + friend);
 			}
-		} else {
-			int i = 0;
-			print(friendsItem[1]);
-			// foreach (string friend in friendsItem[1]) {
-			// 	friend.Replace("\"", "");
-			// 	print ("friend: " + friend);
-			// 	friendsList[i] = friend;
-			// }
 		}
 	}
 
@@ -105,13 +103,16 @@ public class Profile : MonoBehaviour {
 
 		// set font color to black
 		GUI.contentColor = Color.black;
-		GUI.Label(new Rect(200, 150, 100, 20), "Your friends:");
-		int y = 250;
-		foreach(var friend in friendsList){
-			GUI.Label(new Rect(200, y, 100, 20), friend);
-			y += 50;
+		GUI.Label(new Rect(200, 100, 100, 20), "Your friends:");
+		int y = 125;
+		if (friendsList.Length != 0) {
+			foreach (var friend in friendsList) {
+				GUI.Label (new Rect (200, y, 100, 20), friend);
+				y += 25;
+			}
+		} else {
+			GUI.Label (new Rect (200, y, 1000, 20), "No friends yet! Connect to Facebook to import friends.");
 		}
-
 	}
 
 
