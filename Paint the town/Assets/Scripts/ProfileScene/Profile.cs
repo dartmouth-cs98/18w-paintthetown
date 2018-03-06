@@ -32,9 +32,6 @@ public class Profile : MonoBehaviour {
 		// user data we can use for this scene
 		returnData = www.text;
 		subReturnStrings = returnData.Split(',');
-		foreach(var item in subReturnStrings) {
-				print(item.ToString());
-		}
 
 		getName ();
 		getTeam ();
@@ -60,13 +57,12 @@ public class Profile : MonoBehaviour {
 	void getTeam() {
 		// grab team / color
 		string[] teamItem = subReturnStrings[8].Split(':');
-		if (teamItem [1] == "") {
-			print ("not assigned to a team");
-			team = "not assigned";
+
+		if (teamItem [1] == "null") {
+			team = "You are not assigned to a team yet!";
 		} else {
 			team = teamItem [1];
 			team = team.Replace("\"", "");
-			print ("team: " + team);
 		}
 
 	}
@@ -75,10 +71,7 @@ public class Profile : MonoBehaviour {
 		// grab friends
 		string[] friendsItem = subReturnStrings[9].Split(':');
 
-		if (friendsItem[1] == "[]") {
-			print ("You have no friends");
-			//friendsList = new string[]{"jim bob", "mary sue", "plain jane"};
-		} else {
+		if (friendsItem[1] != "[]") {
 			string friendsListString = friendsItem [1];
 			friendsListString.Replace ("[", "");
 			friendsListString.Replace ("]", "");
@@ -92,19 +85,29 @@ public class Profile : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		// set font color to black
+		// to manipulate font sizes and colors
+		GUIStyle style = new GUIStyle();
+
+		// set font color and size for Name
 		GUI.contentColor = Color.black;
+		style.fontSize = 35;
 		// print name in top left corner
-		GUI.Label(new Rect(200, 50, 100, 20), name);
+		GUI.Label(new Rect(200, 50, 100, 20), name, style);
 
-		// set font color to team color?
-		//print team in top right corner
-		GUI.Label(new Rect(500, 50, 100, 20), team);
+		// set font size and color to team color?
+		GUI.contentColor = Color.black;	//black for now
+		style.fontSize = 30;
+		// print team in top right corner
+		GUI.Label(new Rect(500, 50, 700, 20), team);
 
-		// set font color to black
-		GUI.contentColor = Color.black;
+		// set font color and size for "Your friends:" subheading
+		GUI.contentColor = Color.magenta;
+		style.fontSize = 25;
+		// print below name
 		GUI.Label(new Rect(200, 100, 100, 20), "Your friends:");
 		int y = 125;
+		// lower font size for list of friends
+		style.fontSize = 20;
 		if (friendsList.Length != 0) {
 			foreach (var friend in friendsList) {
 				GUI.Label (new Rect (200, y, 100, 20), friend);
