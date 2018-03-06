@@ -85,19 +85,29 @@ public class Profile : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		// set font color to black
-		GUI.contentColor = Color.black;
-		// print name in top left corner
-		GUI.Label(new Rect(200, 50, 100, 20), name);
+		// to manipulate font sizes and colors
+		GUIStyle style = new GUIStyle();
 
-		// set font color to team color?
-		//print team in top right corner
+		// set font color and size for Name
+		GUI.contentColor = Color.black;
+		style.fontSize = 35;
+		// print name in top left corner
+		GUI.Label(new Rect(200, 50, 100, 20), name, style);
+
+		// set font size and color to team color?
+		GUI.contentColor = Color.black;	//black for now
+		style.fontSize = 30;
+		// print team in top right corner
 		GUI.Label(new Rect(500, 50, 700, 20), team);
 
-		// set font color to black
-		GUI.contentColor = Color.black;
+		// set font color and size for "Your friends:" subheading
+		GUI.contentColor = Color.magenta;
+		style.fontSize = 25;
+		// print below name
 		GUI.Label(new Rect(200, 100, 100, 20), "Your friends:");
 		int y = 125;
+		// lower font size for list of friends
+		style.fontSize = 20;
 		if (friendsList.Length != 0) {
 			foreach (var friend in friendsList) {
 				GUI.Label (new Rect (200, y, 100, 20), friend);
