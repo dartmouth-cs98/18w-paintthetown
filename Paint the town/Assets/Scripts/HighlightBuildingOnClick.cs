@@ -41,7 +41,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
                 var latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
+
+                //given selected building, start to get data from server
                 Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
+
                 Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
                 Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
             }
@@ -71,21 +74,24 @@ public class HighlightBuildingOnClick : MonoBehaviour
         {
             print(b.BuildingId);
         }
-
     }
 
+    //function to get building data
     IEnumerator getBuildingColor()
     {
       Hashtable headers = new Hashtable();
-      print("hi there");
+      print("You're retrieving information about a building");
   		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
   		WWW www = new WWW(getBuildingIDURL, null, headers);
   		yield return www;
 
         if(www.text == "null"){
+          //the building has never been clicked before
           print(www.error);
           StartCoroutine("createBuilding");
         }else{
+            //the building has been found and it's data is returned
+            //TODO: update data on server and color building
             print("hehehe");
             print(www.text);
         }
@@ -97,6 +103,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		// }
     }
 
+    //function to create building data on the server
     IEnumerator createBuilding()
     {
       print ("You're making a building");
@@ -120,7 +127,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
       headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
       WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings", signupform.data, headers);
       yield return www;
-    //  var signup = UnityWebRequest.Post("https://paint-the-town.herokuapp.com/api/buildings", signupform);
+      //var signup = UnityWebRequest.Post("https://paint-the-town.herokuapp.com/api/buildings", signupform);
       //yield return signup.SendWebRequest();
 
   		if (www.error != null)
@@ -134,6 +141,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
       }
     }
 
+    //starter fuction to retrieve building data
     public void startGetBuildingColor(string buildingID)
     {
       needBuildingID = buildingID;
