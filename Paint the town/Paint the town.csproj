@@ -359,11 +359,14 @@
     <Compile Include="Assets\ParticleSplatter\Scripts\particleLauncher.cs" />
     <Compile Include="Assets\ParticleSplatter\Scripts\SplatOnCollision.cs" />
     <Compile Include="Assets\Scripts\createUser.cs" />
+    <Compile Include="Assets\Scripts\GameServerCommunication.cs" />
     <Compile Include="Assets\Scripts\HighlightBuildingOnClick.cs" />
     <Compile Include="Assets\Scripts\Login Scene\fbLogin.cs" />
     <Compile Include="Assets\Scripts\Login Scene\fbLoginServerCommunication.cs" />
     <Compile Include="Assets\Scripts\Login Scene\testLoginScreen.cs" />
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\ProfileScene\Profile.cs" />
+    <Compile Include="Assets\Scripts\Settings Scene\Settings.cs" />
     <Compile Include="Assets\Scripts\SlideMenu.cs" />
     <Compile Include="Assets\Scripts\TestColorCreation.cs" />
     <Compile Include="Assets\Scripts\TestTeamCreation.cs" />
@@ -487,7 +490,6 @@
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\HistogramRender.shader" />
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\TonemappingColorGrading.cginc" />
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
-    <None Include="Assets\StreamingAssets\WrldResources\FrankBold50_A8_icons.fnt" />
     <None Include="Assets\StreamingAssets\WrldResources\Resources\FrankBold50_A8_icons.fnt" />
     <None Include="Assets\Wrld\3rd Party Licenses\fonts\IPA_font.txt" />
     <None Include="Assets\Wrld\3rd Party Licenses\fonts\OpenSans.txt" />
