@@ -10,6 +10,10 @@ using System;
 public class Profile : MonoBehaviour {
 
 	public string userURL = "https://paint-the-town.herokuapp.com/api/users";
+	public string teamurl = "https://paint-the-town.herokuapp.com/api/teams";
+	public string redID;
+	public string blueID;
+	public string[] teamInfoList;
 	public string returnData;
 	public string[] subReturnStrings;
 	public string name;
@@ -23,14 +27,32 @@ public class Profile : MonoBehaviour {
 		token = "JWT " + PlayerPrefs.GetString("token", "no token");
 
 		// POST request to server to fetch user data
-		Hashtable headers = new Hashtable();
-		headers.Add("Authorization", token);
-		WWW www = new WWW(userURL, null, headers);
-		yield return www;
+		Hashtable userHeaders = new Hashtable();
+		userHeaders.Add("Authorization", token);
+		WWW userwww = new WWW(userURL, null, userHeaders);
+		yield return userwww;
 
 		// user data we can use for this scene
-		returnData = www.text;
+		returnData = userwww.text;
 		subReturnStrings = returnData.Split(',');
+		for (int i = 0; i < subReturnStrings.Length; i++) {
+			print (subReturnStrings [i]);
+		}
+
+		Hashtable teamHeaders = new Hashtable();
+		teamHeaders.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+		WWW teamwww = new WWW(teamurl, null, teamHeaders);
+		yield return teamwww;
+
+		if(teamwww.text == "null"){
+			print(teamwww.error);
+		}else{
+			print(teamwww.text);
+			string teamInfo = teamwww.text;
+			teamInfoList = teamInfo.Split('"');
+			redID = teamInfoList[19];
+			blueID = teamInfoList[5];
+		}
 
 		getName ();
 		getTeam ();
@@ -40,12 +62,12 @@ public class Profile : MonoBehaviour {
 
 	void getName() {
 		// grab first name
-		string[] firstNameItems = subReturnStrings[3].Split(':');
+		string[] firstNameItems = subReturnStrings[4].Split(':');
 		string firstName = firstNameItems [1];
 		firstName = firstName.Replace("\"", "");
 
 		// grab last name
-		string[] lastNameItems = subReturnStrings[2].Split(':');
+		string[] lastNameItems = subReturnStrings[3].Split(':');
 		string lastName = lastNameItems [1];
 		lastName = lastName.Replace("\"", "");
 
@@ -55,20 +77,27 @@ public class Profile : MonoBehaviour {
 
 	void getTeam() {
 		// grab team / color
-		string[] teamItem = subReturnStrings[8].Split(':');
+		string[] teamItem = subReturnStrings[6].Split(':');
 
 		if (teamItem [1] == "null") {
 			team = "You are not assigned to a team yet!";
 		} else {
 			team = teamItem [1];
 			team = team.Replace("\"", "");
+			if (team == redID) {
+				team = "Red";
+			} else if (team == blueID) {
+				team = "Blue";
+			} else {
+				team = "You are not assigned to a team yet!";
+			}
 		}
 
 	}
 
 	void getFriends() {
 		// grab friends
-		string[] friendsItem = subReturnStrings[9].Split(':');
+		string[] friendsItem = subReturnStrings[7].Split(':');
 
 		if (friendsItem[1] != "[]") {
 			string friendsListString = friendsItem [1];
@@ -78,7 +107,6 @@ public class Profile : MonoBehaviour {
 
 			foreach (string friend in friendsList) {
 				friend.Replace("\"", "");
-				print ("friend: " + friend);
 			}
 		}
 	}
@@ -113,7 +141,7 @@ public class Profile : MonoBehaviour {
 				y += 25;
 			}
 		} else {
-			GUI.Label (new Rect (200, y, 1000, 20), "No friends yet! Connect to Facebook to import friends.");
+			GUI.Label (new Rect (200, y, 1000, 20), "No friends yet!");
 		}
 	}
 
