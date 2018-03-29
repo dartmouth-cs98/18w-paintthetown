@@ -75,6 +75,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
             print(b.BuildingId);
         }
     }
+    
+    //https://paint-the-town.herokuapp.com/api/buildings/updateTeam
+    //building - building ID
+    //team - teamID
 
     //function to get building data
     IEnumerator getBuildingColor()
@@ -102,6 +106,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		// 		print(item.ToString());
   		// }
     }
+
+
 
     //function to create building data on the server
     IEnumerator createBuilding()

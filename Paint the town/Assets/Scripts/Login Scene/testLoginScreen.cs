@@ -24,8 +24,12 @@ public class testLoginScreen : MonoBehaviour {
 	public GameObject signupLastName;
 	private string SignupName;
 	private string SignupLastName;
+	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
+	public string[] teamInfoList;
 
 	private bool showPopUp = false;
+	public string returnData;
+	public string[] subReturnStrings;
 
 
 	public IEnumerator SigninButton(){
@@ -52,17 +56,34 @@ public class testLoginScreen : MonoBehaviour {
 			string token = test.downloadHandler.text;
 			string[] subStrings = token.Split ('"');
 			print(subStrings[3]);
+
+			//setting player token on login
 			PlayerPrefs.SetString("token", subStrings[3]);
 			PlayerPrefs.Save();
 
-
-
-			SceneManager.LoadScene("FirstScene");
 		}
 	}
 
+	//get the player team when they sign in before loading the game scene
+	public IEnumerator setPlayercolor(){
+		Hashtable headers = new Hashtable();
+		print("You're retrieving information about the user");
+		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+		WWW www = new WWW(userUrl, null, headers);
+		yield return www;
+			if(www.text == "null"){
+				print(www.error);
+			}else{
+				string teamInfo = www.text;
+				teamInfoList = teamInfo.Split('"');
+				PlayerPrefs.SetString("teamID", teamInfoList[33]);
+				PlayerPrefs.Save();
+			}
+				SceneManager.LoadScene("FirstScene");
+	}
+
+
 	public IEnumerator RegisterButton(){
-		print ("You want to register!");
 
 		WWWForm signupform = new WWWForm();
 
@@ -86,22 +107,21 @@ public class testLoginScreen : MonoBehaviour {
 			print("user signed up!");
 			string token = signup.downloadHandler.text;
 			string[] subStrings = token.Split ('"');
-			print(subStrings[3]);
 			PlayerPrefs.SetString("token", subStrings[3]);
 			PlayerPrefs.Save();
 
-			// if we want to do something with the token
-			// string getToken = "JWT " + subStrings[3];
-
-			SceneManager.LoadScene("FirstScene");
+			SceneManager.LoadScene("TeamAssignment");
 		}
 	}
 
 	public void workAroundSignIn() {
+		print("You are signing in");
 		StartCoroutine("SigninButton");
+		StartCoroutine("setPlayercolor");
 	}
 
 	public void workAroundSignUp() {
+		print ("You want to register!");
 		StartCoroutine("RegisterButton");
 	}
 
@@ -124,27 +144,21 @@ public class testLoginScreen : MonoBehaviour {
 
 	}
 
-
-
 	void OnGUI(){
 		if (showPopUp) {
 			GUI.Window(0, new Rect((Screen.width/2)-150, (Screen.height/2)-75
 				, 250, 200), ShowGUI, "Signin Error");
-
 		}
 	}
 
 	void ShowGUI(int windowID) {
 		// You may put a label to show a message to the player
-
 		GUI.Label(new Rect(45, 40, 200, 30), "Invalid username or password");
 
 		// You may put a button to close the pop up too
-
 		if (GUI.Button(new Rect(90, (Screen.height/2) - 150, 75, 30), "OK"))
 		{
 			showPopUp = false;
 		}
 	}
-
 }

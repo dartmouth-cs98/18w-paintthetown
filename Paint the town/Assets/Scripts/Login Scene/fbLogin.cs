@@ -13,7 +13,12 @@ public class fbLogin : MonoBehaviour {
 	public GameObject DialogLoggedOut;
 	public GameObject DialogUsername;
 
+	public string userURL = "https://paint-the-town.herokuapp.com/api/users";
+	public bool isThereTeam;
 	public string url;
+	public string returnData;
+	public string[] subReturnStrings;
+	public string[] teamItem;
 
 
 	// Use this for initialization
@@ -48,24 +53,20 @@ public class fbLogin : MonoBehaviour {
 		FB.LogInWithReadPermissions(permissions, AuthCallBack);
 	}
 
+	//call back for the facebook login
 	public void AuthCallBack(IResult result)
 	{
 		if(result.Error != null){
 			Debug.Log(result.Error);
 		}else{
 
-			print("this is your access token");
-			// print(result.ResultDictionary["access_token"]);
-			// print(result);
+			print("this is your access token:");
+
 			url = "" + result.ResultDictionary["access_token"];
 			print(url);
-			passToServerWorkaround();
 
-			if(FB.IsLoggedIn){
-				//Debug.Log("Haha! Facebook is logged in");
-			}else{
-				//Debug.Log("Hehe! Facebook is not logged in");
-			}
+			passToServerWorkaround();
+			startCheckFirstTimeLogin();
 
 			FacebookMenus(FB.IsLoggedIn);
 
@@ -77,25 +78,57 @@ public class fbLogin : MonoBehaviour {
 		StartCoroutine("passToServer");
 	}
 
+	//main signin function
 	public IEnumerator passToServer()
 	{
-		print("hello!");
+		print("signing in facebook user!");
 			using (WWW www = new WWW("https://paint-the-town.herokuapp.com/api/facebook/tokenize?access_token=" + url))
 			{
 					yield return www;
 					if(www.error == null){
-
-						print(www.text);
-
 						string token = www.text;
 						string[] subStrings = token.Split ('"');
-						print(subStrings[3]);
-
-						SceneManager.LoadScene("FirstScene");
+						PlayerPrefs.SetString("token", subStrings[3]);
+						PlayerPrefs.Save();
 					}else{
 						print("you have a problem");
 						print(www.error);
 					}
+				}
+	}
+
+	public void startCheckFirstTimeLogin(){
+		StartCoroutine("checkFirstTimeLogin");
+	}
+
+	//determine whether or not the user has been signed in before
+	IEnumerator checkFirstTimeLogin () {
+
+		// get token stored in PlayerPrefs
+		print("checking to see if fb user has logged in before");
+		string token = "JWT " + PlayerPrefs.GetString("token", "no token");
+
+		// POST request to server to fetch user data
+		Hashtable headers = new Hashtable();
+		headers.Add("Authorization", token);
+		WWW www = new WWW(userURL, null, headers);
+
+		yield return www;
+
+			returnData = www.text;
+			subReturnStrings = returnData.Split(',');
+			teamItem = subReturnStrings[8].Split(':');
+
+			if(teamItem [1] == "null") {
+				print("you are a new user");
+				SceneManager.LoadScene("TeamAssignment");
+			} else {
+				print("you are not a new user");
+
+				//save the teamID for later use
+				PlayerPrefs.SetString("teamID", teamItem[1]);
+				PlayerPrefs.Save();
+				SceneManager.LoadScene("FirstScene");
 			}
 	}
 

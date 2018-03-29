@@ -7,9 +7,8 @@ using UnityEngine.Networking;
 using System;
 
 
-
 public class Profile : MonoBehaviour {
-	
+
 	public string userURL = "https://paint-the-town.herokuapp.com/api/users";
 	public string returnData;
 	public string[] subReturnStrings;
@@ -38,7 +37,7 @@ public class Profile : MonoBehaviour {
 		getFriends ();
 
 	}
-	
+
 	void getName() {
 		// grab first name
 		string[] firstNameItems = subReturnStrings[3].Split(':');
