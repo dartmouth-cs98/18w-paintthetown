@@ -27,6 +27,10 @@ public class TeamAssignmentScript : MonoBehaviour {
 				string teamInfo = www.text;
 				teamInfoList = teamInfo.Split('"');
 
+			for (int i = 0; i <= teamInfoList.Length - 1; i++) {
+				print (teamInfoList [i]);
+			}
+
 				redID = teamInfoList[19];
 				blueID = teamInfoList[5];
 				print("Red team ID: " + redID);

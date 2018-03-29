@@ -63,6 +63,19 @@
      <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\GraphRequest.cs" />
      <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\MainMenu.cs" />
      <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\Pay.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\RayCastShootComplete.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\RayViewerComplete.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\ShootableBox.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\DecalDestroyer.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\GunAim.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\GunShoot.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\ParticleExamples.cs" />
+     <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\ParticleMenu.cs" />
+     <Compile Include="Assets\orbitCamera.cs" />
+     <Compile Include="Assets\ParticleSplatter\Scripts\ParticleDecalData.cs" />
+     <Compile Include="Assets\ParticleSplatter\Scripts\ParticleDecalPool.cs" />
+     <Compile Include="Assets\ParticleSplatter\Scripts\particleLauncher.cs" />
+     <Compile Include="Assets\ParticleSplatter\Scripts\SplatOnCollision.cs" />
      <Compile Include="Assets\Scripts\createUser.cs" />
      <Compile Include="Assets\Scripts\GameServerCommunication.cs" />
      <Compile Include="Assets\Scripts\HighlightBuildingOnClick.cs" />
@@ -73,6 +86,8 @@
      <Compile Include="Assets\Scripts\ProfileScene\Profile.cs" />
      <Compile Include="Assets\Scripts\Settings Scene\Settings.cs" />
      <Compile Include="Assets\Scripts\SlideMenu.cs" />
+     <Compile Include="Assets\Scripts\TeamAssignmentScript.cs" />
+     <Compile Include="Assets\Scripts\TestBuildings.cs" />
      <Compile Include="Assets\Scripts\TestColorCreation.cs" />
      <Compile Include="Assets\Scripts\TestTeamCreation.cs" />
      <Compile Include="Assets\Scripts\UpdateCameraGPS.cs" />
@@ -176,7 +191,6 @@
      <None Include="Assets\Wrld\3rd Party Licenses\libs\libktx.txt" />
      <None Include="Assets\Wrld\3rd Party Licenses\fonts\IPA_font.txt" />
      <None Include="Assets\Wrld\AssetData\iOS\FrankBold50_A8_icons.fnt" />
-     <None Include="Assets\StreamingAssets\WrldResources\FrankBold50_A8_icons.fnt" />
      <None Include="Assets\Wrld\3rd Party Licenses\libs\mt19937ar.c.txt" />
      <None Include="Assets\Wrld\3rd Party Licenses\libs\zlib.txt" />
      <None Include="Assets\Wrld\Plugins\x86_64\StreamAlpha.bundle\Contents\Resources\FrankBold50_A8_icons.fnt" />
@@ -191,6 +205,7 @@
      <None Include="Assets\Wrld\Version\v686.txt" />
      <None Include="Assets\Wrld\3rd Party Licenses\libs\httpxx.txt" />
      <None Include="Assets\Wrld\3rd Party Licenses\fonts\OpenSans.txt" />
+     <None Include="Assets\StreamingAssets\WrldResources\FrankBold50_A8_icons.fnt" />
      <None Include="Assets\Wrld\AssetData\Windows\FrankBold50_A8_icons.fnt" />
      <None Include="Assets\Wrld\3rd Party Licenses\libs\rapidxml.txt" />
      <None Include="Assets\Wrld\3rd Party Licenses\libs\libpng.txt" />
@@ -256,68 +271,59 @@
  <Reference Include="UnityEditor.VR">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
  </Reference>
- <Reference Include="Vuforia.UnityExtensions.Editor">
- <HintPath>/Applications/Unity/PlaybackEngines/VuforiaSupport/Managed/Editor/Vuforia.UnityExtensions.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Vuforia.UnityExtensions">
- <HintPath>/Applications/Unity/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions">
- <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity.Editor">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity.Gameroom">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
  </Reference>
  <Reference Include="FacebookNamedPipeClient">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity.Settings">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
  <Reference Include="Google.IOSResolver_v1.2.59.0">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.59.0.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.59.0.dll</HintPath>
  </Reference>
  <Reference Include="Google.JarResolver_v1.2.59.0">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.59.0.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.59.0.dll</HintPath>
  </Reference>
  <Reference Include="Google.VersionHandler">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
  </Reference>
  <Reference Include="Google.VersionHandlerImpl_v1.2.59.0">
- <HintPath>/Users/morgan/Documents/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.59.0.dll</HintPath>
+ <HintPath>/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.59.0.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
+ <HintPath>/Users/acaciah/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Advertisements">
- <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/Editor/UnityEditor.Advertisements.dll</HintPath>
+ <HintPath>/Users/acaciah/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>/Users/acaciah/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Analytics">
- <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/Editor/UnityEditor.Analytics.dll</HintPath>
+ <HintPath>/Users/acaciah/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/Editor/UnityEditor.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Purchasing">
- <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
+ <HintPath>/Users/acaciah/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Purchasing">
- <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/Editor/UnityEditor.Purchasing.dll</HintPath>
+ <HintPath>/Users/acaciah/Library/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/Editor/UnityEditor.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.StandardEvents">
- <HintPath>/Users/morgan/Library/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+ <HintPath>/Users/acaciah/Library/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
