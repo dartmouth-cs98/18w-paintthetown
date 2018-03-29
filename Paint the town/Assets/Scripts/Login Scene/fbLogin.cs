@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Facebook.Unity;
@@ -117,9 +117,11 @@ public class fbLogin : MonoBehaviour {
 
 			returnData = www.text;
 			subReturnStrings = returnData.Split(',');
-			teamItem = subReturnStrings[8].Split(':');
+			teamItem = subReturnStrings[6].Split(':');
+			print(teamItem [0]);
+			print(teamItem [1]);
 
-			if(teamItem [1] == "null") {
+			if(teamItem[1] == "null") {
 				print("you are a new user");
 				SceneManager.LoadScene("TeamAssignment");
 			} else {
