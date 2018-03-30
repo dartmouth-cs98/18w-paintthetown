@@ -48,7 +48,9 @@ public class testLoginScreen : MonoBehaviour {
 
 		if (test.isNetworkError || test.isHttpError) {
 			print ("Error downloading: " + test.error);
+			print("before: " +showPopUp);
 			showPopUp = true;
+			print("after: " + showPopUp);
 
 		} else {
 
@@ -60,7 +62,7 @@ public class testLoginScreen : MonoBehaviour {
 			//setting player token on login
 			PlayerPrefs.SetString("token", subStrings[3]);
 			PlayerPrefs.Save();
-
+			StartCoroutine("setPlayercolor");
 		}
 	}
 
@@ -71,15 +73,15 @@ public class testLoginScreen : MonoBehaviour {
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 		WWW www = new WWW(userUrl, null, headers);
 		yield return www;
-			if(www.text == "null"){
-				print(www.error);
-			}else{
-				string teamInfo = www.text;
-				teamInfoList = teamInfo.Split('"');
-				PlayerPrefs.SetString("teamID", teamInfoList[33]);
-				PlayerPrefs.Save();
-			}
-				SceneManager.LoadScene("FirstScene");
+		if(www.text == "null"){
+			print(www.error);
+		}else{
+			string teamInfo = www.text;
+			teamInfoList = teamInfo.Split('"');
+			PlayerPrefs.SetString("teamID", teamInfoList[33]);
+			PlayerPrefs.Save();
+		}
+		SceneManager.LoadScene("FirstScene");
 	}
 
 
@@ -106,6 +108,7 @@ public class testLoginScreen : MonoBehaviour {
 		{
 			print("user signed up!");
 			string token = signup.downloadHandler.text;
+
 			string[] subStrings = token.Split ('"');
 			PlayerPrefs.SetString("token", subStrings[3]);
 			PlayerPrefs.Save();
@@ -117,7 +120,6 @@ public class testLoginScreen : MonoBehaviour {
 	public void workAroundSignIn() {
 		print("You are signing in");
 		StartCoroutine("SigninButton");
-		StartCoroutine("setPlayercolor");
 	}
 
 	public void workAroundSignUp() {
