@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town.Editor.Plugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town.Editor", "Paint the town.Editor.csproj", "{F7A51CB2-431F-ACFD-1C63-43415E8213CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town", "Assembly-CSharp-Editor.csproj", "{E98AC6ED-F3E9-1E49-6327-39CAE01E2984}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

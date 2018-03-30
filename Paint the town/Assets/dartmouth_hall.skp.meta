@@ -1,0 +1,404 @@
+fileFormatVersion: 2
+guid: 06070d138209d554b8a86d09e8da4844
+timeCreated: 1522361243
+licenseType: Free
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000
+  assetHash:
+    serializedVersion: 2
+    Hash: d8e15624b05ecc1fc600867530232b42
+  longitude: -72.2869128494747
+  latitude: 43.70389154088145
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: -64.536705, y: 20.745214, z: 28.557692}
+      lookAt: {x: -11.474044, y: 11.531063, z: 3.3477445}
+      up: {x: 0.13995828, y: 0.98792225, z: -0.066493854}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: chimney
+    100002: chimney 1
+    100004: chimney 2
+    100006: chimney 3
+    100008: chimney1
+    100010: chimney1 1
+    100012: chimney1 2
+    100014: chimney1 3
+    100016: //RootNode
+    100018: Google Earth Snapshot
+    100020: Google Earth Snapshot 1
+    100022: Google Earth Snapshot 2
+    100024: Google Earth Snapshot 3
+    100026: Google Earth Terrain
+    100028: ske453
+    100030: stairside
+    100032: triangle
+    100034: triangle 1
+    100036: triangle 2
+    100038: triangle 3
+    100040: triangle 4
+    100042: triangle 5
+    100044: triangle 6
+    100046: triangle 7
+    400000: chimney
+    400002: chimney 1
+    400004: chimney 2
+    400006: chimney 3
+    400008: chimney1
+    400010: chimney1 1
+    400012: chimney1 2
+    400014: chimney1 3
+    400016: //RootNode
+    400018: Google Earth Snapshot
+    400020: Google Earth Snapshot 1
+    400022: Google Earth Snapshot 2
+    400024: Google Earth Snapshot 3
+    400026: Google Earth Terrain
+    400028: ske453
+    400030: stairside
+    400032: triangle
+    400034: triangle 1
+    400036: triangle 2
+    400038: triangle 3
+    400040: triangle 4
+    400042: triangle 5
+    400044: triangle 6
+    400046: triangle 7
+    2100000: _defaultMat
+    2100002: Color_000
+    2100004: '[Roofing_Slate_Dark]'
+    2100006: backCenter
+    2100008: '[Stone_Pavers_Flagstone_Gray]'
+    2100010: side
+    2100012: leftFront
+    2100014: rightFront
+    2100016: backleft
+    2100018: backright
+    2100020: centerFront
+    2100022: Color_F09
+    2100024: Metal_Seamed
+    2100026: Google Earth Snapshot2
+    2100028: Google Earth Snapshot1
+    2100030: Google Earth Snapshot3
+    2100032: Google Earth Snapshot4
+    2100034: '[Brick_Antique]'
+    2100036: '[Color_007]'
+    2300000: chimney
+    2300002: chimney 1
+    2300004: chimney 2
+    2300006: chimney 3
+    2300008: chimney1
+    2300010: chimney1 1
+    2300012: chimney1 2
+    2300014: chimney1 3
+    2300016: //RootNode
+    2300018: Google Earth Snapshot
+    2300020: Google Earth Snapshot 1
+    2300022: Google Earth Snapshot 2
+    2300024: Google Earth Snapshot 3
+    2300026: Google Earth Terrain
+    2300028: ske453
+    2300030: stairside
+    2300032: triangle
+    2300034: triangle 1
+    2300036: triangle 2
+    2300038: triangle 3
+    2300040: triangle 4
+    2300042: triangle 5
+    2300044: triangle 6
+    2300046: triangle 7
+    3300000: chimney
+    3300002: chimney 1
+    3300004: chimney 2
+    3300006: chimney 3
+    3300008: chimney1
+    3300010: chimney1 1
+    3300012: chimney1 2
+    3300014: chimney1 3
+    3300016: //RootNode
+    3300018: Google Earth Snapshot
+    3300020: Google Earth Snapshot 1
+    3300022: Google Earth Snapshot 2
+    3300024: Google Earth Snapshot 3
+    3300026: Google Earth Terrain
+    3300028: ske453
+    3300030: stairside
+    3300032: triangle
+    3300034: triangle 1
+    3300036: triangle 2
+    3300038: triangle 3
+    3300040: triangle 4
+    3300042: triangle 5
+    3300044: triangle 6
+    3300046: triangle 7
+    4300000: Mesh dartmouth_hall
+    4300002: Mesh Google Earth Snapshot
+    4300004: Mesh Google Earth Snapshot
+    4300006: Mesh Google Earth Snapshot
+    4300008: Mesh Google Earth Terrain
+    4300010: Mesh Google Earth Snapshot
+    4300012: Mesh triangle
+    4300014: Mesh chimney1
+    4300016: Mesh chimney
+    4300018: Mesh chimney
+    4300020: Mesh stairside
+    4300022: Mesh ske453
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Color_000
+    second: {fileID: 2100000, guid: 29385b5d5b3446d438179cf4f43cf8ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Color_F09
+    second: {fileID: 2100000, guid: f0bb6226f01426a48ad0fd5bfdf1126e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Google Earth Snapshot1
+    second: {fileID: 2100000, guid: 3ac3134cd0837724ead9968a2d83c49d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Google Earth Snapshot2
+    second: {fileID: 2100000, guid: ca737d5dc38f48d4dac97e663d118597, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Google Earth Snapshot3
+    second: {fileID: 2100000, guid: b2428d4663306334b81787bdf4f22ce3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Google Earth Snapshot4
+    second: {fileID: 2100000, guid: a6329265121608145b213a8b3d68bef7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_Seamed
+    second: {fileID: 2100000, guid: b8308c2ba996cb04595c874613f749af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Brick_Antique]'
+    second: {fileID: 2100000, guid: 74a5413a3ce0b3e43b1602a92ace3da9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_007]'
+    second: {fileID: 2100000, guid: d2e4ef2b0182ca749ab9c4642ca7c590, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Roofing_Slate_Dark]'
+    second: {fileID: 2100000, guid: e2c67f59fc5bdd447be931b4b441b4e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Stone_Pavers_Flagstone_Gray]'
+    second: {fileID: 2100000, guid: adef901950eace443971b255f35125fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _defaultMat
+    second: {fileID: 2100000, guid: 4ad3404b4e85d9c44a76b00a46fb03eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: backCenter
+    second: {fileID: 2100000, guid: 71722d6c0e86d6547b80768cf6d4b7d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: backleft
+    second: {fileID: 2100000, guid: 8233a90a2e514134c910dd2b4205335b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: backright
+    second: {fileID: 2100000, guid: 9a8968c6e5ed0ad43ac3d607cf0090d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: centerFront
+    second: {fileID: 2100000, guid: c27ffcb2a80f02d409d20efcaa44977d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: leftFront
+    second: {fileID: 2100000, guid: f1ae19861c4e24d4f872f5c76cf63852, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rightFront
+    second: {fileID: 2100000, guid: a18c2cf5cd7ed2d40921d7d412dad655, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: side
+    second: {fileID: 2100000, guid: 8cd5123dfe238cd4f9a5412788102941, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Brick_Antique
+    second: {fileID: 2800000, guid: 0e990ccad32aefd4aa2cf9e2c6ba2433, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: GEI40A
+    second: {fileID: 2800000, guid: 66837988cf13956458cedead9ac59880, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: GEI40B
+    second: {fileID: 2800000, guid: c115b92d6002204459b440bb41de43f9, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: GEI40C
+    second: {fileID: 2800000, guid: c1d22351c4af0a942b8e8a134d843cb3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: GEI4672
+    second: {fileID: 2800000, guid: 7d3250f5a6587f344804fbc86aab8e7f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Metal_Seamed
+    second: {fileID: 2800000, guid: e2da7ca7c38f1b34bb41db41eda88e7d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Roofing_Slate_Dark
+    second: {fileID: 2800000, guid: 199d99722a7ee494fbb7c7df06e150d8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Stone_Pavers_Flagstone_Gray
+    second: {fileID: 2800000, guid: 09e0f9e3e1bc2474292e369e3aefb465, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: backCenter
+    second: {fileID: 2800000, guid: d713fab63a64aff47897669d2df61f7c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: backleft
+    second: {fileID: 2800000, guid: 729b07298fb995c479a12fbd5545881d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: backright
+    second: {fileID: 2800000, guid: 23ea415094b7db348adbb93accf5ba24, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: centerFront
+    second: {fileID: 2800000, guid: e28169863695aec4e90bab15a82e79f3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: leftFront
+    second: {fileID: 2800000, guid: 93b263328d316364db33b9a8dc8473d8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: rightFront
+    second: {fileID: 2800000, guid: f9d54b8b04edea14face098f5506a4ea, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: side
+    second: {fileID: 2800000, guid: 0643ee0d447e6344387c079387d168e7, type: 3}
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
