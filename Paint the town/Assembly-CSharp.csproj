@@ -84,6 +84,7 @@
      <Compile Include="Assets\Scripts\Login Scene\testLoginScreen.cs" />
      <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\ProfileScene\Profile.cs" />
+     <Compile Include="Assets\Scripts\ProfileScene\ProfileEdit.cs" />
      <Compile Include="Assets\Scripts\Settings Scene\Settings.cs" />
      <Compile Include="Assets\Scripts\SlideMenu.cs" />
      <Compile Include="Assets\Scripts\TeamAssignmentScript.cs" />

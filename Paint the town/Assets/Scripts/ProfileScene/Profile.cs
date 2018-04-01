@@ -115,6 +115,17 @@ public class Profile : MonoBehaviour {
 		// to manipulate font sizes and colors
 		GUIStyle style = new GUIStyle();
 
+		if (GUI.Button (new Rect (500, 70, 75, 30), "Edit Profile")) {
+			// load the edit profile scene
+			SceneManager.LoadScene ("ProfileEditScene");
+		}
+
+		if (GUI.Button (new Rect (500, 150, 75, 30), "Logout")) {
+			// load the login scene
+			//SceneManager.LoadScene ("LoginScene");
+			print("need to get correct new name of login scene");
+		}
+
 		// set font color and size for Name
 		GUI.contentColor = Color.black;
 		style.fontSize = 35;
