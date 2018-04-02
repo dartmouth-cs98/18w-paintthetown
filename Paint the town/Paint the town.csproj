@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.3.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -348,14 +350,14 @@
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\GraphRequest.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\MainMenu.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\Pay.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\RayCastShootComplete.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\RayViewerComplete.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\ShootableBox.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\DecalDestroyer.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\GunAim.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\GunShoot.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\ParticleExamples.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\ParticleMenu.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\CompletedScripts\RayCastShootComplete.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\CompletedScripts\RayViewerComplete.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\CompletedScripts\ShootableBox.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\DecalDestroyer.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\GunAim.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\GunShoot.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\ParticleExamples.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\ParticleMenu.cs" />
     <Compile Include="Assets\orbitCamera.cs" />
     <Compile Include="Assets\ParticleSplatter\Scripts\ParticleDecalData.cs" />
     <Compile Include="Assets\ParticleSplatter\Scripts\ParticleDecalPool.cs" />
