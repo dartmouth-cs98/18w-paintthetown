@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.3.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -348,14 +350,14 @@
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\GraphRequest.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\MainMenu.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Scripts\SubMenus\Pay.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\RayCastShootComplete.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\RayViewerComplete.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\CompletedScripts\ShootableBox.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\DecalDestroyer.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\GunAim.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\GunShoot.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\ParticleExamples.cs" />
-    <Compile Include="Assets\Let&apos;s Try Shooter\Scripts\ParticleMenu.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\CompletedScripts\RayCastShootComplete.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\CompletedScripts\RayViewerComplete.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\CompletedScripts\ShootableBox.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\DecalDestroyer.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\GunAim.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\GunShoot.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\ParticleExamples.cs" />
+    <Compile Include="Assets\Let's Try Shooter\Scripts\ParticleMenu.cs" />
     <Compile Include="Assets\orbitCamera.cs" />
     <Compile Include="Assets\ParticleSplatter\Scripts\ParticleDecalData.cs" />
     <Compile Include="Assets\ParticleSplatter\Scripts\ParticleDecalPool.cs" />
@@ -370,8 +372,10 @@
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\ProfileScene\Profile.cs" />
     <Compile Include="Assets\Scripts\Settings Scene\Settings.cs" />
+    <Compile Include="Assets\Scripts\SignUp.cs" />
     <Compile Include="Assets\Scripts\SlideMenu.cs" />
     <Compile Include="Assets\Scripts\TeamAssignmentScript.cs" />
+    <Compile Include="Assets\Scripts\TestBuildings.cs" />
     <Compile Include="Assets\Scripts\TestColorCreation.cs" />
     <Compile Include="Assets\Scripts\TestTeamCreation.cs" />
     <Compile Include="Assets\Scripts\UpdateCameraGPS.cs" />
@@ -467,6 +471,7 @@
     <Compile Include="Assets\Wrld\Scripts\Utilities\ErrorMessage.cs" />
     <Compile Include="Assets\Wrld\Scripts\Utilities\InvalidApiKeyException.cs" />
     <Compile Include="Assets\Wrld\Scripts\ViewNormals.cs" />
+    <Compile Include="Assets\ZoomPinch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FacebookSDK\link.xml" />
@@ -494,9 +499,7 @@
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\HistogramRender.shader" />
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\TonemappingColorGrading.cginc" />
     <None Include="Assets\Standard Assets\Effects\CinematicEffects(BETA)\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
-    <None Include="Assets\StreamingAssets\WrldResources\ShadowConfig.txt" />
-    <None Include="Assets\StreamingAssets\WrldResources\WelcomeConfig.txt" />
-    <None Include="Assets\StreamingAssets\WrldResources\v686.txt" />
+    <None Include="Assets\StreamingAssets\WrldResources\Resources\FrankBold50_A8_icons.fnt" />
     <None Include="Assets\Wrld\3rd Party Licenses\fonts\IPA_font.txt" />
     <None Include="Assets\Wrld\3rd Party Licenses\fonts\OpenSans.txt" />
     <None Include="Assets\Wrld\3rd Party Licenses\libs\ANGLE.txt" />
