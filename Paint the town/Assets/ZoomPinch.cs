@@ -32,6 +32,26 @@ public class ZoomPinch : MonoBehaviour {
             // find the difference in magnitude between the two distances
             float distMagnitudeDiff = prevTouchDistanceMag - touchDistanceMag;
 
+            Camera c = GetComponent<Camera>();
+            // if the camera is orthographic
+            if (c.orthographic)
+            {
+                // change the orthographic size based on the change in distance between the touches
+                c.orthographicSize += distMagnitudeDiff * zoomSpeed;
+
+                // make sure the orthographic size never goes negative
+                c.orthographicSize = Mathf.Max(c.orthographicSize, 0.1f);
+            }
+
+            // otherwise the camera is in perspective mode
+            else
+            {
+                // change the field of view based on the change in distance between the touches
+                c.fieldOfView += distMagnitudeDiff * zoomSpeed;
+
+                // clamp the fov to make sure it's between 0 and 180.
+                c.fieldOfView = Mathf.Clamp(c.fieldOfView, 0.1f, 179.9f);
+            }
 
         }
     }
