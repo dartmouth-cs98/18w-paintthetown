@@ -60,7 +60,9 @@ public class SignUp : MonoBehaviour {
 		StartCoroutine("RegisterButton");
 	}
 
-
+	public void GoToLoginBtn() {
+		SceneManager.LoadScene("Login Scene");
+	}
 
 
 	// called once per frame

@@ -117,6 +117,10 @@ public class testLoginScreen : MonoBehaviour {
 		}
 	}
 
+	public void GoToSignUpBtn() {
+		SceneManager.LoadScene("SignUpScene");
+	}
+
 	public void workAroundSignIn() {
 		print("You are signing in");
 		StartCoroutine("SigninButton");
