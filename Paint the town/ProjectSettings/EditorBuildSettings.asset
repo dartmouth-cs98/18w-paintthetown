@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/__DELETED_GUID_Trash/d88653ee62e404ba8942e7ba60a71451
-    guid: d88653ee62e404ba8942e7ba60a71451
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/FirstScene.unity
     guid: 91d2ef72b714ae84ab2983d51c00e098
@@ -33,5 +33,5 @@ EditorBuildSettings:
     path: Assets/test Login Scene.unity
     guid: e98416449ffe54fc1bed4b0e75391fc8
   - enabled: 1
-    path: Assets/Login Scene.unity
+    path: Assets/LoginScene.unity
     guid: 205c88fdbde3243908c0345d4df33cb1

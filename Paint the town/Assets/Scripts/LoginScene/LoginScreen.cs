@@ -6,24 +6,24 @@ using UnityEngine.Networking;
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 
-public class testLoginScreen : MonoBehaviour {
+public class LoginScreen : MonoBehaviour {
 
 	// the two URL strings that we need to use
 	string signinURL = "https://paint-the-town.herokuapp.com/api/signin";
-	string signupURL= "https://paint-the-town.herokuapp.com/api/signup";
+	//	string signupURL= "https://paint-the-town.herokuapp.com/api/signup";
 
 	public GameObject username;
 	public GameObject password;
 	private string Username;
 	private string Password;
-	public GameObject signupUsername;
-	public GameObject signupPassword;
-	private string SignupUsername;
-	private string SignupPassword;
-	public GameObject signupName;
-	public GameObject signupLastName;
-	private string SignupName;
-	private string SignupLastName;
+	//	public GameObject signupUsername;
+	//	public GameObject signupPassword;
+	//	private string SignupUsername;
+	//	private string SignupPassword;
+	//	public GameObject signupName;
+	//	public GameObject signupLastName;
+	//	private string SignupName;
+	//	private string SignupLastName;
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
 
@@ -85,37 +85,37 @@ public class testLoginScreen : MonoBehaviour {
 	}
 
 
-	public IEnumerator RegisterButton(){
-
-		WWWForm signupform = new WWWForm();
-
-		signupform.AddField("email", SignupUsername);
-		signupform.AddField("password", SignupPassword);
-		signupform.AddField("name", SignupName);
-		signupform.AddField("lastName", SignupLastName);
-
-		var signup = UnityWebRequest.Post(signupURL, signupform);
-
-		// Wait until the download is done
-		yield return signup.SendWebRequest();
-
-		if (signup.isNetworkError || signup.isHttpError)
-		{
-			print("Error downloading: " + signup.error);
-			showPopUp = true;
-		}
-		else
-		{
-			print("user signed up!");
-			string token = signup.downloadHandler.text;
-
-			string[] subStrings = token.Split ('"');
-			PlayerPrefs.SetString("token", subStrings[3]);
-			PlayerPrefs.Save();
-
-			SceneManager.LoadScene("TeamAssignment");
-		}
-	}
+	//	public IEnumerator RegisterButton(){
+	//
+	//		WWWForm signupform = new WWWForm();
+	//
+	//		signupform.AddField("email", SignupUsername);
+	//		signupform.AddField("password", SignupPassword);
+	//		signupform.AddField("name", SignupName);
+	//		signupform.AddField("lastName", SignupLastName);
+	//
+	//		var signup = UnityWebRequest.Post(signupURL, signupform);
+	//
+	//		// Wait until the download is done
+	//		yield return signup.SendWebRequest();
+	//
+	//		if (signup.isNetworkError || signup.isHttpError)
+	//		{
+	//			print("Error downloading: " + signup.error);
+	//			showPopUp = true;
+	//		}
+	//		else
+	//		{
+	//			print("user signed up!");
+	//			string token = signup.downloadHandler.text;
+	//
+	//			string[] subStrings = token.Split ('"');
+	//			PlayerPrefs.SetString("token", subStrings[3]);
+	//			PlayerPrefs.Save();
+	//
+	//			SceneManager.LoadScene("TeamAssignment");
+	//		}
+	//	}
 
 	public void GoToSignUpBtn() {
 		SceneManager.LoadScene("SignUpScene");
@@ -126,27 +126,28 @@ public class testLoginScreen : MonoBehaviour {
 		StartCoroutine("SigninButton");
 	}
 
-	public void workAroundSignUp() {
-		print ("You want to register!");
-		StartCoroutine("RegisterButton");
-	}
+	//	public void workAroundSignUp() {
+	//		print ("You want to register!");
+	//		StartCoroutine("RegisterButton");
+	//	}
 
 	public void Update() {
 
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			if (Password != "" && Username != "") {
 				StartCoroutine("SigninButton");
-			}else if (SignupPassword != "" && SignupUsername != "") {
-				StartCoroutine("RegisterButton");
 			}
+			//			else if (SignupPassword != "" && SignupUsername != "") {
+			//				StartCoroutine("RegisterButton");
+			//			}
 		}
 
 		Username = username.GetComponent<InputField> ().text;
 		Password = password.GetComponent<InputField> ().text;
-		SignupUsername = signupUsername.GetComponent<InputField> ().text;
-		SignupPassword = signupPassword.GetComponent<InputField> ().text;
-		SignupName = signupName.GetComponent<InputField> ().text;
-		SignupLastName = signupLastName.GetComponent<InputField> ().text;
+		//		SignupUsername = signupUsername.GetComponent<InputField> ().text;
+		//		SignupPassword = signupPassword.GetComponent<InputField> ().text;
+		//		SignupName = signupName.GetComponent<InputField> ().text;
+		//		SignupLastName = signupLastName.GetComponent<InputField> ().text;
 
 	}
 
@@ -168,3 +169,4 @@ public class testLoginScreen : MonoBehaviour {
 		}
 	}
 }
+

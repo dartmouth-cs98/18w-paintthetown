@@ -61,7 +61,7 @@ public class SignUp : MonoBehaviour {
 	}
 
 	public void GoToLoginBtn() {
-		SceneManager.LoadScene("Login Scene");
+		SceneManager.LoadScene("LoginScene");
 	}
 
 
