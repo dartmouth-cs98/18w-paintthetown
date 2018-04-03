@@ -20,6 +20,20 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public string id;
     public string captureBuildingID;
 
+
+    void Start()
+    {
+      print("setting color");
+      if(PlayerPrefs.GetString("color", "no color") == "red")
+      {
+        highlightMaterial.color = Color.red;
+      } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
+        highlightMaterial.color = Color.blue;
+      } else {
+        print("Error: could not find player color");
+      }
+    }
+
     void OnEnable()
     {
 
@@ -46,7 +60,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
                 Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 
                 Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
-                Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+                //Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
             }
         }
     }
@@ -133,8 +147,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
       {
         print(www.text);
         print("building captured!");
+        print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
       }
-
     }
 
 
@@ -188,18 +202,5 @@ public class HighlightBuildingOnClick : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
         Api.Instance.BuildingsApi.ClearHighlight(highlight);
-    }
-
-    // set the desired material for the highlight
-    public void OnRedClick()
-    {
-        //highlightMaterial = Resources.Load("RedMaterial") as Material;
-        highlightMaterial.color = Color.red;
-    }
-
-    public void OnBlueClick()
-    {
-        //highlightMaterial = Resources.Load("BlueMaterial") as Material;
-        highlightMaterial.color = Color.blue;
     }
 }

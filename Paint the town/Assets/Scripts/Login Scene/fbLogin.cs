@@ -19,6 +19,9 @@ public class fbLogin : MonoBehaviour {
 	public string returnData;
 	public string[] subReturnStrings;
 	public string[] teamItem;
+	public string[] teamInfoList;
+	public string redID;
+	public string blueID;
 
 
 	// Use this for initialization
@@ -60,25 +63,27 @@ public class fbLogin : MonoBehaviour {
 			Debug.Log(result.Error);
 		}else{
 
-			print("this is your access token:");
 
-			url = "" + result.ResultDictionary["access_token"];
-			print(url);
-
+      url = "" + result.ResultDictionary["access_token"];
 			passToServerWorkaround();
-			startCheckFirstTimeLogin();
-
-			FacebookMenus(FB.IsLoggedIn);
-
+			// startCheckFirstTimeLogin();
+			// startGetColorFromID();
+			// FacebookMenus(FB.IsLoggedIn);
 		}
 	}
 
-	public void passToServerWorkaround()
-	{
+	public void passToServerWorkaround(){
 		StartCoroutine("passToServer");
 	}
 
-	//main signin function
+	public void startCheckFirstTimeLogin(){
+		StartCoroutine("checkFirstTimeLogin");
+	}
+
+	public void startGetColorFromID(){
+		StartCoroutine("getColorFromID");
+	}
+
 	public IEnumerator passToServer()
 	{
 		print("signing in facebook user!");
@@ -87,18 +92,19 @@ public class fbLogin : MonoBehaviour {
 					yield return www;
 					if(www.error == null){
 						string token = www.text;
+						print(token);
 						string[] subStrings = token.Split ('"');
 						PlayerPrefs.SetString("token", subStrings[3]);
 						PlayerPrefs.Save();
+
+						print("LOOK AT THIS RIGHT HERE " + PlayerPrefs.GetString("token", "no token"));
 					}else{
 						print("you have a problem");
 						print(www.error);
 					}
-				}
-	}
+					StartCoroutine("checkFirstTimeLogin");
+			}
 
-	public void startCheckFirstTimeLogin(){
-		StartCoroutine("checkFirstTimeLogin");
 	}
 
 	//determine whether or not the user has been signed in before
@@ -106,6 +112,7 @@ public class fbLogin : MonoBehaviour {
 
 		// get token stored in PlayerPrefs
 		print("checking to see if fb user has logged in before");
+
 		string token = "JWT " + PlayerPrefs.GetString("token", "no token");
 
 		// POST request to server to fetch user data
@@ -122,7 +129,6 @@ public class fbLogin : MonoBehaviour {
 			//sometimes returning weird shit
 			teamItem = subReturnStrings[6].Split(':');
 
-
 			print(teamItem [0]);
 			print(teamItem [1]);
 
@@ -135,8 +141,44 @@ public class fbLogin : MonoBehaviour {
 				//save the teamID for later use
 				PlayerPrefs.SetString("teamID", teamItem[1].Split('"')[1]);
 				PlayerPrefs.Save();
-				SceneManager.LoadScene("FirstScene");
 			}
+			StartCoroutine("getColorFromID");
+	}
+
+	public IEnumerator getColorFromID()
+	{
+		Hashtable headers = new Hashtable();
+		print("You're retrieving information about teams IN ORDER TO GET THE COLOR");
+		print("THIS IS PLAYER TOKEN " + PlayerPrefs.GetString("token", "no token"));
+		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+		WWW wwww = new WWW("https://paint-the-town.herokuapp.com/api/teams", null, headers);
+		yield return wwww;
+
+			if(wwww.text == "null"){
+				print(wwww.error);
+			}else{
+				print(wwww.text);
+				print("parsing strings");
+				string teamInfo = wwww.text;
+				teamInfoList = teamInfo.Split('"');
+
+				redID = teamInfoList[19];
+				blueID = teamInfoList[5];
+				print("Red team ID: " + redID);
+				print("Blue team ID: " + blueID);
+
+				if( (PlayerPrefs.GetString("teamID", "no teamID")) == redID)
+				{
+					PlayerPrefs.SetString("color", "red");
+					PlayerPrefs.Save();
+				} else if (PlayerPrefs.GetString("teamID", "no teamID") == blueID) {
+					PlayerPrefs.SetString("color", "blue");
+					PlayerPrefs.Save();
+				} else {
+					print("Critical error, could not find team color");
+				}
+			}
+			SceneManager.LoadScene("FirstScene");
 	}
 
 	void FacebookMenus(bool isLoggedIn)
