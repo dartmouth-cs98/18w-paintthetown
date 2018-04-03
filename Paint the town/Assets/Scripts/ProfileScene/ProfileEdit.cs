@@ -13,92 +13,115 @@ public class ProfileEdit : MonoBehaviour {
 	public string originalLastName;
 	public string newFirstName;
 	public string newLastName;
-	public string token = "";
-	public string returnData;
-	public string[] subReturnStrings;
-	public string userURL = "https://paint-the-town.herokuapp.com/api/users";
 
 	// Use this for initialization
-	IEnumerator Start () {
-
-
-		// get token stored in PlayerPrefs
-		token = "JWT " + PlayerPrefs.GetString("token", "no token");
-
-		// POST request to server to fetch user data
-		Hashtable userHeaders = new Hashtable();
-		userHeaders.Add("Authorization", token);
-		WWW userwww = new WWW(userURL, null, userHeaders);
-		yield return userwww;
-
-		// user data we can use for this scene
-		returnData = userwww.text;
-		subReturnStrings = returnData.Split(',');
-		for (int i = 0; i < subReturnStrings.Length; i++) {
-			print (subReturnStrings [i]);
-		}
-
-		getName ();
+	void Start () {
+		originalFirstName = PlayerPrefs.GetString("firstName", "no first name");
+		originalLastName = PlayerPrefs.GetString("lastName", "no last name");
 		FirstNameInput.placeholder.GetComponent<Text>().text = originalFirstName;
 		LastNameInput.placeholder.GetComponent<Text>().text = originalLastName;
-
-
 	}
+		
 
-	void getName() {
-		// grab first name
-		string[] firstNameItems = subReturnStrings[4].Split(':');
-		originalFirstName = firstNameItems [1];
-		originalFirstName = originalFirstName.Replace("\"", "");
+	IEnumerator updateServer() {
+		print ("newFirstName: " + newFirstName);
+		print ("newLastName: " + newLastName);
 
-		// grab last name
-		string[] lastNameItems = subReturnStrings[3].Split(':');
-		originalLastName = lastNameItems [1];
-		originalLastName = originalLastName.Replace("\"", "");
-	}
 
-	void updateServer() {
-		print("tell server here");
+		// make a form of new changes
 		WWWForm updateform = new WWWForm();
-
 		updateform.AddField("name", newFirstName);
 		updateform.AddField("lastName", newLastName);
 
-		/* SERVER NEEDS TO BE ABLE TO DO THIS
-		var update = UnityWebRequest.Post(userURL, updateform);
-		// Wait until the download is done
-		yield return update.SendWebRequest();
-		if (update.isNetworkError || update.isHttpError) {
-			print("Error downloading: " + update.error);
-		}
-		*/
+		// make authentication header
+		Hashtable headers = new Hashtable();
+		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+		// post to update user info
+		WWW www = new WWW("https://paint-the-town.herokuapp.com/api/users/updateInfo", updateform.data, headers);
+		yield return www;
 
+		if (www.error != null) {
+			print("Error downloading: ");
+		} else {
+			// save new player info
+			PlayerPrefs.SetString("firstName", newFirstName);
+			PlayerPrefs.SetString("lastName", newLastName);
+			PlayerPrefs.Save();
+			// go back to profile scene
+			SceneManager.LoadScene ("ProfileScene");
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
+		// if the user enters some data in the first or last name input fields
 		if (Input.GetKeyDown (KeyCode.Return)) {
+			// if they are actual changes
 			if (originalFirstName != FirstNameInput.text || originalLastName != LastNameInput.text) {
-				newFirstName = FirstNameInput.text;
-				newLastName = LastNameInput.text;
-				updateServer ();
+				// is the first name changed?
+				if (FirstNameInput.text == "") {
+					newFirstName = originalFirstName;
+				} else if ((FirstNameInput.text != "") & (originalFirstName != FirstNameInput.text)) {
+					// get the new one
+					newFirstName = FirstNameInput.text;
+				} else {	// keep it as original; still need a placehold otherwise it will turn null
+					newFirstName = originalFirstName;
+				}
+
+				// is the last name changed?
+				if (LastNameInput.text == "") {
+					newLastName = originalLastName;
+				} else if ((LastNameInput.text != "") & (originalLastName != LastNameInput.text)) {
+					// get the new one
+					newLastName = LastNameInput.text;
+				} else {	// keep it as original; still need a placeholder otherwise it will turn null
+					newLastName = originalLastName;
+				}
+
+				// update the server with the changes
+				StartCoroutine("updateServer");
+			} else {
+				// if no actual changes, just load the profile scene
 				SceneManager.LoadScene ("ProfileScene");
 			}
 		}
-			
 	}
 
 	void OnGUI() {
-		if (GUI.Button (new Rect (400, 120, 75, 50), "Save Changes")) {
-			// load the edit profile scene
-			if (originalFirstName != FirstNameInput.text || originalLastName != LastNameInput.text) {
-				newFirstName = FirstNameInput.text;
-				newLastName = LastNameInput.text;
-				updateServer ();
+		// if "Save Changes" is clicked (same as if they pressed "enter" in Update() function
+		if (GUI.Button (new Rect (400, 120, 100, 50), "Save Changes")) {
+			// if the user made actual changes
+			if ((originalFirstName != FirstNameInput.text) || (originalLastName != LastNameInput.text)) {
+				// is the first name changed?
+				if (FirstNameInput.text == "") {
+					newFirstName = originalFirstName;
+				} else if ((FirstNameInput.text != "") & (originalFirstName != FirstNameInput.text)) {
+					// get the new one
+					newFirstName = FirstNameInput.text;
+				} else {	// keep it as original; still need a placehold otherwise it will turn null
+					newFirstName = originalFirstName;
+				}
+
+				// is the last name changed?
+				if (LastNameInput.text == "") {
+					newLastName = originalLastName;
+				} else if ((LastNameInput.text != "") & (originalLastName != LastNameInput.text)) {
+					// get the new one
+					newLastName = LastNameInput.text;
+				} else {	// keep it as original; still need a placeholder otherwise it will turn null
+					newLastName = originalLastName;
+				}
+
+				// update the server with the changes
+				StartCoroutine("updateServer");
+			} else {
+				// if no actual changes, just load the profile scene
+				SceneManager.LoadScene ("ProfileScene");
 			}
-			SceneManager.LoadScene ("ProfileScene");
+
 		}
 
+		// if "Done" is clicked
 		if (GUI.Button (new Rect (400, 70, 75, 30), "Done")) {
 			// load the profile scene without saving changes
 			SceneManager.LoadScene ("ProfileScene");

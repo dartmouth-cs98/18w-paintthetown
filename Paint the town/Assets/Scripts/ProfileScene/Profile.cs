@@ -7,108 +7,85 @@ using UnityEngine.Networking;
 using System;
 
 
+[Serializable] public class Player {
+	public string role;
+	public string lastName;
+	public string name;
+	public string typeOfLogin;
+	public string team;
+	public string[] friends;
+}
+
 public class Profile : MonoBehaviour {
 
 	public string userURL = "https://paint-the-town.herokuapp.com/api/users";
 	public string teamurl = "https://paint-the-town.herokuapp.com/api/teams";
 	public string redID;
 	public string blueID;
-	public string[] teamInfoList;
-	public string returnData;
-	public string[] subReturnStrings;
-	public string name;
+	public string fullName;
 	public string team;
 	public string[] friendsList = new string[0];
 	public string token = "";
+	public Player player;
+	public string[] teamInfoList;
 
 	// Use this for initialization
 	IEnumerator Start () {
 		// get token stored in PlayerPrefs
 		token = "JWT " + PlayerPrefs.GetString("token", "no token");
+		team = PlayerPrefs.GetString("teamID", "no team");
 
-		// POST request to server to fetch user data
-		Hashtable userHeaders = new Hashtable();
-		userHeaders.Add("Authorization", token);
-		WWW userwww = new WWW(userURL, null, userHeaders);
+		// make the authorization header hashtable
+		Hashtable headers = new Hashtable();
+		headers.Add("Authorization", token);
+
+		// get the user data
+		WWW userwww = new WWW(userURL, null, headers);
 		yield return userwww;
-
-		// user data we can use for this scene
-		returnData = userwww.text;
-		subReturnStrings = returnData.Split(',');
-		for (int i = 0; i < subReturnStrings.Length; i++) {
-			print (subReturnStrings [i]);
+	
+		if(userwww.text == "null"){
+			print(userwww.error);
+		}else{
+			// user data we can use for this scene
+			player = JsonUtility.FromJson<Player>(userwww.text);
 		}
 
-		Hashtable teamHeaders = new Hashtable();
-		teamHeaders.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
-		WWW teamwww = new WWW(teamurl, null, teamHeaders);
+		// get the IDs for team data
+		WWW teamwww = new WWW(teamurl, null, headers);
 		yield return teamwww;
-
 		if(teamwww.text == "null"){
 			print(teamwww.error);
 		}else{
-			print(teamwww.text);
 			string teamInfo = teamwww.text;
 			teamInfoList = teamInfo.Split('"');
-			redID = teamInfoList[19];
 			blueID = teamInfoList[5];
+			redID = teamInfoList[19];
 		}
 
-		getName ();
+		// save player info
+		PlayerPrefs.SetString("firstName", player.name);
+		PlayerPrefs.SetString("lastName", player.lastName);
+		PlayerPrefs.Save();
+
+		// concatenate name
+		fullName = player.name + " " + player.lastName;
+		// grab friendsList
+		friendsList = player.friends;
+		// get the team color
 		getTeam ();
-		getFriends ();
 
-	}
-
-	void getName() {
-		// grab first name
-		string[] firstNameItems = subReturnStrings[4].Split(':');
-		string firstName = firstNameItems [1];
-		firstName = firstName.Replace("\"", "");
-
-		// grab last name
-		string[] lastNameItems = subReturnStrings[3].Split(':');
-		string lastName = lastNameItems [1];
-		lastName = lastName.Replace("\"", "");
-
-		// concatenate
-		name = firstName + " " + lastName;
 	}
 
 	void getTeam() {
-		// grab team / color
-		string[] teamItem = subReturnStrings[6].Split(':');
-
-		if (teamItem [1] == "null") {
-			team = "You are not assigned to a team yet!";
+		// compare team ID to color IDs		
+		if (team == redID) {
+			team = "Red";
+		} else if (team == blueID) {
+			team = "Blue";
 		} else {
-			team = teamItem [1];
-			team = team.Replace("\"", "");
-			if (team == redID) {
-				team = "Red";
-			} else if (team == blueID) {
-				team = "Blue";
-			} else {
-				team = "You are not assigned to a team yet!";
-			}
+			team = "You are not assigned to a team yet!";
 		}
 
-	}
-
-	void getFriends() {
-		// grab friends
-		string[] friendsItem = subReturnStrings[7].Split(':');
-
-		if (friendsItem[1] != "[]") {
-			string friendsListString = friendsItem [1];
-			friendsListString.Replace ("[", "");
-			friendsListString.Replace ("]", "");
-			friendsList = friendsListString.Split (',');
-
-			foreach (string friend in friendsList) {
-				friend.Replace("\"", "");
-			}
-		}
 	}
 
 	void OnGUI() {
@@ -122,15 +99,15 @@ public class Profile : MonoBehaviour {
 
 		if (GUI.Button (new Rect (500, 150, 75, 30), "Logout")) {
 			// load the login scene
-			//SceneManager.LoadScene ("LoginScene");
-			print("need to get correct new name of login scene");
+			PlayerPrefs.DeleteAll();
+			SceneManager.LoadScene ("test Login Scene");
 		}
 
 		// set font color and size for Name
 		GUI.contentColor = Color.black;
 		style.fontSize = 35;
 		// print name in top left corner
-		GUI.Label(new Rect(200, 50, 100, 20), name, style);
+		GUI.Label(new Rect(200, 50, 100, 20), fullName, style);
 
 		// set font size and color to team color?
 		GUI.contentColor = Color.black;	//black for now
@@ -155,7 +132,4 @@ public class Profile : MonoBehaviour {
 			GUI.Label (new Rect (200, y, 1000, 20), "No friends yet!");
 		}
 	}
-
-
-
 }
