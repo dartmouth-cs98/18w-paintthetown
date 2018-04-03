@@ -117,7 +117,12 @@ public class fbLogin : MonoBehaviour {
 
 			returnData = www.text;
 			subReturnStrings = returnData.Split(',');
+
+			//THIS NEEDS TO BE LOOKED INTO
+			//sometimes returning weird shit
 			teamItem = subReturnStrings[6].Split(':');
+
+
 			print(teamItem [0]);
 			print(teamItem [1]);
 
@@ -128,7 +133,7 @@ public class fbLogin : MonoBehaviour {
 				print("you are not a new user");
 
 				//save the teamID for later use
-				PlayerPrefs.SetString("teamID", teamItem[1]);
+				PlayerPrefs.SetString("teamID", teamItem[1].Split('"')[1]);
 				PlayerPrefs.Save();
 				SceneManager.LoadScene("FirstScene");
 			}
