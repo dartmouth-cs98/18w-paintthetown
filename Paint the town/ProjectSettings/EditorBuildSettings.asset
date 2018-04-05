@@ -24,5 +24,8 @@ EditorBuildSettings:
     path: Assets/ChallengesScene.unity
     guid: ea44d35d3cbc4449ab9175fee14b477a
   - enabled: 1
+    path: Assets/ProfileEditScene.unity
+    guid: 342128301f8104353a99c47aec5b9001
+  - enabled: 1
     path: Assets/TeamAssignment.unity
-    guid: 4d6f575d72b9948eb876f4ace1a4cace
+    guid: 1bc6d84293fb44c7e8cddb4d67920b49
