@@ -115,12 +115,28 @@ public class Profile : MonoBehaviour {
 		// print team in top right corner
 		GUI.Label(new Rect(500, 50, 700, 20), team);
 
+		//stats
+		int buildingNum = 3;
+		string[] towns = {"Hanover"};
+		// set font size and color to team color?
+		GUI.contentColor = Color.black;	//black for now
+		style.fontSize = 30;
+		GUI.Label(new Rect(200, 100, 200, 20), "Your stats:");
+		GUI.Label(new Rect(200, 125, 200, 20), "# buildings: " + buildingNum);
+		GUI.Label(new Rect(200, 150, 200, 20), "Towns: ");
+		int yTowns = 175;
+		foreach (string town in towns) {
+			GUI.Label(new Rect(200, yTowns, 700, 20), town);
+			yTowns += 25;
+		}
+			
+
 		// set font color and size for "Your friends:" subheading
 		GUI.contentColor = Color.magenta;
 		style.fontSize = 25;
 		// print below name
-		GUI.Label(new Rect(200, 100, 100, 20), "Your friends:");
-		int y = 125;
+		GUI.Label(new Rect(200, 200, 100, 20), "Your friends:");
+		int y = 225;
 		// lower font size for list of friends
 		style.fontSize = 20;
 		if (friendsList.Length != 0) {
