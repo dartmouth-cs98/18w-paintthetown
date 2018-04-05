@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,6 +70,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 		{
 			print("user assigned to RED!!");
 			PlayerPrefs.SetString("teamID", redID);
+			PlayerPrefs.SetString("color", "red");
 			PlayerPrefs.Save();
 			SceneManager.LoadScene("FirstScene");
 		}
@@ -95,6 +96,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 		else
 		{
 			PlayerPrefs.SetString("teamID", blueID);
+			PlayerPrefs.SetString("color", "blue");
 			PlayerPrefs.Save();
 			print("user assigned to BLUE!!");
 			SceneManager.LoadScene("FirstScene");
