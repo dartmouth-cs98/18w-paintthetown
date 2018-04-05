@@ -27,6 +27,10 @@ public class orbitCamera : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        GameObject buildingMesh = Instantiate((GameObject)Resources.Load("dartmouth_hall"));
+
+        target = buildingMesh.GetComponent<Transform>();
+
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
