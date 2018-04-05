@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +26,8 @@ public class testLoginScreen : MonoBehaviour {
 	private string SignupLastName;
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
+	public string redID;
+	public string blueID;
 
 	private bool showPopUp = false;
 	public string returnData;
@@ -48,7 +50,9 @@ public class testLoginScreen : MonoBehaviour {
 
 		if (test.isNetworkError || test.isHttpError) {
 			print ("Error downloading: " + test.error);
+			print("before: " +showPopUp);
 			showPopUp = true;
+			print("after: " + showPopUp);
 
 		} else {
 
@@ -60,7 +64,8 @@ public class testLoginScreen : MonoBehaviour {
 			//setting player token on login
 			PlayerPrefs.SetString("token", subStrings[3]);
 			PlayerPrefs.Save();
-
+			StartCoroutine("setPlayercolor");
+			StartCoroutine("getColorFromID");
 		}
 	}
 
@@ -71,15 +76,15 @@ public class testLoginScreen : MonoBehaviour {
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 		WWW www = new WWW(userUrl, null, headers);
 		yield return www;
-			if(www.text == "null"){
-				print(www.error);
-			}else{
-				string teamInfo = www.text;
-				teamInfoList = teamInfo.Split('"');
-				PlayerPrefs.SetString("teamID", teamInfoList[33]);
-				PlayerPrefs.Save();
-			}
-				SceneManager.LoadScene("FirstScene");
+		if(www.text == "null"){
+			print(www.error);
+		}else{
+			string teamInfo = www.text;
+			teamInfoList = teamInfo.Split('"');
+			PlayerPrefs.SetString("teamID", teamInfoList[33]);
+			PlayerPrefs.Save();
+		}
+		SceneManager.LoadScene("FirstScene");
 	}
 
 
@@ -106,6 +111,7 @@ public class testLoginScreen : MonoBehaviour {
 		{
 			print("user signed up!");
 			string token = signup.downloadHandler.text;
+
 			string[] subStrings = token.Split ('"');
 			PlayerPrefs.SetString("token", subStrings[3]);
 			PlayerPrefs.Save();
@@ -114,10 +120,46 @@ public class testLoginScreen : MonoBehaviour {
 		}
 	}
 
+	public IEnumerator getColorFromID()
+	{
+		Hashtable headers = new Hashtable();
+		print("You're retrieving information about teams");
+		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+		print (PlayerPrefs.GetString ("token", "no token"));
+		WWW www = new WWW("https://paint-the-town.herokuapp.com/api/teams", null, headers);
+		yield return www;
+
+			if(www.text == "null"){
+				print(www.error);
+			}else{
+				print(www.text);
+				print("parsing strings");
+				string teamInfo = www.text;
+				teamInfoList = teamInfo.Split('"');
+
+				for (int i = 0; i <= teamInfoList.Length - 1; i++) {
+					print (teamInfoList [i]);
+				}
+
+				redID = teamInfoList[19];
+				blueID = teamInfoList[5];
+				print("Red team ID: " + redID);
+				print("Blue team ID: " + blueID);
+
+				if( (PlayerPrefs.GetString("teamID", "no teamID")) == redID)
+				{
+					PlayerPrefs.SetString("color", "red");
+				} else if (PlayerPrefs.GetString("teamID", "no teamID") == blueID) {
+					PlayerPrefs.SetString("color", "blue");
+				} else {
+					print("Critical error, could not find team color");
+				}
+			}
+	}
+
 	public void workAroundSignIn() {
 		print("You are signing in");
 		StartCoroutine("SigninButton");
-		StartCoroutine("setPlayercolor");
 	}
 
 	public void workAroundSignUp() {

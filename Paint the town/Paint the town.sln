@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town", "Assembly-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town", "Assembly-CSharp-Editor-firstpass.csproj", "{AA376D2C-5E42-A8E9-CFE6-E1AE91D5D229}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paint the town", "Assembly-CSharp-Editor.csproj", "{E98AC6ED-F3E9-1E49-6327-39CAE01E2984}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +16,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 		Hashtable headers = new Hashtable();
 		print("You're retrieving information about teams");
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+		print (PlayerPrefs.GetString ("token", "no token"));
 		WWW www = new WWW(url, null, headers);
 		yield return www;
 
@@ -26,6 +27,10 @@ public class TeamAssignmentScript : MonoBehaviour {
 				print("parsing strings");
 				string teamInfo = www.text;
 				teamInfoList = teamInfo.Split('"');
+
+				for (int i = 0; i <= teamInfoList.Length - 1; i++) {
+					print (teamInfoList [i]);
+				}
 
 				redID = teamInfoList[19];
 				blueID = teamInfoList[5];
@@ -65,6 +70,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 		{
 			print("user assigned to RED!!");
 			PlayerPrefs.SetString("teamID", redID);
+			PlayerPrefs.SetString("color", "red");
 			PlayerPrefs.Save();
 			SceneManager.LoadScene("FirstScene");
 		}
@@ -90,6 +96,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 		else
 		{
 			PlayerPrefs.SetString("teamID", blueID);
+			PlayerPrefs.SetString("color", "blue");
 			PlayerPrefs.Save();
 			print("user assigned to BLUE!!");
 			SceneManager.LoadScene("FirstScene");

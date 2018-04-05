@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: sign up password
+  m_Text: password
 --- !u!222 &127128865
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -362,7 +362,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'sign up lastName
+  m_Text: 'last name
 
 '
 --- !u!222 &210143713
@@ -577,7 +577,7 @@ RectTransform:
   m_GameObject: {fileID: 338986813}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7625, y: 1, z: 1}
   m_Children:
   - {fileID: 459858065}
   m_Father: {fileID: 138617323}
@@ -585,7 +585,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 100}
+  m_AnchoredPosition: {x: -198, y: 57}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &338986815
@@ -1020,7 +1020,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: sign up name
+  m_Text: first name
 --- !u!222 &408780592
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1136,7 +1136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 139, y: 48.756653}
+  m_AnchoredPosition: {x: 139, y: 96.72351}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548261251
@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
   m_Text: 
-  m_CaretBlinkRate: 0.85
+  m_CaretBlinkRate: 1.87
   m_CaretWidth: 1
   m_ReadOnly: 0
 --- !u!114 &548261252
@@ -1772,7 +1772,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'sign up email
+  m_Text: 'email
 
 '
 --- !u!222 &1126868931
@@ -2680,6 +2680,10 @@ MonoBehaviour:
   signupPassword: {fileID: 1039258338}
   signupName: {fileID: 548261249}
   signupLastName: {fileID: 1976072074}
+  userUrl: https://paint-the-town.herokuapp.com/api/users
+  teamInfoList: []
+  returnData: 
+  subReturnStrings: []
 --- !u!114 &1773216264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2694,6 +2698,12 @@ MonoBehaviour:
   DialogLoggedIn: {fileID: 1385027210}
   DialogLoggedOut: {fileID: 138617322}
   DialogUsername: {fileID: 1324766067}
+  userURL: https://paint-the-town.herokuapp.com/api/users
+  isThereTeam: 0
+  url: 
+  returnData: 
+  subReturnStrings: []
+  teamItem: []
 --- !u!1 &1887378926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,7 +2979,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Password
+  m_Text: password
 --- !u!222 &1957668605
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3011,7 +3021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 136.07501, y: 98.91858}
+  m_AnchoredPosition: {x: 138.66785, y: 48}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1976072076
