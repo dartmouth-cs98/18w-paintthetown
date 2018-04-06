@@ -167,6 +167,10 @@ public class testLoginScreen : MonoBehaviour {
 		StartCoroutine("RegisterButton");
 	}
 
+	public void GoToSignUp() {
+		SceneManager.LoadScene ("SignUpScene");
+	}
+
 	public void Update() {
 
 		if (Input.GetKeyDown (KeyCode.Return)) {
