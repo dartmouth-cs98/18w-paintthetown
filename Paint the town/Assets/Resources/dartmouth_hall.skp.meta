@@ -8,7 +8,7 @@ SketchUpImporter:
   selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000
   assetHash:
     serializedVersion: 2
-    Hash: d8e15624b05ecc1fc600867530232b42
+    Hash: 4a5eb97d3012d68c20746ff2bf9e2e36
   longitude: -72.2869128494747
   latitude: 43.70389154088145
   northCorrection: -0
@@ -152,6 +152,30 @@ SketchUpImporter:
     4300018: Mesh chimney
     4300020: Mesh stairside
     4300022: Mesh ske453
+    6400000: chimney
+    6400002: chimney 1
+    6400004: chimney 2
+    6400006: chimney 3
+    6400008: chimney1
+    6400010: chimney1 1
+    6400012: chimney1 2
+    6400014: chimney1 3
+    6400016: //RootNode
+    6400018: Google Earth Snapshot
+    6400020: Google Earth Snapshot 1
+    6400022: Google Earth Snapshot 2
+    6400024: Google Earth Snapshot 3
+    6400026: Google Earth Terrain
+    6400028: ske453
+    6400030: stairside
+    6400032: triangle
+    6400034: triangle 1
+    6400036: triangle 2
+    6400038: triangle 3
+    6400040: triangle 4
+    6400042: triangle 5
+    6400044: triangle 6
+    6400046: triangle 7
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -354,7 +378,7 @@ SketchUpImporter:
     lODScreenPercentages: []
     globalScale: 0.0254
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
