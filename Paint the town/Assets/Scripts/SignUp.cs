@@ -19,10 +19,15 @@ public class SignUp : MonoBehaviour {
 	private string SignupLastName;
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
+	public Button GoToLoginButton;
 
 	private bool showPopUp = false;
 	public string returnData;
 	public string[] subReturnStrings;
+
+	void Start () {
+		GoToLoginButton.onClick.AddListener(goToLogin);
+	}
 
 	public IEnumerator RegisterButton(){
 
@@ -60,7 +65,7 @@ public class SignUp : MonoBehaviour {
 		StartCoroutine("RegisterButton");
 	}
 
-	public void GoToLogin() {
+	public void goToLogin() {
 		SceneManager.LoadScene("LoginScene");
 	}
 
@@ -78,6 +83,7 @@ public class SignUp : MonoBehaviour {
 		SignupPassword = signupPassword.GetComponent<InputField> ().text;
 		SignupName = signupName.GetComponent<InputField> ().text;
 		SignupLastName = signupLastName.GetComponent<InputField> ().text;
+
 
 	}
 

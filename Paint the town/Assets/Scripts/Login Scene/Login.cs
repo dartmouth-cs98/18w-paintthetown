@@ -6,24 +6,25 @@ using UnityEngine.Networking;
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 
-public class testLoginScreen : MonoBehaviour {
+public class Login : MonoBehaviour {
 
 	// the two URL strings that we need to use
 	string signinURL = "https://paint-the-town.herokuapp.com/api/signin";
-	string signupURL= "https://paint-the-town.herokuapp.com/api/signup";
+//	string signupURL= "https://paint-the-town.herokuapp.com/api/signup";
 
+	public Button GoToSignUpButton;
 	public GameObject username;
 	public GameObject password;
 	private string Username;
 	private string Password;
-	public GameObject signupUsername;
-	public GameObject signupPassword;
-	private string SignupUsername;
-	private string SignupPassword;
-	public GameObject signupName;
-	public GameObject signupLastName;
-	private string SignupName;
-	private string SignupLastName;
+//	public GameObject signupUsername;
+//	public GameObject signupPassword;
+//	private string SignupUsername;
+//	private string SignupPassword;
+//	public GameObject signupName;
+//	public GameObject signupLastName;
+//	private string SignupName;
+//	private string SignupLastName;
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
 	public string redID;
@@ -33,6 +34,13 @@ public class testLoginScreen : MonoBehaviour {
 	public string returnData;
 	public string[] subReturnStrings;
 
+	void Start () {
+		GoToSignUpButton.onClick.AddListener(goToSignUp);
+	}
+
+	public void goToSignUp() {
+		SceneManager.LoadScene("SignUpScene");
+	}
 
 	public IEnumerator SigninButton(){
 
@@ -87,7 +95,7 @@ public class testLoginScreen : MonoBehaviour {
 		SceneManager.LoadScene("FirstScene");
 	}
 
-
+	/*
 	public IEnumerator RegisterButton(){
 
 		WWWForm signupform = new WWWForm();
@@ -118,7 +126,7 @@ public class testLoginScreen : MonoBehaviour {
 
 			SceneManager.LoadScene("TeamAssignment");
 		}
-	}
+	}*/
 
 	public IEnumerator getColorFromID()
 	{
@@ -162,10 +170,11 @@ public class testLoginScreen : MonoBehaviour {
 		StartCoroutine("SigninButton");
 	}
 
+	/*
 	public void workAroundSignUp() {
 		print ("You want to register!");
 		StartCoroutine("RegisterButton");
-	}
+	}*/
 
 	public void GoToSignUp() {
 		SceneManager.LoadScene ("SignUpScene");
@@ -176,17 +185,17 @@ public class testLoginScreen : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			if (Password != "" && Username != "") {
 				StartCoroutine("SigninButton");
-			}else if (SignupPassword != "" && SignupUsername != "") {
+			} /*else if (SignupPassword != "" && SignupUsername != "") {
 				StartCoroutine("RegisterButton");
-			}
+			}*/
 		}
 
 		Username = username.GetComponent<InputField> ().text;
 		Password = password.GetComponent<InputField> ().text;
-		SignupUsername = signupUsername.GetComponent<InputField> ().text;
-		SignupPassword = signupPassword.GetComponent<InputField> ().text;
-		SignupName = signupName.GetComponent<InputField> ().text;
-		SignupLastName = signupLastName.GetComponent<InputField> ().text;
+		//SignupUsername = signupUsername.GetComponent<InputField> ().text;
+		//SignupPassword = signupPassword.GetComponent<InputField> ().text;
+		//SignupName = signupName.GetComponent<InputField> ().text;
+		//SignupLastName = signupLastName.GetComponent<InputField> ().text;
 
 	}
 
