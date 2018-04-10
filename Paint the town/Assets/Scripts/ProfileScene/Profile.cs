@@ -100,7 +100,7 @@ public class Profile : MonoBehaviour {
 		if (GUI.Button (new Rect (500, 150, 75, 30), "Logout")) {
 			// load the login scene
 			PlayerPrefs.DeleteAll();
-			SceneManager.LoadScene ("test Login Scene");
+			SceneManager.LoadScene ("LoginScene");
 		}
 
 		// set font color and size for Name
