@@ -21,8 +21,6 @@ public class SignUp : MonoBehaviour {
 	public string[] teamInfoList;
 	public Button GoToLoginButton;
 
-	private bool showPopUp = false;
-	public string returnData;
 	public string[] subReturnStrings;
 
 	void Start () {
@@ -46,7 +44,6 @@ public class SignUp : MonoBehaviour {
 		if (signup.isNetworkError || signup.isHttpError)
 		{
 			print("Error downloading: " + signup.error);
-			showPopUp = true;
 		}
 		else
 		{
