@@ -5,6 +5,7 @@ using Wrld.Resources.Buildings;
 using Wrld.Space;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
 
@@ -14,11 +15,11 @@ public class HighlightBuildingOnClick : MonoBehaviour
     private Vector3 mouseDownPosition;
     public string token;
     public string getBuildingIDURL; //https://paint-the-town.herokuapp.com/api/buildings/info?id=<buildingid>&fields[]=team
-    public LatLong location;
+    public LatLongAltitude location;
     public string baseAlt;
     public string topAlt;
     public string id;
-    public string captureBuildingID;
+
 
 
     void Start()
@@ -55,30 +56,30 @@ public class HighlightBuildingOnClick : MonoBehaviour
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
                 var latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
+                print("BUILDING LAT LONG ALT: " + latLongAlt.GetLatitude() + " " + latLongAlt.GetLongitude() + " " + latLongAlt.GetAltitude());
 
+                PlayerPrefs.SetString("LAT", Convert.ToString(latLongAlt.GetLatitude()));
+                PlayerPrefs.SetString("LONG", Convert.ToString(latLongAlt.GetLongitude()));
+                PlayerPrefs.SetString("ALT", Convert.ToString(latLongAlt.GetAltitude()));
+                PlayerPrefs.Save();
                 //given selected building, start to get data from server
+
+                location = latLongAlt;
                 Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 
                 Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
-                //Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+
+                Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
             }
         }
     }
 
-    void passToGetID(bool success, Building b)
-    {
-      //location = "" + b.Centroid;
-      baseAlt = "" + b.BaseAltitude;
-      topAlt = "" + b.TopAltitude;
-      id = b.BuildingId;
-      startGetBuildingColor(b.BuildingId);
-    }
 
     void OnHighlightReceived(bool success, Highlight highlight)
     {
         if (success)
         {
-            StartCoroutine(ClearHighlight(highlight));
+            //StartCoroutine(ClearHighlight(highlight));
         }
     }
 
@@ -88,6 +89,23 @@ public class HighlightBuildingOnClick : MonoBehaviour
         {
             print(b.BuildingId);
         }
+    }
+
+    void passToGetID(bool success, Building b)
+    {
+      if(success){
+        baseAlt = "" + b.BaseAltitude;
+        topAlt = "" + b.TopAltitude;
+        id = b.BuildingId;
+        print("THIS IS THE BUILDING'S ID: " + id);
+
+        PlayerPrefs.SetString("bid", id);
+        PlayerPrefs.Save();
+
+        startGetBuildingColor(id);
+      } else {
+        print("uh oh");
+      }
     }
 
     //https://paint-the-town.herokuapp.com/api/buildings/updateTeam
@@ -103,25 +121,21 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		WWW www = new WWW(getBuildingIDURL, null, headers);
   		yield return www;
 
+        print("HERE HERE HERE " + www.text);
         if(www.text == "null"){
           //the building has never been clicked before
           print(www.error);
-          StartCoroutine("createBuilding");
+          //StartCoroutine("createBuilding");
         }else{
-            //the building has been found and it's data is returned
-            //TODO: update data on server and color building
-            print("hehehe");
-            print(www.text);
             StartCoroutine("captureBuilding");
         }
+    }
 
-
-  		// user data we can use for this scene
-
-  		// subReturnStrings = returnData.Split(',');
-  		// foreach(var item in subReturnStrings) {
-  		// 		print(item.ToString());
-  		// }
+    //starter fuction to retrieve building data
+    public void startGetBuildingColor(string buildingID)
+    {
+      getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/buildings/info?id=" + buildingID + "&fields[]=team";
+      StartCoroutine("getBuildingColor");
     }
 
     IEnumerator captureBuilding()
@@ -131,7 +145,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
       WWWForm captureform = new WWWForm();
 
       print("team ID: " + PlayerPrefs.GetString("teamID", "no teamID"));
-      captureform.AddField("building", captureBuildingID);
+      captureform.AddField("building", id);
       captureform.AddField("team", PlayerPrefs.GetString("teamID", "no teamID"));
 
       Hashtable headers = new Hashtable();
@@ -151,8 +165,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
       }
     }
 
-
-    //function to create building data on the server
     IEnumerator createBuilding()
     {
       print ("You're making a building");
@@ -160,12 +172,16 @@ public class HighlightBuildingOnClick : MonoBehaviour
       WWWForm signupform = new WWWForm();
 
       signupform.AddField("name", "I am a name");
-      //print(location);
+      print(location);
       string lat = "" + location.GetLatitude();
       string longi = "" + location.GetLongitude();
-      string[] array = new string[2];
-      array[0] = lat;
-      array[1] = longi;
+      List<string> array = new List<string>();
+      array.Add(lat);
+      array.Add(longi);
+      print(array[0]);
+      print(array[1]);
+      //TODO: BUG HERE
+      signupform.AddField("id", id);
       signupform.AddField("centroid[]", array[0]);
       signupform.AddField("centroid[]", array[1]);
       signupform.AddField("baseAltitude", baseAlt);
@@ -185,17 +201,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		else
   		{
         print(www.text);
+
   			print("building signed up!");
         StartCoroutine("captureBuilding");
       }
-    }
-
-    //starter fuction to retrieve building data
-    public void startGetBuildingColor(string buildingID)
-    {
-      captureBuildingID = buildingID;
-      getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/buildings/info?id=" + buildingID + "&fields[]=team";
-      StartCoroutine("getBuildingColor");
     }
 
     IEnumerator ClearHighlight(Highlight highlight)
