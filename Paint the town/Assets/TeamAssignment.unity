@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.5748249, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 258349949}
   - component: {fileID: 258349948}
   - component: {fileID: 258349953}
+  - component: {fileID: 258349954}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -206,6 +207,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de47645fdc984417ea4269aefdeed93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  url: https://paint-the-town.herokuapp.com/api/teams
+  teamInfoList: []
+  redID: 
+  blueID: 
 --- !u!114 &258349949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +303,21 @@ MonoBehaviour:
   teamInfoList: []
   redID: 
   blueID: 
+--- !u!114 &258349954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 258349947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de47645fdc984417ea4269aefdeed93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  url: https://paint-the-town.herokuapp.com/api/teams
+  teamInfoList: []
+  redID: 
+  blueID: 
 --- !u!1 &398564456
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +394,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 258349953}
+      - m_Target: {fileID: 258349948}
         m_MethodName: startAssignPlayerBLUE
         m_Mode: 1
         m_Arguments:
@@ -648,7 +668,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 258349953}
+      - m_Target: {fileID: 258349948}
         m_MethodName: startAssignPlayerRED
         m_Mode: 1
         m_Arguments:
