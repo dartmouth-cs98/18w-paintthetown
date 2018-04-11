@@ -19,10 +19,13 @@ public class SignUp : MonoBehaviour {
 	private string SignupLastName;
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
+	public Button GoToLoginButton;
 
-	private bool showPopUp = false;
-	public string returnData;
 	public string[] subReturnStrings;
+
+	void Start () {
+		GoToLoginButton.onClick.AddListener(goToLogin);
+	}
 
 	public IEnumerator RegisterButton(){
 
@@ -41,7 +44,6 @@ public class SignUp : MonoBehaviour {
 		if (signup.isNetworkError || signup.isHttpError)
 		{
 			print("Error downloading: " + signup.error);
-			showPopUp = true;
 		}
 		else
 		{
@@ -60,7 +62,9 @@ public class SignUp : MonoBehaviour {
 		StartCoroutine("RegisterButton");
 	}
 
-
+	public void goToLogin() {
+		SceneManager.LoadScene("LoginScene");
+	}
 
 
 	// called once per frame
@@ -76,6 +80,7 @@ public class SignUp : MonoBehaviour {
 		SignupPassword = signupPassword.GetComponent<InputField> ().text;
 		SignupName = signupName.GetComponent<InputField> ().text;
 		SignupLastName = signupLastName.GetComponent<InputField> ().text;
+
 
 	}
 

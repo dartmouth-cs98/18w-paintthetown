@@ -8,7 +8,7 @@ SketchUpImporter:
   selectedNodes: 00000000010000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b000000
   assetHash:
     serializedVersion: 2
-    Hash: 5989d0e7ce1a22c762dccd73f5382539
+    Hash: 89c85b59748e795936b10e8fd5acebab
   longitude: -72.288162435599
   latitude: 43.70527227418
   northCorrection: -0
@@ -44,6 +44,7 @@ SketchUpImporter:
     100032: Google Earth Terrain
     100034: Group 12
     100036: 465dfa316808d
+    100038: baker_berry
     400000: //RootNode
     400002: BackWindow
     400004: BackWindow 1
@@ -63,6 +64,7 @@ SketchUpImporter:
     400032: Google Earth Terrain
     400034: Group 12
     400036: 465dfa316808d
+    400038: baker_berry
     2100000: _defaultMat
     2100002: Google Earth Snapshot5
     2100004: Roofing_Shingles_Asphalt
@@ -117,6 +119,7 @@ SketchUpImporter:
     2300032: Google Earth Terrain
     2300034: Group 12
     2300036: 465dfa316808d
+    2300038: baker_berry
     3300000: //RootNode
     3300002: BackWindow
     3300004: BackWindow 1
@@ -136,10 +139,30 @@ SketchUpImporter:
     3300032: Google Earth Terrain
     3300034: Group 12
     3300036: 465dfa316808d
+    3300038: baker_berry
     4300000: Mesh 465dfa316808d
     4300002: Mesh Google Earth Terrain
     4300004: Mesh Group 12
     4300006: Mesh BackWindow
+    4300008: Mesh baker_berry
+    6400000: BackWindow
+    6400002: BackWindow 1
+    6400004: BackWindow 10
+    6400006: BackWindow 11
+    6400008: BackWindow 12
+    6400010: BackWindow 13
+    6400012: BackWindow 14
+    6400014: BackWindow 2
+    6400016: BackWindow 3
+    6400018: BackWindow 4
+    6400020: BackWindow 5
+    6400022: BackWindow 6
+    6400024: BackWindow 7
+    6400026: BackWindow 8
+    6400028: BackWindow 9
+    6400030: baker_berry
+    6400032: Google Earth Terrain
+    6400034: Group 12
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -497,7 +520,7 @@ SketchUpImporter:
     lODScreenPercentages: []
     globalScale: 0.0254
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -517,7 +540,7 @@ SketchUpImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 0
