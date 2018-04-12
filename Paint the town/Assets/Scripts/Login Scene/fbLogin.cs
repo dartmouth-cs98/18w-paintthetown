@@ -186,6 +186,7 @@ public class fbLogin : MonoBehaviour {
 		if(isLoggedIn){
 			DialogLoggedIn.SetActive(true);
 			DialogLoggedOut.SetActive(false);
+            SceneManager.LoadScene("FirstScene");
 			FB.API("/me?fields=first_name", HttpMethod.GET, DisplayUsername);
 		}else{
 			DialogLoggedIn.SetActive(false);
