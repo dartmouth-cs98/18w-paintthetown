@@ -386,7 +386,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1653256132}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c021ea6ce40e9c4cab9c29539647285, type: 3}
   m_Name: 
@@ -518,3 +518,4 @@ MonoBehaviour:
   yMaxLimit: 80
   distanceMin: 15
   distanceMax: 100
+  zoomSpeed: 0.5
