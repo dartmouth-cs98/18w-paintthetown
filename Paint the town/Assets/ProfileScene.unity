@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.5748249, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1567,7 +1567,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3c40be7dd034e8aaf2562ab36824d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userName: 
+  userURL: https://paint-the-town.herokuapp.com/api/users
+  teamurl: https://paint-the-town.herokuapp.com/api/teams
+  redID: 
+  blueID: 
+  fullName: 
+  team: 
+  friendsList: []
+  token: 
+  player:
+    role: 
+    lastName: 
+    name: 
+    typeOfLogin: 
+    team: 
+    friends: []
+  teamInfoList: []
 --- !u!114 &1709763165
 MonoBehaviour:
   m_ObjectHideFlags: 0
