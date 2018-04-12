@@ -367,7 +367,7 @@
     <Compile Include="Assets\Scripts\HighlightBuildingOnClick.cs" />
     <Compile Include="Assets\Scripts\Login Scene\fbLogin.cs" />
     <Compile Include="Assets\Scripts\Login Scene\fbLoginServerCommunication.cs" />
-    <Compile Include="Assets\Scripts\Login Scene\testLoginScreen.cs" />
+    <Compile Include="Assets\Scripts\Login Scene\Login.cs" />
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\ProfileScene\Profile.cs" />
     <Compile Include="Assets\Scripts\ProfileScene\ProfileEdit.cs" />
