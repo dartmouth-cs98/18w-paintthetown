@@ -23,10 +23,14 @@ public class UpdateCameraGPS : MonoBehaviour {
     public double uMaxLng;
     public double uMaxLat;
     public string[] parsingString;
-    public Material highlightMaterial;
+    public Material highlightMaterialRed;
+    public Material highlightMaterialBlue;
 
     IEnumerator Start()
     {
+        highlightMaterialRed.color = Color.red;
+        highlightMaterialBlue.color = Color.blue;
+
         // wait for the unity remote to connect, if applicable
         if (isUnityRemote)
         {
@@ -74,7 +78,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         // Set the camera for the Wrld3d map
         Api.Instance.CameraApi.SetControlledCamera(setCam);
 
-        InvokeRepeating("updateMap", 2.0f, 1.0f);
+        InvokeRepeating("updateMap", 2.0f, 10.0f);
 
 
     }
@@ -101,7 +105,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
       //centroidLat
       //team
-      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=team&extraFields[3]=baseAltitude&extraFields[4]=topAltitude", null, header);
+      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&teamOnly=true&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=team&extraFields[3]=baseAltitude&extraFields[4]=topAltitude", null, header);
       yield return www;
       if (www.error != null)
       {
@@ -109,7 +113,7 @@ public class UpdateCameraGPS : MonoBehaviour {
       } else {
 
         //SET BUILDING COLORS HERE
-        //print("WWW " + www.text);
+        print("WWW " + www.text);
         parsingString = Regex.Split(www.text, @"[,:{}]+");
 
         // for(int x = 0; x < parsingString.Length; x ++){
@@ -135,12 +139,10 @@ public class UpdateCameraGPS : MonoBehaviour {
             var buildingLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
 
             if(parsingString[x + 1].Trim('"') == "red"){
-              highlightMaterial.color = Color.red;
+              Api.Instance.BuildingsApi.HighlightBuildingAtLocation(buildingLocation, highlightMaterialRed, OnHighlightReceived);
             } else if(parsingString[x + 1].Trim('"') == "blue"){
-              highlightMaterial.color = Color.blue;
+              Api.Instance.BuildingsApi.HighlightBuildingAtLocation(buildingLocation, highlightMaterialBlue, OnHighlightReceived);
             }
-
-            Api.Instance.BuildingsApi.HighlightBuildingAtLocation(buildingLocation, highlightMaterial, OnHighlightReceived);
           }
         }
       }
@@ -163,7 +165,7 @@ public class UpdateCameraGPS : MonoBehaviour {
           // print("HELLO?");
             //StartCoroutine(ClearHighlight(highlight));
         } else{
-          print("NOOOOOO");
+          //print("NOOOOOO");
         }
     }
 
