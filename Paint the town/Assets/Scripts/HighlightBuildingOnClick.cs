@@ -131,10 +131,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
           //StartCoroutine("createBuilding");
         }else{
             // if the ID matches a poi, load the POI scene
-            if (isPoi)
-            {
-                SceneManager.LoadScene("testModelScene");
-            }
+            //if (isPoi)
+            //{
+            //    SceneManager.LoadScene("testModelScene");
+            //}
        
             StartCoroutine("captureBuilding");
         }
@@ -154,10 +154,17 @@ public class HighlightBuildingOnClick : MonoBehaviour
         {
             if (idNum.Equals(id))
             {
+                print("POI found!");
                 isPoi = true;
+                // open the testModelScene
+                SceneManager.LoadScene("testModelScene");
             }
 
-            isPoi = false;
+            else
+            {
+                print("POI not found!");
+                isPoi = false;
+            }
         }
 
         return null;

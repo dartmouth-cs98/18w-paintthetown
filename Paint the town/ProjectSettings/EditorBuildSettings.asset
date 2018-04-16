@@ -35,3 +35,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LoginScene.unity
     guid: 6c87f28e57c5e4c5db8a890bce0d7f44
+  - enabled: 1
+    path: Assets/testModelScene.unity
+    guid: ae2a4280bfc78514c807cd2b9be301fb
