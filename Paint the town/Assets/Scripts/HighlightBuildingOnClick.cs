@@ -21,7 +21,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public string baseAlt;
     public string topAlt;
     public string id;
-    public ArrayList poiList = new ArrayList();
+    public ArrayList poiList = new ArrayList(new string[] { "dbf69cccfd7b8c096e5b150e0140b0ae" });
     private Boolean isPoi;
 
     void Start()
