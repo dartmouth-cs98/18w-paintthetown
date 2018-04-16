@@ -329,7 +329,7 @@ RectTransform:
   m_Children:
   - {fileID: 1561410030}
   - {fileID: 532329161}
-  m_Father: {fileID: 205543925}
+  m_Father: {fileID: 1747790730}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -484,11 +484,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76e31a1fc2789e545bbc050acb3b27c9, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &205543925 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4949443167667572, guid: ff5eded233b11354abc5fa81665a2548,
-    type: 2}
-  m_PrefabInternal: {fileID: 1695763971}
 --- !u!1 &217708046
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +711,68 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 532329160}
+--- !u!1 &758426063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 758426066}
+  - component: {fileID: 758426065}
+  - component: {fileID: 758426064}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &758426064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 758426063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &758426065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 758426063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 5
+--- !u!4 &758426066
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 758426063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &853535985
 Prefab:
   m_ObjectHideFlags: 0
@@ -1026,6 +1083,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76e31a1fc2789e545bbc050acb3b27c9, type: 2}
   m_IsPrefabParent: 0
+--- !u!198 &1501054440 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198248526474942746, guid: ff5eded233b11354abc5fa81665a2548,
+    type: 2}
+  m_PrefabInternal: {fileID: 1695763971}
 --- !u!1 &1561410029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,6 +1438,15 @@ Prefab:
       propertyPath: m_MouseLook.lockCursor
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4949443167667572, guid: ff5eded233b11354abc5fa81665a2548, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114153936756657580, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff5eded233b11354abc5fa81665a2548, type: 2}
   m_IsPrefabParent: 0
@@ -1453,6 +1524,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1698517944}
+--- !u!4 &1747790730 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4949443167667572, guid: ff5eded233b11354abc5fa81665a2548,
+    type: 2}
+  m_PrefabInternal: {fileID: 1695763971}
 --- !u!1 &1788008535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,6 +1634,9 @@ MonoBehaviour:
   distanceMin: 15
   distanceMax: 100
   zoomSpeed: 0.5
+  pLauncher: {fileID: 1501054440}
+  splatterParticles: {fileID: 265059507}
+  PDP: {fileID: 1123677928}
 --- !u!1 &1875604214
 GameObject:
   m_ObjectHideFlags: 0
