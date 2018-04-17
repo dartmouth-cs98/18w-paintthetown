@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+
 
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
 
@@ -25,9 +27,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public float speed = 0.001f;
     public Image image;
     public LatLongAltitude latLongAlt;
+    public ArrayList poiList = new ArrayList(new string[] { "dbf69cccfd7b8c096e5b150e0140b0ae" });
+    private Boolean isPoi;
 
     int index = 0;
     int characterIndex = 0;
+    
     void Start()
     {
       textArea.enabled = false;
@@ -144,6 +149,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
         topAlt = "" + b.TopAltitude;
         id = b.BuildingId;
         print("THIS IS THE BUILDING'S ID: " + id);
+        StartCoroutine("checkPoi");
 
         PlayerPrefs.SetString("bid", id);
         PlayerPrefs.Save();
@@ -173,6 +179,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
           print(www.error);
           //StartCoroutine("createBuilding");
         }else{
+            // if the ID matches a poi, load the POI scene
+            //if (isPoi)
+            //{
+            //    SceneManager.LoadScene("testModelScene");
+            //}
+
             StartCoroutine("captureBuilding");
         }
     }
@@ -182,6 +194,29 @@ public class HighlightBuildingOnClick : MonoBehaviour
     {
       getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/buildings/info?id=" + buildingID + "&fields[]=team";
       StartCoroutine("getBuildingColor");
+    }
+
+    // check if an id is that of a POI, asynchronously so threads don't lock
+    IEnumerator checkPoi()
+    {
+        foreach(string idNum in poiList)
+        {
+            if (idNum.Equals(id))
+            {
+                print("POI found!");
+                isPoi = true;
+                // open the testModelScene
+                SceneManager.LoadScene("testModelScene");
+            }
+
+            else
+            {
+                print("POI not found!");
+                isPoi = false;
+            }
+        }
+
+        return null;
     }
 
     IEnumerator captureBuilding()
