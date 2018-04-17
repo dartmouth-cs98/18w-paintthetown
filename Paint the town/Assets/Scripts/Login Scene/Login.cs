@@ -165,8 +165,9 @@ public class Login : MonoBehaviour {
 		GUI.Label(new Rect(45, 40, 200, 30), "Invalid username or password");
 
 		// You may put a button to close the pop up too
-		if (GUI.Button(new Rect(90, (Screen.height/2) - 150, 75, 30), "OK"))
-		{
+		if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
+			username.GetComponent<InputField> ().text = "";
+			password.GetComponent<InputField> ().text = "";
 			showPopUp = false;
 		}
 	}
