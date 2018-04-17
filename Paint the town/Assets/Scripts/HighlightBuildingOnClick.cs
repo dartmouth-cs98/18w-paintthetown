@@ -5,6 +5,7 @@ using Wrld.Resources.Buildings;
 using Wrld.Space;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 
@@ -21,12 +22,23 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public string baseAlt;
     public string topAlt;
     public string id;
+    public Text textArea;
+    public string[] strings;
+    public float speed = 0.001f;
+    public Image image;
+    public LatLongAltitude latLongAlt;
     public ArrayList poiList = new ArrayList(new string[] { "dbf69cccfd7b8c096e5b150e0140b0ae" });
     private Boolean isPoi;
 
+    int index = 0;
+    int characterIndex = 0;
+    
     void Start()
     {
-      print("setting color");
+      textArea.enabled = false;
+      image.enabled = false;
+
+      //
       if(PlayerPrefs.GetString("color", "no color") == "red")
       {
         highlightMaterial.color = Color.red;
@@ -44,6 +56,23 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void Update()
     {
+      if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
+        //BUG: WHAT?
+        if(image.enabled == true){
+          if (index == strings.Length - 1){
+            image.enabled = false;
+            textArea.enabled = false;
+            index = 0;
+            characterIndex = 0;
+          }else if (index < strings.Length){
+            index++;
+            characterIndex = 0;
+          } else if(characterIndex < strings[index].Length){
+            characterIndex = strings[index].Length;
+          }
+        }
+      }
+
         if (Input.GetMouseButtonDown(0))
         {
             mouseDownPosition = Input.mousePosition;
@@ -57,21 +86,30 @@ public class HighlightBuildingOnClick : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
-                var latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
-                print("BUILDING LAT LONG ALT: " + latLongAlt.GetLatitude() + " " + latLongAlt.GetLongitude() + " " + latLongAlt.GetAltitude());
+                latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
+                //print("BUILDING LAT LONG ALT: " + latLongAlt.GetLatitude() + " " + latLongAlt.GetLongitude() + " " + latLongAlt.GetAltitude());
 
-                PlayerPrefs.SetString("LAT", Convert.ToString(latLongAlt.GetLatitude()));
-                PlayerPrefs.SetString("LONG", Convert.ToString(latLongAlt.GetLongitude()));
-                PlayerPrefs.SetString("ALT", Convert.ToString(latLongAlt.GetAltitude()));
-                PlayerPrefs.Save();
-                //given selected building, start to get data from server
+                if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < .0015 && -.0015 < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < .0015 && -.0015 < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
+                  //given selected building, start to get data from server
 
-                location = latLongAlt;
-                Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
+                  location = latLongAlt;
 
-                Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
+                  Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 
-                Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+                  //Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
+
+                  Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+
+                } else if(image.enabled == false){
+
+                  Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), checkBuildingExist);
+                  // print("MEMEMEMEMEMEMEMEMEMEMEM");
+                  // image.enabled = true;
+                  // textArea.enabled = true;
+                  // index = 0;
+                  // characterIndex = 0;
+                  // StartCoroutine("displayTimer");
+                }
             }
         }
     }
@@ -83,6 +121,17 @@ public class HighlightBuildingOnClick : MonoBehaviour
         {
             //StartCoroutine(ClearHighlight(highlight));
         }
+    }
+
+    void checkBuildingExist(bool success, Building b){
+      if(success){
+        print("MEMEMEMEMEMEMEMEMEMEMEM");
+        image.enabled = true;
+        textArea.enabled = true;
+        index = 0;
+        characterIndex = 0;
+        StartCoroutine("displayTimer");
+      }
     }
 
     void OnBuildingRecieved(bool success, Building b)
@@ -135,7 +184,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
             //{
             //    SceneManager.LoadScene("testModelScene");
             //}
-       
+
             StartCoroutine("captureBuilding");
         }
     }
@@ -176,7 +225,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
       WWWForm captureform = new WWWForm();
 
-      print("team ID: " + PlayerPrefs.GetString("teamID", "no teamID"));
       captureform.AddField("building", id);
       captureform.AddField("team", PlayerPrefs.GetString("teamID", "no teamID"));
 
@@ -243,5 +291,20 @@ public class HighlightBuildingOnClick : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
         Api.Instance.BuildingsApi.ClearHighlight(highlight);
+    }
+
+    IEnumerator displayTimer(){
+
+      while(true){
+        if((Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)) && index == (strings.Length - 1)){
+          break;
+        }
+        yield return new WaitForSeconds(speed);
+        if(characterIndex > strings[index].Length){
+          continue;
+        }
+        textArea.text = strings[index].Substring(0, characterIndex);
+        characterIndex++;
+      }
     }
 }

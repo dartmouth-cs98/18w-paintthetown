@@ -121,16 +121,16 @@ public class UpdateCameraGPS : MonoBehaviour {
         // }
 
         for(int x = 3; x < parsingString.Length - 14; x = x + 14){
-          if(parsingString[x].Trim('"') == "team"){
 
+          if(parsingString[x].Trim('"') == "team"){
 
             //print("BUILDIGN TOPALT " + parsingString[x + 11]);
 
             double lat = Convert.ToDouble(parsingString[x + 7]) + 0.0000000000001;
-            double lnge = Convert.ToDouble(parsingString[x + 5]) + 0.0000000000001;
-            double alt = Convert.ToDouble(parsingString[x + 9]);
+            double lnge = Convert.ToDouble(parsingString[x + 9]) + 0.0000000000001;
+            double alt = Convert.ToDouble(parsingString[x + 5]);
 
-            // print("BUILDING COLOR: " +parsingString[x + 1]);
+            // print("BUILDING COLOR: " + parsingString[x + 1]);
             // print("BUILDING ID: " + parsingString[x + 3]);
             // print("BUILDING LNG: " + lnge);
             // print("BUILDING LAT: " + lat);
