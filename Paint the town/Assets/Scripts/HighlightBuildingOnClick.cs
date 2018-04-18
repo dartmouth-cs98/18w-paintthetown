@@ -32,13 +32,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     int index = 0;
     int characterIndex = 0;
-    
+
     void Start()
     {
       textArea.enabled = false;
       image.enabled = false;
 
-      //
       if(PlayerPrefs.GetString("color", "no color") == "red")
       {
         highlightMaterial.color = Color.red;
@@ -57,8 +56,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     void Update()
     {
       if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
-        //BUG: WHAT?
-        if(image.enabled == true){
+        if(image.enabled == true && textArea.enabled == true){
           if (index == strings.Length - 1){
             image.enabled = false;
             textArea.enabled = false;
@@ -87,28 +85,19 @@ public class HighlightBuildingOnClick : MonoBehaviour
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
                 latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
-                //print("BUILDING LAT LONG ALT: " + latLongAlt.GetLatitude() + " " + latLongAlt.GetLongitude() + " " + latLongAlt.GetAltitude());
-
-                if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < .0015 && -.0015 < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < .0015 && -.0015 < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
+                double captureDistance = .0015;
+                if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
                   //given selected building, start to get data from server
 
                   location = latLongAlt;
 
                   Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 
-                  //Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
-
                   Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
 
                 } else if(image.enabled == false){
 
                   Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), checkBuildingExist);
-                  // print("MEMEMEMEMEMEMEMEMEMEMEM");
-                  // image.enabled = true;
-                  // textArea.enabled = true;
-                  // index = 0;
-                  // characterIndex = 0;
-                  // StartCoroutine("displayTimer");
                 }
             }
         }
@@ -119,7 +108,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     {
         if (success)
         {
-            //StartCoroutine(ClearHighlight(highlight));
+
         }
     }
 
@@ -130,6 +119,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
         textArea.enabled = true;
         index = 0;
         characterIndex = 0;
+        print("image: " + image.enabled);
+        print("textArea " + textArea.enabled);
         StartCoroutine("displayTimer");
       }
     }
@@ -199,18 +190,13 @@ public class HighlightBuildingOnClick : MonoBehaviour
     // check if an id is that of a POI, asynchronously so threads don't lock
     IEnumerator checkPoi()
     {
-        foreach(string idNum in poiList)
-        {
-            if (idNum.Equals(id))
-            {
+        foreach(string idNum in poiList){
+            if (idNum.Equals(id)){
                 print("POI found!");
                 isPoi = true;
                 // open the testModelScene
                 SceneManager.LoadScene("testModelScene");
-            }
-
-            else
-            {
+            }else{
                 print("POI not found!");
                 isPoi = false;
             }
@@ -296,7 +282,9 @@ public class HighlightBuildingOnClick : MonoBehaviour
     IEnumerator displayTimer(){
 
       while(true){
-        if((Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)) && index == (strings.Length - 1)){
+
+        if((Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)) && index == (strings.Length)){
+          print("Hello???");
           break;
         }
         yield return new WaitForSeconds(speed);
@@ -305,6 +293,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
         }
         textArea.text = strings[index].Substring(0, characterIndex);
         characterIndex++;
+        print("text area: " + textArea.text);
       }
     }
 }
