@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
@@ -29,6 +30,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public LatLongAltitude latLongAlt;
     public ArrayList poiList = new ArrayList(new string[] { "dbf69cccfd7b8c096e5b150e0140b0ae" });
     private Boolean isPoi;
+    private string buildingDistanceMessage = "You must be closer to the building in order to paint it!";
+    private string sameBuildingColorMessage = "That building is already owned by your team!";
 
     int index = 0;
     int characterIndex = 0;
@@ -41,8 +44,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
       if(PlayerPrefs.GetString("color", "no color") == "red")
       {
         highlightMaterial.color = Color.red;
+        print("THE GAME COLOR IS RED");
       } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
         highlightMaterial.color = Color.blue;
+        print("THE GAME COLOR IS BLUE");
       } else {
         print("Error: could not find player color");
       }
@@ -119,8 +124,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
         textArea.enabled = true;
         index = 0;
         characterIndex = 0;
-        print("image: " + image.enabled);
-        print("textArea " + textArea.enabled);
+        strings[0] = buildingDistanceMessage;
         StartCoroutine("displayTimer");
       }
     }
@@ -165,18 +169,30 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		yield return www;
 
         print("HERE HERE HERE " + www.text);
+        print(PlayerPrefs.GetString("teamID", "no teamID"));
         if(www.text == "null"){
           //the building has never been clicked before
           print(www.error);
-          //StartCoroutine("createBuilding");
         }else{
-            // if the ID matches a poi, load the POI scene
-            //if (isPoi)
-            //{
-            //    SceneManager.LoadScene("testModelScene");
-            //}
-
-            StartCoroutine("captureBuilding");
+            string[] subStrings = Regex.Split(www.text, @"[,:{}]+");
+            bool Flag = false;
+            for (int i = 0; i < subStrings.Length; i++){
+              if(subStrings[i].Trim('"') == "team"){
+                if(subStrings[i + 1].Trim('"') == PlayerPrefs.GetString("teamID", "no teamID")){
+                  Flag = true;
+                }
+              }
+            }
+            if(Flag == true){
+              image.enabled = true;
+              textArea.enabled = true;
+              index = 0;
+              characterIndex = 0;
+              strings[0] = sameBuildingColorMessage;
+              StartCoroutine("displayTimer");
+            }else{
+              StartCoroutine("captureBuilding");
+            }
         }
     }
 
@@ -293,7 +309,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
         }
         textArea.text = strings[index].Substring(0, characterIndex);
         characterIndex++;
-        print("text area: " + textArea.text);
+        //print("text area: " + textArea.text);
       }
     }
 }

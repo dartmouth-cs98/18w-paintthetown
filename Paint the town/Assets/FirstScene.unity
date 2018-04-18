@@ -322,7 +322,7 @@ MonoBehaviour:
   id: 
   textArea: {fileID: 1264300695}
   strings:
-  - You must be closer to the building in order to paint it!
+  - '""'
   speed: 0.001
   image: {fileID: 1715559694}
 --- !u!1 &368571543

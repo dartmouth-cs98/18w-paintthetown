@@ -52,12 +52,8 @@ public class SignUp : MonoBehaviour {
 			print(signup.downloadHandler.text);
 			string[] subStrings = Regex.Split(signup.downloadHandler.text, @"[,:{}]+");
 
-			for(int i = 0; i < subStrings.Length; i++){
-				print(subStrings[i]);
-			}
-
 			if(subStrings[1].Trim('"') != "error"){
-				PlayerPrefs.SetString("token", subStrings[3]);
+				PlayerPrefs.SetString("token", subStrings[2].Trim('"'));
 				PlayerPrefs.Save();
 
 				SceneManager.LoadScene("TeamAssignment");
