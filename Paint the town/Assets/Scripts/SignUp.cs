@@ -19,10 +19,15 @@ public class SignUp : MonoBehaviour {
 	private string SignupLastName;
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
-
+	public Button GoToLoginButton;
 	private bool showPopUp = false;
-	public string returnData;
+	private string errorMessage;
+
 	public string[] subReturnStrings;
+
+	void Start () {
+		GoToLoginButton.onClick.AddListener(goToLogin);
+	}
 
 	public IEnumerator RegisterButton(){
 
@@ -41,17 +46,21 @@ public class SignUp : MonoBehaviour {
 		if (signup.isNetworkError || signup.isHttpError)
 		{
 			print("Error downloading: " + signup.error);
-			showPopUp = true;
 		}
 		else
 		{
-			print("user signed up!");
-			string token = signup.downloadHandler.text;
-			string[] subStrings = token.Split ('"');
-			PlayerPrefs.SetString("token", subStrings[3]);
-			PlayerPrefs.Save();
+			print(signup.downloadHandler.text);
+			string[] subStrings = Regex.Split(signup.downloadHandler.text, @"[,:{}]+");
 
-			SceneManager.LoadScene("TeamAssignment");
+			if(subStrings[1].Trim('"') != "error"){
+				PlayerPrefs.SetString("token", subStrings[2].Trim('"'));
+				PlayerPrefs.Save();
+
+				SceneManager.LoadScene("TeamAssignment");
+			}else{
+				showPopUp = true;
+				errorMessage = subStrings[5];
+			}
 		}
 	}
 
@@ -60,26 +69,43 @@ public class SignUp : MonoBehaviour {
 		StartCoroutine("RegisterButton");
 	}
 
-	public void GoToLogin() {
+	public void goToLogin() {
 		SceneManager.LoadScene("LoginScene");
 	}
 
 
 	// called once per frame
 	public void Update() {
-
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			if (SignupPassword != "" && SignupUsername != "") {
 				StartCoroutine("RegisterButton");
 			}
 		}
-			
 		SignupUsername = signupUsername.GetComponent<InputField> ().text;
 		SignupPassword = signupPassword.GetComponent<InputField> ().text;
 		SignupName = signupName.GetComponent<InputField> ().text;
 		SignupLastName = signupLastName.GetComponent<InputField> ().text;
+	}
 
+	void OnGUI(){
+		if (showPopUp) {
+			GUI.Window(0, new Rect((Screen.width/2)-150, (Screen.height/2)-75
+				, 250, 200), ShowGUI, "Signup Error");
+		}
+	}
+
+	void ShowGUI(int windowID) {
+		// put a label to show a message to the player
+		GUI.Label(new Rect(45, 40, 200, 30), errorMessage.Trim('"'));
+
+		// You may put a button to close the pop up too
+		if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
+			signupUsername.GetComponent<InputField> ().text = "";
+			signupPassword.GetComponent<InputField> ().text = "";
+			signupName.GetComponent<InputField> ().text = "";
+			signupLastName.GetComponent<InputField> ().text = "";
+			showPopUp = false;
+		}
 	}
 
 }
-
