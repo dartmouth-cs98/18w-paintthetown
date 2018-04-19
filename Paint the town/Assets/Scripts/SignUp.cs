@@ -20,6 +20,7 @@ public class SignUp : MonoBehaviour {
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
 	public Button GoToLoginButton;
+	public Button SignUpButton;
 
 	public string[] subReturnStrings;
 
@@ -70,7 +71,7 @@ public class SignUp : MonoBehaviour {
 	// called once per frame
 	public void Update() {
 
-		if (Input.GetKeyDown (KeyCode.Return)) {
+		if (SignUpButton) {
 			if (SignupPassword != "" && SignupUsername != "") {
 				StartCoroutine("RegisterButton");
 			}
