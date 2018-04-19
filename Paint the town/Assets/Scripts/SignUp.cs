@@ -48,13 +48,18 @@ public class SignUp : MonoBehaviour {
 		}
 		else
 		{
-			print("user signed up!");
-			string token = signup.downloadHandler.text;
-			string[] subStrings = token.Split ('"');
-			PlayerPrefs.SetString("token", subStrings[3]);
-			PlayerPrefs.Save();
+			print(signup.downloadHandler.text);
+			string[] subStrings = Regex.Split(signup.downloadHandler.text, @"[,:{}]+");
 
-			SceneManager.LoadScene("TeamAssignment");
+			if(subStrings[1].Trim('"') != "error"){
+				PlayerPrefs.SetString("token", subStrings[2].Trim('"'));
+				PlayerPrefs.Save();
+
+				SceneManager.LoadScene("TeamAssignment");
+			}else{
+				showPopUp = true;
+				errorMessage = subStrings[5];
+			}
 		}
 	}
 
@@ -76,14 +81,11 @@ public class SignUp : MonoBehaviour {
 				StartCoroutine("RegisterButton");
 			}
 		}
-			
 		SignupUsername = signupUsername.GetComponent<InputField> ().text;
 		SignupPassword = signupPassword.GetComponent<InputField> ().text;
 		SignupName = signupName.GetComponent<InputField> ().text;
 		SignupLastName = signupLastName.GetComponent<InputField> ().text;
-
-
 	}
 
-}
 
+}

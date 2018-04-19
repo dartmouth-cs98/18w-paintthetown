@@ -78,14 +78,21 @@ public class Login : MonoBehaviour {
 		if(www.text == "null"){
 			print(www.error);
 		}else{
-			string teamInfo = www.text;
-			teamInfoList = teamInfo.Split('"');
-			PlayerPrefs.SetString("teamID", teamInfoList[33]);
-			PlayerPrefs.Save();
+			print("AHWEFJHSDVBAHSBDNEJHAWEGJ");
+
+			string[] teamInfo = Regex.Split(www.text, @"[,:{}]+");
+
+			for(int x = 0; x < teamInfo.Length - 1; x ++){
+				if(teamInfo[x].Trim('"') == "team"){
+					print("TEAM ID: " + teamInfo[x + 1]);
+					PlayerPrefs.SetString("teamID", teamInfo[x + 1].Trim('"'));
+					PlayerPrefs.Save();
+				}
+			}
 		}
 		SceneManager.LoadScene("FirstScene");
 	}
-		
+
 	public IEnumerator getColorFromID()
 	{
 		Hashtable headers = new Hashtable();
@@ -102,15 +109,17 @@ public class Login : MonoBehaviour {
 				string teamInfo = www.text;
 				teamInfoList = teamInfo.Split('"');
 
-				for (int i = 0; i <= teamInfoList.Length - 1; i++) {
-					print (teamInfoList [i]);
-				}
+        //
+				// for (int i = 0; i <= teamInfoList.Length - 1; i++) {
+				// 	print (teamInfoList [i]);
+				// }
+				print("THIS IS REDID: " + teamInfoList[19]);
+				print("THIS IS BLUEID: " + teamInfoList[5]);
 
 				redID = teamInfoList[19];
 				blueID = teamInfoList[5];
 				print("Red team ID: " + redID);
 				print("Blue team ID: " + blueID);
-
 				if( (PlayerPrefs.GetString("teamID", "no teamID")) == redID)
 				{
 					PlayerPrefs.SetString("color", "red");
@@ -126,7 +135,7 @@ public class Login : MonoBehaviour {
 		print("You are signing in");
 		StartCoroutine("SigninButton");
 	}
-		
+
 
 	public void GoToSignUp() {
 		SceneManager.LoadScene ("SignUpScene");
@@ -137,7 +146,7 @@ public class Login : MonoBehaviour {
 		if (SignInButton) {
 			if (Password != "" && Username != "") {
 				StartCoroutine("SigninButton");
-			} 
+			}
 		}
 
 		Username = username.GetComponent<InputField> ().text;
@@ -157,8 +166,9 @@ public class Login : MonoBehaviour {
 		GUI.Label(new Rect(45, 40, 200, 30), "Invalid username or password");
 
 		// You may put a button to close the pop up too
-		if (GUI.Button(new Rect(90, (Screen.height/2) - 150, 75, 30), "OK"))
-		{
+		if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
+			username.GetComponent<InputField> ().text = "";
+			password.GetComponent<InputField> ().text = "";
 			showPopUp = false;
 		}
 	}

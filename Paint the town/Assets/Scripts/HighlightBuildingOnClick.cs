@@ -5,7 +5,11 @@ using Wrld.Resources.Buildings;
 using Wrld.Space;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
+
 
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
 
@@ -19,17 +23,31 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public string baseAlt;
     public string topAlt;
     public string id;
+    public Text textArea;
+    public string[] strings;
+    public float speed = 0.001f;
+    public Image image;
+    public LatLongAltitude latLongAlt;
+    public ArrayList poiList = new ArrayList(new string[] { "dbf69cccfd7b8c096e5b150e0140b0ae" });
+    private Boolean isPoi;
+    private string buildingDistanceMessage = "You must be closer to the building in order to paint it!";
+    private string sameBuildingColorMessage = "That building is already owned by your team!";
 
-
+    int index = 0;
+    int characterIndex = 0;
 
     void Start()
     {
-      print("setting color");
+      textArea.enabled = false;
+      image.enabled = false;
+
       if(PlayerPrefs.GetString("color", "no color") == "red")
       {
         highlightMaterial.color = Color.red;
+        print("THE GAME COLOR IS RED");
       } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
         highlightMaterial.color = Color.blue;
+        print("THE GAME COLOR IS BLUE");
       } else {
         print("Error: could not find player color");
       }
@@ -42,6 +60,22 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void Update()
     {
+      if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
+        if(image.enabled == true && textArea.enabled == true){
+          if (index == strings.Length - 1){
+            image.enabled = false;
+            textArea.enabled = false;
+            index = 0;
+            characterIndex = 0;
+          }else if (index < strings.Length){
+            index++;
+            characterIndex = 0;
+          } else if(characterIndex < strings[index].Length){
+            characterIndex = strings[index].Length;
+          }
+        }
+      }
+
         if (Input.GetMouseButtonDown(0))
         {
             mouseDownPosition = Input.mousePosition;
@@ -55,21 +89,21 @@ public class HighlightBuildingOnClick : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
-                var latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
-                print("BUILDING LAT LONG ALT: " + latLongAlt.GetLatitude() + " " + latLongAlt.GetLongitude() + " " + latLongAlt.GetAltitude());
+                latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
+                double captureDistance = .0015;
+                if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
+                  //given selected building, start to get data from server
 
-                PlayerPrefs.SetString("LAT", Convert.ToString(latLongAlt.GetLatitude()));
-                PlayerPrefs.SetString("LONG", Convert.ToString(latLongAlt.GetLongitude()));
-                PlayerPrefs.SetString("ALT", Convert.ToString(latLongAlt.GetAltitude()));
-                PlayerPrefs.Save();
-                //given selected building, start to get data from server
+                  location = latLongAlt;
 
-                location = latLongAlt;
-                Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
+                  Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 
-                Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), OnBuildingRecieved);
+                  Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
 
-                Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+                } else if(image.enabled == false){
+
+                  Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), checkBuildingExist);
+                }
             }
         }
     }
@@ -79,8 +113,20 @@ public class HighlightBuildingOnClick : MonoBehaviour
     {
         if (success)
         {
-            //StartCoroutine(ClearHighlight(highlight));
+
         }
+    }
+
+    void checkBuildingExist(bool success, Building b){
+      if(success){
+        print("MEMEMEMEMEMEMEMEMEMEMEM");
+        image.enabled = true;
+        textArea.enabled = true;
+        index = 0;
+        characterIndex = 0;
+        strings[0] = buildingDistanceMessage;
+        StartCoroutine("displayTimer");
+      }
     }
 
     void OnBuildingRecieved(bool success, Building b)
@@ -98,6 +144,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
         topAlt = "" + b.TopAltitude;
         id = b.BuildingId;
         print("THIS IS THE BUILDING'S ID: " + id);
+        StartCoroutine("checkPoi");
 
         PlayerPrefs.SetString("bid", id);
         PlayerPrefs.Save();
@@ -122,12 +169,30 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		yield return www;
 
         print("HERE HERE HERE " + www.text);
+        print(PlayerPrefs.GetString("teamID", "no teamID"));
         if(www.text == "null"){
           //the building has never been clicked before
           print(www.error);
-          //StartCoroutine("createBuilding");
         }else{
-            StartCoroutine("captureBuilding");
+            string[] subStrings = Regex.Split(www.text, @"[,:{}]+");
+            bool Flag = false;
+            for (int i = 0; i < subStrings.Length; i++){
+              if(subStrings[i].Trim('"') == "team"){
+                if(subStrings[i + 1].Trim('"') == PlayerPrefs.GetString("teamID", "no teamID")){
+                  Flag = true;
+                }
+              }
+            }
+            if(Flag == true){
+              image.enabled = true;
+              textArea.enabled = true;
+              index = 0;
+              characterIndex = 0;
+              strings[0] = sameBuildingColorMessage;
+              StartCoroutine("displayTimer");
+            }else{
+              StartCoroutine("captureBuilding");
+            }
         }
     }
 
@@ -138,13 +203,30 @@ public class HighlightBuildingOnClick : MonoBehaviour
       StartCoroutine("getBuildingColor");
     }
 
+    // check if an id is that of a POI, asynchronously so threads don't lock
+    IEnumerator checkPoi()
+    {
+        foreach(string idNum in poiList){
+            if (idNum.Equals(id)){
+                print("POI found!");
+                isPoi = true;
+                // open the testModelScene
+                SceneManager.LoadScene("testModelScene");
+            }else{
+                print("POI not found!");
+                isPoi = false;
+            }
+        }
+
+        return null;
+    }
+
     IEnumerator captureBuilding()
     {
       print("You're capturing a building");
 
       WWWForm captureform = new WWWForm();
 
-      print("team ID: " + PlayerPrefs.GetString("teamID", "no teamID"));
       captureform.AddField("building", id);
       captureform.AddField("team", PlayerPrefs.GetString("teamID", "no teamID"));
 
@@ -211,5 +293,23 @@ public class HighlightBuildingOnClick : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
         Api.Instance.BuildingsApi.ClearHighlight(highlight);
+    }
+
+    IEnumerator displayTimer(){
+
+      while(true){
+
+        if((Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)) && index == (strings.Length)){
+          print("Hello???");
+          break;
+        }
+        yield return new WaitForSeconds(speed);
+        if(characterIndex > strings[index].Length){
+          continue;
+        }
+        textArea.text = strings[index].Substring(0, characterIndex);
+        characterIndex++;
+        //print("text area: " + textArea.text);
+      }
     }
 }
