@@ -8,15 +8,29 @@ using UnityEngine;
 public class ParticleDecalPool : MonoBehaviour {
     private int particleDataIndex;
     public int maxParticleDecals = 200;
-    private ParticleDecalData[] pd;
+    public ParticleDecalData[] pd;
     public float decalSizeMin = .5f;
     public float decalSizeMax = 1.5f;
     private ParticleSystem.Particle[] particles;
     private ParticleSystem decalPS;
+    private string colorString;
+    private Color plrColor;
 
 	// Use this for initialization
 	void Start () {
         particleDataIndex = 0;
+
+        colorString = PlayerPrefs.GetString("color");
+
+        if (colorString.Equals("red"))
+        {
+            plrColor = Color.red;
+        }
+
+        else
+        {
+            plrColor = Color.blue;
+        }
 
         decalPS = GetComponent<ParticleSystem>();
 
@@ -62,7 +76,7 @@ public class ParticleDecalPool : MonoBehaviour {
         pd[particleDataIndex].rotation = Quaternion.LookRotation(pce.normal).eulerAngles;
         pd[particleDataIndex].rotation.z = Random.Range(0, 360);
         pd[particleDataIndex].size = Random.Range(decalSizeMin, decalSizeMax);
-        pd[particleDataIndex].color = Color.blue;
+        pd[particleDataIndex].color = plrColor;
 
         particleDataIndex++;
     }
