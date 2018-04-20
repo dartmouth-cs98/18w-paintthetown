@@ -113,6 +113,48 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &127628214
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 711
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 389
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668438993351696, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b64721cb1d5374f7193460a79edb8051, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &145077966
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +345,7 @@ MonoBehaviour:
     type: 2}
   highlightMaterialBlue: {fileID: 2100000, guid: 7cf047302c5fe4b448d7ecd4d5e8186c,
     type: 2}
+  prefab: {fileID: 1723291844528510, guid: 72aec96d7d1374185bc56a1d6e311ca4, type: 2}
 --- !u!114 &220022119
 MonoBehaviour:
   m_ObjectHideFlags: 0

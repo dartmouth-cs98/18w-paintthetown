@@ -25,9 +25,20 @@ public class UpdateCameraGPS : MonoBehaviour {
     public string[] parsingString;
     public Material highlightMaterialRed;
     public Material highlightMaterialBlue;
+    public ArrayList poiList;
+    public GameObject prefab;
+    private float time = 1f;
+    public GameObject toBeDestroyedMarker;
+    public GameObject[] listOfToBeDestroyed;
+
+
+    HashSet<List<string>> oldBuildings = new HashSet<List<string>>();
+    HashSet<List<string>> newBuildings = new HashSet<List<string>>();
 
     IEnumerator Start()
     {
+        poiList = new ArrayList();
+        poiList.Add("71a5f824a0dc35526a4b13078541adee");
         highlightMaterialRed.color = Color.red;
         highlightMaterialBlue.color = Color.blue;
 
@@ -78,13 +89,11 @@ public class UpdateCameraGPS : MonoBehaviour {
         // Set the camera for the Wrld3d map
         Api.Instance.CameraApi.SetControlledCamera(setCam);
 
-        InvokeRepeating("updateMap", 2.0f, 10.0f);
-
+        InvokeRepeating("updateMap", 2.0f, time);
 
     }
 
     public void updateMap(){
-
 
       double lat = Input.location.lastData.latitude;
       double longe = Input.location.lastData.longitude;
@@ -102,71 +111,126 @@ public class UpdateCameraGPS : MonoBehaviour {
       Hashtable header = new Hashtable();
       header.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 
-
       //centroidLat
       //team
-      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&teamOnly=true&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=team&extraFields[3]=baseAltitude&extraFields[4]=topAltitude", null, header);
+      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=team&extraFields[3]=baseAltitude&extraFields[4]=topAltitude", null, header);
       yield return www;
       if (www.error != null)
       {
         print("Error downloading: " + www.error);
       } else {
 
-        //SET BUILDING COLORS HERE
-        print("WWW " + www.text);
+        //print("WWW " + www.text);
         parsingString = Regex.Split(www.text, @"[,:{}]+");
 
-        // for(int x = 0; x < parsingString.Length; x ++){
-        //   print(parsingString[x]);
+        // for(int y = 3; y < parsingString.Length; y++){
+        //   print(parsingString[y]);
         // }
 
         for(int x = 3; x < parsingString.Length - 14; x = x + 14){
 
+          double lnge;
+          double topAlt;
+          string stringLnge;
+          string stringTopAlt;
+          string id;
+          string stringLat = parsingString[x + 7];
+          double lat = Convert.ToDouble(parsingString[x + 7]) + 0.0000000000001;
+
           if(parsingString[x].Trim('"') == "team"){
 
-            //print("BUILDIGN TOPALT " + parsingString[x + 11]);
+            stringLnge = parsingString[x + 9];
+            lnge = Convert.ToDouble(parsingString[x + 9]) + 0.0000000000001;
 
-            double lat = Convert.ToDouble(parsingString[x + 7]) + 0.0000000000001;
-            double lnge = Convert.ToDouble(parsingString[x + 9]) + 0.0000000000001;
+            stringTopAlt = parsingString[x + 3];
+            topAlt = Convert.ToDouble(parsingString[x + 3]);
+
+            id = parsingString[x + 11].Trim('"');
+
             double alt = Convert.ToDouble(parsingString[x + 5]);
-
-            // print("BUILDING COLOR: " + parsingString[x + 1]);
-            // print("BUILDING ID: " + parsingString[x + 3]);
-            // print("BUILDING LNG: " + lnge);
-            // print("BUILDING LAT: " + lat);
-            // print("BUILDING BASEALT " + alt);
-
             var buildingLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
 
             if(parsingString[x + 1].Trim('"') == "red"){
               Api.Instance.BuildingsApi.HighlightBuildingAtLocation(buildingLocation, highlightMaterialRed, OnHighlightReceived);
+
             } else if(parsingString[x + 1].Trim('"') == "blue"){
               Api.Instance.BuildingsApi.HighlightBuildingAtLocation(buildingLocation, highlightMaterialBlue, OnHighlightReceived);
             }
+          }else{
+            stringLnge = parsingString[x + 5];
+            lnge = Convert.ToDouble(parsingString[x + 5]) + 0.0000000000001;
+
+            stringTopAlt = parsingString[x + 11];
+            topAlt = Convert.ToDouble(parsingString[x + 11]);
+
+            id = parsingString[x + 3].Trim('"');
+          }
+
+          foreach(string idNum in poiList){
+            if (idNum.Equals(id)){
+              print("YAY");
+              var v1  = new List<string>();
+              v1.Add(id);
+              v1.Add(stringLat);
+              v1.Add(stringLnge);
+              v1.Add(stringTopAlt);
+              //id, stringLat, stringLnge, stringTopAlt
+              newBuildings.Add(v1);
+            }
           }
         }
-      }
-    }
 
-    void test(bool success, Highlight highlight)
-    {
-        if (success)
-        {
-            //StartCoroutine(ClearHighlight(highlight));
-        } else{
-          //
+        var toLoad = new HashSet<List<string>>(newBuildings);
+        var toDestroy = new HashSet<List<string>>(oldBuildings);
+
+        toDestroy.ExceptWith(newBuildings);
+
+        toLoad.ExceptWith(oldBuildings);
+
+        foreach (List<string> placement in toDestroy){
+
+          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 10);
+          StartCoroutine(destroy(placement[0], boxLocation));
         }
+
+        foreach (List<string> placement in toLoad){
+          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 10);
+          print(boxLocation.GetLatitude());
+          print(placement[0]);
+          StartCoroutine(MakeBox(placement[0], boxLocation));
+        }
+
+        oldBuildings = newBuildings;
+
+      }
     }
 
     void OnHighlightReceived(bool success, Highlight highlight)
     {
         if (success)
         {
-          // print("HELLO?");
-            //StartCoroutine(ClearHighlight(highlight));
+          //it did work
         } else{
-          //print("NOOOOOO");
+          //it didn't work
         }
+    }
+
+    IEnumerator MakeBox(string id, LatLongAltitude latLongAlt){
+      var viewpoint = Wrld.Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
+
+      var worldpoint = Camera.main.ViewportToWorldPoint(viewpoint);
+
+      GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
+
+      cloneMarker.name = id;
+
+      yield return null;
+    }
+
+    IEnumerator destroy(string id, LatLongAltitude latLongAlt){
+      toBeDestroyedMarker = GameObject.Find(id);
+      Destroy(toBeDestroyedMarker);
+      yield return null;
     }
 
     void Update () {
@@ -222,6 +286,5 @@ public class UpdateCameraGPS : MonoBehaviour {
         Api.Instance.CameraApi.AnimateTo(currentLocation, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
-
 	}
 }

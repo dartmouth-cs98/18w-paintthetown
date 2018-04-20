@@ -28,7 +28,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public float speed = 0.001f;
     public Image image;
     public LatLongAltitude latLongAlt;
-    public ArrayList poiList = new ArrayList(new string[] { "dbf69cccfd7b8c096e5b150e0140b0ae" });
+    public ArrayList poiList = new ArrayList(new string[] { "71a5f824a0dc35526a4b13078541adee" });
     private Boolean isPoi;
     private string buildingDistanceMessage = "You must be closer to the building in order to paint it!";
     private string sameBuildingColorMessage = "That building is already owned by your team!";
