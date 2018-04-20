@@ -12,6 +12,7 @@ public class Login : MonoBehaviour {
 	string signinURL = "https://paint-the-town.herokuapp.com/api/signin";
 
 	public Button GoToSignUpButton;
+	public Button SignInButton;
 	public GameObject username;
 	public GameObject password;
 	private string Username;
@@ -142,7 +143,7 @@ public class Login : MonoBehaviour {
 
 	public void Update() {
 
-		if (Input.GetKeyDown (KeyCode.Return)) {
+		if (SignInButton) {
 			if (Password != "" && Username != "") {
 				StartCoroutine("SigninButton");
 			}
