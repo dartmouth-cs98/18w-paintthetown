@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Wrld;
+using Wrld.Resources.Buildings;
+using Wrld.Space;
 
 public class SwitchCamera : MonoBehaviour {
 
@@ -15,6 +18,7 @@ public class SwitchCamera : MonoBehaviour {
         Button btn = switchBtn.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
 
+        //Api.Instance.CameraApi.SetControlledCamera(null);
         uiCam.enabled = true;
         setCam.enabled = true;
         povCam.enabled = false;
@@ -30,6 +34,13 @@ public class SwitchCamera : MonoBehaviour {
     {
         povCam.enabled = !povCam.enabled;
         setCam.enabled = !setCam.enabled;
+
+        if(povCam.enabled == true){
+          Api.Instance.CameraApi.SetControlledCamera(null);
+        }else{
+          Api.Instance.CameraApi.SetControlledCamera(setCam);
+        }
+
         print("Cameras switched!");
     }
 }

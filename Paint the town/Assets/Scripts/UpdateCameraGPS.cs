@@ -31,15 +31,18 @@ public class UpdateCameraGPS : MonoBehaviour {
     private float time = 1f;
     public GameObject toBeDestroyedMarker;
     public GameObject[] listOfToBeDestroyed;
-
+    public LatLong centerMapLatLong;
+    public double centerMapDistance;
+    public bool mapCentered;
 
     HashSet<List<string>> oldBuildings = new HashSet<List<string>>();
     HashSet<List<string>> newBuildings = new HashSet<List<string>>();
 
     IEnumerator Start()
     {
-
+        mapCentered = false;
         Input.gyro.enabled = true;
+
         poiList = new ArrayList();
         poiList.Add("71a5f824a0dc35526a4b13078541adee");
         highlightMaterialRed.color = Color.red;
@@ -86,7 +89,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         else
         {
             // Access granted and location value could be retrieved
-            // print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
+            print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
         }
 
         // Set the camera for the Wrld3d map
@@ -94,6 +97,8 @@ public class UpdateCameraGPS : MonoBehaviour {
 
         InvokeRepeating("updateMap", 2.0f, time);
 
+        var currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+        //Api.Instance.CameraApi.AnimateTo(currentLatLong, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
     }
 
     public void updateMap(){
@@ -171,7 +176,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
           foreach(string idNum in poiList){
             if (idNum.Equals(id)){
-              print("YAY");
+              //print("YAY");
               var v1  = new List<string>();
               v1.Add(id);
               v1.Add(stringLat);
@@ -237,6 +242,11 @@ public class UpdateCameraGPS : MonoBehaviour {
       yield return null;
     }
 
+    public void centerCam(){
+        print("'ELLO'");
+        Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+    }
+
     void Update () {
 
         // handle pinch to zoom
@@ -284,13 +294,24 @@ public class UpdateCameraGPS : MonoBehaviour {
             distance += distMagnitudeDiff * zoomSpeed;
         }
 
-        var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude,0);
+        var currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+        var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 0);
 
         Api.Instance.CameraApi.GeographicToWorldPoint(currentLocation,setCam);
+
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 
         povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
+
+        centerMapLatLong = currentLatLong;
+        centerMapDistance = distance;
+
+        if(!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f){
+          print("GOVNA");
+          mapCentered = true;
+          Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+        }
 
         //print("---------------------------------");
         //print(setCam.transform.position);
