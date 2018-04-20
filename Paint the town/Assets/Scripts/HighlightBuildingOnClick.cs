@@ -30,6 +30,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public LatLongAltitude latLongAlt;
     public ArrayList poiList = new ArrayList(new string[] { "71a5f824a0dc35526a4b13078541adee" });
     private Boolean isPoi;
+    public Boolean stopFlag;
     private string buildingDistanceMessage = "You must be closer to the building in order to paint it!";
     private string sameBuildingColorMessage = "That building is already owned by your team!";
 
@@ -38,6 +39,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void Start()
     {
+      stopFlag = false;
       textArea.enabled = false;
       image.enabled = false;
 
@@ -80,8 +82,11 @@ public class HighlightBuildingOnClick : MonoBehaviour
         {
             mouseDownPosition = Input.mousePosition;
         }
-        if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f)
+        //print(Camera.current);
+        if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && !stopFlag)
         {
+            print("this and that " + Vector3.Distance(mouseDownPosition, Input.mousePosition));
+
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
@@ -311,5 +316,9 @@ public class HighlightBuildingOnClick : MonoBehaviour
         characterIndex++;
         //print("text area: " + textArea.text);
       }
+    }
+
+    public void stopCheckingMapClicks(){
+      stopFlag = !stopFlag;
     }
 }

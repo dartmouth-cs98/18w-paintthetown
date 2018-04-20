@@ -77,11 +77,11 @@ public class SignUp : MonoBehaviour {
 	// called once per frame
 	public void Update() {
 
-		if (SignUpButton) {
-			if (SignupPassword != "" && SignupUsername != "") {
-				StartCoroutine("RegisterButton");
-			}
-		}
+		// if (SignUpButton) {
+		// 	if (SignupPassword != "" && SignupUsername != "") {
+		// 		StartCoroutine("RegisterButton");
+		// 	}
+		// }
 
 		SignupUsername = signupUsername.GetComponent<InputField> ().text;
 		SignupPassword = signupPassword.GetComponent<InputField> ().text;

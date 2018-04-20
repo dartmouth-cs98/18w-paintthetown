@@ -15,6 +15,7 @@ using UnityEngine.Networking;
 public class UpdateCameraGPS : MonoBehaviour {
 
     public bool isUnityRemote;
+    public Camera povCam;
     public Camera setCam;
     public float zoomSpeed = .5f; // speed to zoom in or out at
     private double distance = 300.00; // height in Wrld3d api distance terms
@@ -37,6 +38,8 @@ public class UpdateCameraGPS : MonoBehaviour {
 
     IEnumerator Start()
     {
+
+        Input.gyro.enabled = true;
         poiList = new ArrayList();
         poiList.Add("71a5f824a0dc35526a4b13078541adee");
         highlightMaterialRed.color = Color.red;
@@ -218,7 +221,8 @@ public class UpdateCameraGPS : MonoBehaviour {
     IEnumerator MakeBox(string id, LatLongAltitude latLongAlt){
       var viewpoint = Wrld.Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
 
-      var worldpoint = Camera.main.ViewportToWorldPoint(viewpoint);
+      var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
+
 
       GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
 
@@ -237,25 +241,25 @@ public class UpdateCameraGPS : MonoBehaviour {
 
         // handle pinch to zoom
         // if there are two touches
-        if (Input.touchCount == 2)
+        if (Input.touchCount == 2 && setCam.enabled)
         {
 
-            print("Pinch gesture detected!");
+          print("Pinch gesture detected!");
 
-            // store them
-            Touch touch0 = Input.GetTouch(0);
-            Touch touch1 = Input.GetTouch(1);
+          // store them
+          Touch touch0 = Input.GetTouch(0);
+          Touch touch1 = Input.GetTouch(1);
 
-            // find the positions of those touches in the previous frame
-            Vector2 touch0PrevPos = touch0.position - touch0.deltaPosition;
-            Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
+          // find the positions of those touches in the previous frame
+          Vector2 touch0PrevPos = touch0.position - touch0.deltaPosition;
+          Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
 
-            // find magnitude of the distance between the touches, both current and in the previous frame
-            float touchDistanceMag = (touch0.position - touch1.position).magnitude;
-            float prevTouchDistanceMag = (touch0PrevPos - touch1PrevPos).magnitude;
+          // find magnitude of the distance between the touches, both current and in the previous frame
+          float touchDistanceMag = (touch0.position - touch1.position).magnitude;
+          float prevTouchDistanceMag = (touch0PrevPos - touch1PrevPos).magnitude;
 
-            // find the difference in magnitude between the two distances
-            float distMagnitudeDiff = prevTouchDistanceMag - touchDistanceMag;
+          // find the difference in magnitude between the two distances
+          float distMagnitudeDiff = prevTouchDistanceMag - touchDistanceMag;
 
             // if the camera is orthographic
             //if (setCam.orthographic)
@@ -280,11 +284,19 @@ public class UpdateCameraGPS : MonoBehaviour {
             distance += distMagnitudeDiff * zoomSpeed;
         }
 
-        // take the lastData and put it into the camera api from wrld3d
-        var currentLocation = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+        var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude,0);
 
-        Api.Instance.CameraApi.AnimateTo(currentLocation, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+        Api.Instance.CameraApi.GeographicToWorldPoint(currentLocation,setCam);
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
+
+        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
+
+        //print("---------------------------------");
+        //print(setCam.transform.position);
+        //print(povCam.transform.position);
+
+        povCam.transform.Rotate(-Input.gyro.rotationRateUnbiased.x, -Input.gyro.rotationRateUnbiased.y, -Input.gyro.rotationRateUnbiased.z);
+
 	}
 }
