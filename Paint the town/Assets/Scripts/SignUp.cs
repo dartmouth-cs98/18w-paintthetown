@@ -20,8 +20,7 @@ public class SignUp : MonoBehaviour {
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
 	public Button GoToLoginButton;
-	private bool showPopUp = false;
-	private string errorMessage;
+	public Button SignUpButton;
 
 	public string[] subReturnStrings;
 
@@ -76,7 +75,8 @@ public class SignUp : MonoBehaviour {
 
 	// called once per frame
 	public void Update() {
-		if (Input.GetKeyDown (KeyCode.Return)) {
+
+		if (SignUpButton) {
 			if (SignupPassword != "" && SignupUsername != "") {
 				StartCoroutine("RegisterButton");
 			}
@@ -87,25 +87,5 @@ public class SignUp : MonoBehaviour {
 		SignupLastName = signupLastName.GetComponent<InputField> ().text;
 	}
 
-	void OnGUI(){
-		if (showPopUp) {
-			GUI.Window(0, new Rect((Screen.width/2)-150, (Screen.height/2)-75
-				, 250, 200), ShowGUI, "Signup Error");
-		}
-	}
-
-	void ShowGUI(int windowID) {
-		// put a label to show a message to the player
-		GUI.Label(new Rect(45, 40, 200, 30), errorMessage.Trim('"'));
-
-		// You may put a button to close the pop up too
-		if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
-			signupUsername.GetComponent<InputField> ().text = "";
-			signupPassword.GetComponent<InputField> ().text = "";
-			signupName.GetComponent<InputField> ().text = "";
-			signupLastName.GetComponent<InputField> ().text = "";
-			showPopUp = false;
-		}
-	}
 
 }
