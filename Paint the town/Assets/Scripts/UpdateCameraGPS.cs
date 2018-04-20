@@ -16,6 +16,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
     public bool isUnityRemote;
     public Camera setCam;
+    public Camera povCam;
     public float zoomSpeed = .5f; // speed to zoom in or out at
     private double distance = 300.00; // height in Wrld3d api distance terms
     public double uMinLng;
@@ -30,6 +31,8 @@ public class UpdateCameraGPS : MonoBehaviour {
     {
         highlightMaterialRed.color = Color.red;
         highlightMaterialBlue.color = Color.blue;
+
+        Input.gyro.enabled = true;
 
         // wait for the unity remote to connect, if applicable
         if (isUnityRemote)
@@ -96,6 +99,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
       StartCoroutine("sendUpdateBoundingBox");
     }
+
 
     public IEnumerator sendUpdateBoundingBox(){
 
@@ -217,11 +221,22 @@ public class UpdateCameraGPS : MonoBehaviour {
         }
 
         // take the lastData and put it into the camera api from wrld3d
-        var currentLocation = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+        var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude,0);
 
-        Api.Instance.CameraApi.AnimateTo(currentLocation, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+        //Api.Instance.CameraApi.AnimateTo(currentLocation, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+    
+        Api.Instance.CameraApi.GeographicToWorldPoint(currentLocation,setCam);
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
+        
+        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
 
-	}
+        print("---------------------------------");
+        print(setCam.transform.position);
+        print(povCam.transform.position);
+
+        povCam.transform.Rotate(-Input.gyro.rotationRateUnbiased.x, -Input.gyro.rotationRateUnbiased.y, -Input.gyro.rotationRateUnbiased.z);
+
+        
+    }
 }
