@@ -1083,11 +1083,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76e31a1fc2789e545bbc050acb3b27c9, type: 2}
   m_IsPrefabParent: 0
---- !u!198 &1501054440 stripped
-ParticleSystem:
-  m_PrefabParentObject: {fileID: 198248526474942746, guid: ff5eded233b11354abc5fa81665a2548,
-    type: 2}
-  m_PrefabInternal: {fileID: 1695763971}
 --- !u!1 &1561410029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,7 +1325,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1653256132}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c021ea6ce40e9c4cab9c29539647285, type: 3}
   m_Name: 
@@ -1397,7 +1392,7 @@ Prefab:
     - target: {fileID: 23395203977131126, guid: ff5eded233b11354abc5fa81665a2548,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114153936756657580, guid: ff5eded233b11354abc5fa81665a2548,
         type: 2}
@@ -1445,7 +1440,7 @@ Prefab:
     - target: {fileID: 114153936756657580, guid: ff5eded233b11354abc5fa81665a2548,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff5eded233b11354abc5fa81665a2548, type: 2}
@@ -1634,9 +1629,6 @@ MonoBehaviour:
   distanceMin: 15
   distanceMax: 100
   zoomSpeed: 0.5
-  pLauncher: {fileID: 1501054440}
-  splatterParticles: {fileID: 265059507}
-  PDP: {fileID: 1123677928}
 --- !u!1 &1875604214
 GameObject:
   m_ObjectHideFlags: 0

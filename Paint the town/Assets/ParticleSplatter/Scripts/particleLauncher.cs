@@ -13,10 +13,79 @@ public class particleLauncher : MonoBehaviour {
 
     List<ParticleCollisionEvent> cEvents;
 
-	// Use this for initialization
-	void Start () {
+    public string bID;
+    public string owner;
+    public string playerColor;
+
+    IEnumerator checkOwnership()
+    {
+        int red = 0;
+        int blu = 0;
+
+        foreach(ParticleDecalData pdd in PDP.pd)
+        {
+            if (pdd.color == Color.blue)
+            {
+                blu += 1;
+            }
+
+            else
+            {
+                red += 1;
+            }
+        }
+
+        if (blu > red)
+        {
+            owner = "blue";
+        }
+
+        else
+        {
+            owner = "red";
+        }
+
+        if (owner.Equals(playerColor))
+        {
+            StartCoroutine("captureBuilding");
+        }
+
+        yield return null;
+    }
+
+    IEnumerator captureBuilding()
+    {
+        print("You're capturing a building");
+
+        WWWForm captureform = new WWWForm();
+
+        captureform.AddField("building", bID);
+        captureform.AddField("team", PlayerPrefs.GetString("teamID", "no teamID"));
+
+        Hashtable headers = new Hashtable();
+        headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+
+        WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings/updateTeam", captureform.data, headers);
+        yield return www;
+        if (www.error != null)
+        {
+            print("Error downloading: " + www.error);
+        }
+        else
+        {
+            print(www.text);
+            print("building captured!");
+            print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
         cEvents = new List<ParticleCollisionEvent>();
-	}
+        bID = PlayerPrefs.GetString("bid");
+        playerColor = PlayerPrefs.GetString("color");
+        InvokeRepeating("startOwnershipCheck", 5.0f, 2.0f);
+    }
 
     void OnParticleCollision(GameObject other)
     {
@@ -44,8 +113,10 @@ public class particleLauncher : MonoBehaviour {
             ParticleSystem.MainModule psMain = pLauncher.main;
             pLauncher.Emit(1);
         }
-
-        
-        
 	}
+
+    void startOwnershipCheck ()
+    {
+        StartCoroutine("checkOwnership");
+    }
 }
