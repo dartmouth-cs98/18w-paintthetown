@@ -12,7 +12,6 @@ public class Login : MonoBehaviour {
 	string signinURL = "https://paint-the-town.herokuapp.com/api/signin";
 
 	public Button GoToSignUpButton;
-	public Button SignInButton;
 	public GameObject username;
 	public GameObject password;
 	private string Username;
@@ -36,6 +35,8 @@ public class Login : MonoBehaviour {
 	public IEnumerator SigninButton(){
 
 		WWWForm f = new WWWForm();
+		print(Username);
+		print(Password);
 		f.AddField("email", Username);
 		f.AddField("password", Password);
 
@@ -78,7 +79,6 @@ public class Login : MonoBehaviour {
 		if(www.text == "null"){
 			print(www.error);
 		}else{
-			print("AHWEFJHSDVBAHSBDNEJHAWEGJ");
 
 			string[] teamInfo = Regex.Split(www.text, @"[,:{}]+");
 
@@ -143,7 +143,7 @@ public class Login : MonoBehaviour {
 
 	public void Update() {
 
-		if (SignInButton) {
+		if (Input.GetKeyDown (KeyCode.Return)) {
 			if (Password != "" && Username != "") {
 				StartCoroutine("SigninButton");
 			}

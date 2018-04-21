@@ -56,7 +56,7 @@ public class WrldMap : MonoBehaviour
 
     [Tooltip("Set to true to use the default mouse & keyboard/touch controls, false if controlling the camera by some other means.")]
     [SerializeField]
-    private bool m_useBuiltInCameraControls;
+    public bool m_useBuiltInCameraControls;
 
     [Header("Collision Settings")]
     [Tooltip("Set to true for Terrain collisions")]
@@ -153,6 +153,7 @@ public class WrldMap : MonoBehaviour
 
         if (m_useBuiltInCameraControls)
         {
+            //Api.Instance.CameraApi.SetControlledCamera(null);
             m_api.CameraApi.SetControlledCamera(m_streamingCamera);
         }
     }
