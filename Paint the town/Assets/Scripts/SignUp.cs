@@ -21,7 +21,8 @@ public class SignUp : MonoBehaviour {
 	public string[] teamInfoList;
 	public Button GoToLoginButton;
 	public Button SignUpButton;
-
+	private bool showPopUp = false;
+	private string errorMessage;
 	public string[] subReturnStrings;
 
 	void Start () {
@@ -76,16 +77,36 @@ public class SignUp : MonoBehaviour {
 	// called once per frame
 	public void Update() {
 
-		if (SignUpButton) {
-			if (SignupPassword != "" && SignupUsername != "") {
-				StartCoroutine("RegisterButton");
-			}
-		}
+		// if (SignUpButton) {
+		// 	if (SignupPassword != "" && SignupUsername != "") {
+		// 		StartCoroutine("RegisterButton");
+		// 	}
+		// }
+
 		SignupUsername = signupUsername.GetComponent<InputField> ().text;
 		SignupPassword = signupPassword.GetComponent<InputField> ().text;
 		SignupName = signupName.GetComponent<InputField> ().text;
 		SignupLastName = signupLastName.GetComponent<InputField> ().text;
 	}
 
+	void OnGUI(){
+		if (showPopUp) {
+			GUI.Window(0, new Rect((Screen.width/2)-150, (Screen.height/2)-75, 250, 200), ShowGUI, "Signup Error");
+		}
+	}
+
+	void ShowGUI(int windowID) {
+		// put a label to show a message to the player
+		GUI.Label(new Rect(45, 40, 200, 30), errorMessage.Trim('"'));
+
+		// You may put a button to close the pop up too
+		if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
+			signupUsername.GetComponent<InputField> ().text = "";
+			signupPassword.GetComponent<InputField> ().text = "";
+			signupName.GetComponent<InputField> ().text = "";
+			signupLastName.GetComponent<InputField> ().text = "";
+			showPopUp = false;
+		}
+	}
 
 }
