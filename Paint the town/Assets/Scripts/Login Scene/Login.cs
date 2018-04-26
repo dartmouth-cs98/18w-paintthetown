@@ -19,7 +19,11 @@ public class Login : MonoBehaviour {
 	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
 	public string redID;
+	public string orangeID;
+	public string yellowID;
+	public string greenID;
 	public string blueID;
+	public string purpleID;
 
 	private bool showPopUp = false;
 	public string[] subReturnStrings;
@@ -105,27 +109,43 @@ public class Login : MonoBehaviour {
 			if(www.text == "null"){
 				print(www.error);
 			}else{
-				print(www.text);
-				string teamInfo = www.text;
-				teamInfoList = teamInfo.Split('"');
+				// print(www.text);
+				// string teamInfo = www.text;
+				teamInfoList = Regex.Split(www.text, @"[,:{}]+");
 
-        //
-				// for (int i = 0; i <= teamInfoList.Length - 1; i++) {
-				// 	print (teamInfoList [i]);
-				// }
-				print("THIS IS REDID: " + teamInfoList[19]);
-				print("THIS IS BLUEID: " + teamInfoList[5]);
 
-				redID = teamInfoList[19];
-				blueID = teamInfoList[5];
+				for (int i = 0; i <= teamInfoList.Length - 1; i++) {
+					// print (teamInfoList [i]);
+					if(teamInfoList [i].Trim('"') == "red"){
+						redID = teamInfoList [i - 2].Trim('"');
+					} else if (teamInfoList [i].Trim('"') == "orange"){
+						orangeID = teamInfoList [i - 2].Trim('"');
+					} else if (teamInfoList [i].Trim('"') == "yellow"){
+						yellowID = teamInfoList [i - 2].Trim('"');
+					} else if (teamInfoList [i].Trim('"') == "green"){
+						greenID = teamInfoList [i - 2].Trim('"');
+					} else if (teamInfoList [i].Trim('"') == "blue"){
+						blueID = teamInfoList [i - 2].Trim('"');
+					} else if (teamInfoList [i].Trim('"') == "purple"){
+						purpleID = teamInfoList [i - 2].Trim('"');
+					}
+				}
 				print("Red team ID: " + redID);
 				print("Blue team ID: " + blueID);
 				if( (PlayerPrefs.GetString("teamID", "no teamID")) == redID)
 				{
 					PlayerPrefs.SetString("color", "red");
+				} else if (PlayerPrefs.GetString("teamID", "no teamID") == orangeID) {
+					PlayerPrefs.SetString("color", "orange");
+				} else if (PlayerPrefs.GetString("teamID", "no teamID") == yellowID) {
+					PlayerPrefs.SetString("color", "yellow");
+				} else if (PlayerPrefs.GetString("teamID", "no teamID") == greenID) {
+					PlayerPrefs.SetString("color", "green");
 				} else if (PlayerPrefs.GetString("teamID", "no teamID") == blueID) {
 					PlayerPrefs.SetString("color", "blue");
-				} else {
+				} else if (PlayerPrefs.GetString("teamID", "no teamID") == purpleID) {
+					PlayerPrefs.SetString("color", "purple");
+				}else{
 					print("Critical error, could not find team color");
 				}
 			}
