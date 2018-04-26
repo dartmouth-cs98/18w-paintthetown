@@ -50,9 +50,11 @@ public class HighlightBuildingOnClick : MonoBehaviour
       if(PlayerPrefs.GetString("color", "no color") == "red")
       {
         highlightMaterial.color = Color.red;
+            e_params.startColor = Color.red;
         print("THE GAME COLOR IS RED");
       } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
         highlightMaterial.color = Color.blue;
+            e_params.startColor = Color.blue;
         print("THE GAME COLOR IS BLUE");
       } else {
         print("Error: could not find player color");

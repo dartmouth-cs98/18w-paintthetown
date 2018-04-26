@@ -22,6 +22,22 @@ public class particleLauncherHighlight : MonoBehaviour {
         cEvents = new List<ParticleCollisionEvent>();
         bID = PlayerPrefs.GetString("bid");
         playerColor = PlayerPrefs.GetString("color");
+
+        ParticleSystem.MainModule mm = pLauncher.main;
+
+
+        if (playerColor == "red")
+        {
+            pLauncher.GetComponent<ParticleSystemRenderer>().material.SetColor("_Color", Color.red);
+            mm.startColor = new ParticleSystem.MinMaxGradient(Color.red);
+        }
+
+        if (playerColor == "blue")
+        {
+            pLauncher.GetComponent<ParticleSystemRenderer>().material.SetColor("_Color", Color.blue);
+            mm.startColor = new ParticleSystem.MinMaxGradient(Color.blue);
+        }
+
     }
 
     void OnParticleCollision(GameObject other)
