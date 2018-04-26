@@ -54,6 +54,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 					print("blue team ID: " + blueID);
 					print("purple team ID: " + purpleID);
 			}
+
   }
 
 	public void startAssignPlayerRED()
