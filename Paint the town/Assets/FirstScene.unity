@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_useBuiltInCameraControls: 1
   m_terrainCollisions: 1
   m_roadCollisions: 0
-  m_buildingCollisions: 0
+  m_buildingCollisions: 1
 --- !u!4 &220022117
 Transform:
   m_ObjectHideFlags: 0
@@ -601,7 +601,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 684563607
+  randomSeed: -1208470021
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5714,7 +5714,6 @@ GameObject:
   - component: {fileID: 1469582716}
   - component: {fileID: 1469582719}
   - component: {fileID: 1469582718}
-  - component: {fileID: 1469582717}
   - component: {fileID: 1469582720}
   m_Layer: 0
   m_Name: POVparticles
@@ -5737,24 +5736,6 @@ Transform:
   m_Father: {fileID: 330341062}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1469582717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114153936756657580, guid: ff5eded233b11354abc5fa81665a2548,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1469582715}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66231ee3151338346a6f614119394274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pLauncher: {fileID: 1469582719}
-  splatterParticles: {fileID: 1848871689}
-  PDP: {fileID: 898762751}
-  bID: 
-  owner: 
-  playerColor: 
 --- !u!199 &1469582718
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -5871,7 +5852,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1276601444
+  randomSeed: 1842813548
   InitialModule:
     serializedVersion: 3
     enabled: 1

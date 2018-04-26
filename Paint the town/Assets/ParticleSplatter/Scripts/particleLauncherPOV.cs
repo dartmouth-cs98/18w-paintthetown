@@ -117,7 +117,15 @@ public class particleLauncherPOV : MonoBehaviour {
         if (Input.GetButton("Fire1")) {
             print("we in that");
 
-            var ray = setCam.ScreenPointToRay(Input.mousePosition);
+            // FIX IT FIX IT FIX IT
+            var screenPos = new Vector3
+            {
+                x = Input.mousePosition.x,
+                y = Input.mousePosition.y,
+                z = setCam.transform.position.z
+            };
+
+            var ray = setCam.ScreenPointToRay(screenPos);
 
             RaycastHit hit;
 
