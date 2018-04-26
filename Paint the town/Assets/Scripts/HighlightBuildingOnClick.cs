@@ -37,6 +37,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
     int index = 0;
     int characterIndex = 0;
 
+    // particle system stuff
+    public ParticleSystem pLauncher;
+    public ParticleSystem.EmitParams e_params;
+
     void Start()
     {
       stopFlag = false;
@@ -46,13 +50,19 @@ public class HighlightBuildingOnClick : MonoBehaviour
       if(PlayerPrefs.GetString("color", "no color") == "red")
       {
         highlightMaterial.color = Color.red;
+            e_params.startColor = Color.red;
         print("THE GAME COLOR IS RED");
       } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
         highlightMaterial.color = Color.blue;
+            e_params.startColor = Color.blue;
         print("THE GAME COLOR IS BLUE");
       } else {
         print("Error: could not find player color");
       }
+
+        // particle system stuff
+        e_params = new ParticleSystem.EmitParams();
+        e_params.startSize = 5.0f;
     }
 
     void OnEnable()
@@ -94,6 +104,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
+                var tempPosition = hit.point;
+                tempPosition.y = hit.point.y + 10;
+                e_params.position = tempPosition;
+                pLauncher.Emit(e_params, 1);
                 latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
                 double captureDistance = .0015;
                 if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
