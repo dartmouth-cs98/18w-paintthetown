@@ -33,6 +33,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public Boolean stopFlag;
     private string buildingDistanceMessage = "You must be closer to the building in order to paint it!";
     private string sameBuildingColorMessage = "That building is already owned by your team!";
+	public Camera povCam;
+	public Camera overheadCam;
 
     int index = 0;
     int characterIndex = 0;
@@ -88,44 +90,56 @@ public class HighlightBuildingOnClick : MonoBehaviour
         }
       }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            mouseDownPosition = Input.mousePosition;
-        }
-        //print(Camera.current);
-        if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && !stopFlag)
-        {
-            print("this and that " + Vector3.Distance(mouseDownPosition, Input.mousePosition));
+		if (Input.GetMouseButtonDown(0))
+		{
+			print ("mouse pressed maybe?"+mouseDownPosition);
+			print ("i am here! come find me!");
+			mouseDownPosition = Input.mousePosition;
+			print ("input mousepos = " + Input.mousePosition);
+		}
+			
 
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			//print(Camera.current);
+		if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && overheadCam.enabled ==false)
+		{
+			print ("sf2 "+ stopFlag);
+			print("this and that " + Vector3.Distance(mouseDownPosition, Input.mousePosition));
+			//			print ("oHCam" + overheadCam.enabled);
+			//			print ("pCam" + povCam.enabled);
+			if (povCam.enabled == true && overheadCam.enabled == false) {
+				print ("hello hello");
+				var ray = povCam.ScreenPointToRay (Input.mousePosition);
 
-            RaycastHit hit;
+			
+		        RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
-                var tempPosition = hit.point;
-                tempPosition.y = hit.point.y + 10;
-                e_params.position = tempPosition;
-                pLauncher.Emit(e_params, 1);
-                latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
-                double captureDistance = .0015;
-                if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
-                  //given selected building, start to get data from server
+		        if (Physics.Raycast(ray, out hit))
+		        {
+		            var viewportPoint = povCam.WorldToViewportPoint(hit.point);
+		            var tempPosition = hit.point;
+		            tempPosition.y = hit.point.y + 10;
+		            e_params.position = tempPosition;
+		            pLauncher.Emit(e_params, 1);
+		            latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, povCam);
+		            double captureDistance = .0015;
+		            if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
+		              //given selected building, start to get data from server
 
-                  location = latLongAlt;
+		              location = latLongAlt;
 
-                  Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
+		              Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
+						//make two calls one for 1st raycast hit and one for the second. then check if ids are the same or diff
+						//account for them being null yo
+		              //Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
 
-                  Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+		            } else if(image.enabled == false){
 
-                } else if(image.enabled == false){
-
-                  Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), checkBuildingExist);
-                }
-            }
-        }
-    }
+		              Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), checkBuildingExist);
+		            }
+		        }
+	    	}
+		}
+	}
 
 
     void OnHighlightReceived(bool success, Highlight highlight)

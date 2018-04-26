@@ -44,3 +44,15 @@
 /Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Unity.Cecil.Mdb.dll
 /Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll
 /Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.xml
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Google.IOSResolver_v1.2.59.0.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Google.JarResolver_v1.2.59.0.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Google.VersionHandlerImpl_v1.2.59.0.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/UnityEditor.iOS.Extensions.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Facebook.Unity.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Facebook.Unity.Editor.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Facebook.Unity.Gameroom.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/FacebookNamedPipeClient.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Facebook.Unity.Settings.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/Google.VersionHandler.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/UnityEditor.iOS.Extensions.Common.dll
+/Users/acaciah/Documents/acacia/dart_classes/cs98/18w-paintthetown/Paint the town/Temp/bin/Debug/UnityEditor.iOS.Extensions.Common.dll.mdb
