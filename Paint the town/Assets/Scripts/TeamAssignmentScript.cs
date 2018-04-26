@@ -34,17 +34,17 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 				for (int i = 3; i <= teamInfoList.Length - 1; i++) {
 					if(teamInfoList [i].Trim('"') == "red"){
-						redID = teamInfoList [i - 2].Trim('"');
+						redID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "blue"){
-						blueID = teamInfoList [i - 2].Trim('"');
+						blueID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "yellow"){
-						yellowID = teamInfoList [i - 2].Trim('"');
+						yellowID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "orange"){
-						orangeID = teamInfoList [i - 2].Trim('"');
+						orangeID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "purple"){
-						purpleID = teamInfoList [i - 2].Trim('"');
+						purpleID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "green"){
-						greenID = teamInfoList [i - 2].Trim('"');
+						greenID = teamInfoList [i - 5].Trim('"');
 					}
 				}
 					print("Red team ID: " + redID);
