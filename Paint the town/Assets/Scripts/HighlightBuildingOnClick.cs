@@ -33,6 +33,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
     public Boolean stopFlag;
     private string buildingDistanceMessage = "You must be closer to the building in order to paint it!";
     private string sameBuildingColorMessage = "That building is already owned by your team!";
+    public Camera mainCam;
+    public Camera povCam;
 
     int index = 0;
     int characterIndex = 0;
@@ -90,30 +92,36 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            mouseDownPosition = Input.mousePosition;
+          print("HI!");
+          mouseDownPosition = Input.mousePosition;
         }
-        //print(Camera.current);
-        if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && !stopFlag)
+
+        if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && mainCam.enabled == false)
         {
             print("this and that " + Vector3.Distance(mouseDownPosition, Input.mousePosition));
 
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var ray = povCam.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                var viewportPoint = Camera.main.WorldToViewportPoint(hit.point);
+                var viewportPoint = povCam.WorldToViewportPoint(hit.point);
                 var tempPosition = hit.point;
                 tempPosition.y = hit.point.y + 10;
                 e_params.position = tempPosition;
                 pLauncher.Emit(e_params, 1);
-                latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, Camera.main);
+                latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, povCam);
                 double captureDistance = .0015;
                 if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
                   //given selected building, start to get data from server
 
                   location = latLongAlt;
+
+                  print("LONG " + location.GetLongitude());
+                  print("LAT " + location.GetLatitude());
+                  print("ALT " + location.GetAltitude());
+
 
                   Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 

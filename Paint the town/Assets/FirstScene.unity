@@ -387,8 +387,8 @@ MonoBehaviour:
   m_overrideLandmarkMaterial: {fileID: 0}
   m_useBuiltInCameraControls: 1
   m_terrainCollisions: 1
-  m_roadCollisions: 0
-  m_buildingCollisions: 0
+  m_roadCollisions: 1
+  m_buildingCollisions: 1
 --- !u!4 &220022117
 Transform:
   m_ObjectHideFlags: 0
@@ -455,6 +455,8 @@ MonoBehaviour:
   speed: 0.001
   image: {fileID: 1715559694}
   stopFlag: 0
+  mainCam: {fileID: 739109162}
+  povCam: {fileID: 330341061}
   pLauncher: {fileID: 300762916}
 --- !u!1 &300762915
 GameObject:
