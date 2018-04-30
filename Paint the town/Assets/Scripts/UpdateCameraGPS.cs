@@ -14,6 +14,55 @@ using UnityEngine.Networking;
 
 public class UpdateCameraGPS : MonoBehaviour {
 
+    struct BuildingStuff
+    {
+        public string id;
+        public float Lat;
+        public float Longe;
+        public float alt;
+        public float r;
+        public float g;
+        public float b;
+
+        public override bool Equals( object ob ){
+      		if( ob is BuildingStuff ) {
+      			BuildingStuff c = (BuildingStuff) ob;
+      			return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt && r==c.r && g==c.r && b==c.b;
+      		}
+      		else {
+      			return false;
+      		}
+      	}
+
+        public override int GetHashCode(){
+          return id.GetHashCode() + Lat.GetHashCode()  + Longe.GetHashCode() + alt.GetHashCode() + r.GetHashCode() + g.GetHashCode() + b.GetHashCode();
+        }
+
+    };
+
+    struct BuildingPOIStuff
+    {
+      public string id;
+      public float Lat;
+      public float Longe;
+      public float alt;
+
+      public override bool Equals( object ob ){
+        if( ob is BuildingPOIStuff ) {
+          BuildingPOIStuff c = (BuildingPOIStuff) ob;
+          return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt;
+        }
+        else {
+          return false;
+        }
+      }
+
+      public override int GetHashCode(){
+        return (id.GetHashCode() + Lat.GetHashCode() + Longe.GetHashCode() + alt.GetHashCode());
+      }
+
+    };
+
     public bool isUnityRemote;
     public Camera povCam;
     public Camera setCam;
@@ -28,7 +77,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     public Material highlightMaterialBlue;
     public ArrayList poiList;
     public GameObject prefab;
-    private float time = 10f;
+    private float time = 0.5f;
     public GameObject toBeDestroyedMarker;
     public GameObject[] listOfToBeDestroyed;
     public LatLong centerMapLatLong;
@@ -52,11 +101,11 @@ public class UpdateCameraGPS : MonoBehaviour {
     string g;
     string b;
 
-    HashSet<List<string>> oldBuildings = new HashSet<List<string>>();
-    HashSet<List<string>> newBuildings = new HashSet<List<string>>();
+    HashSet<BuildingPOIStuff> oldBuildings = new HashSet<BuildingPOIStuff>();
+    HashSet<BuildingPOIStuff> newBuildings = new HashSet<BuildingPOIStuff>();
 
-    HashSet<List<string>> oldBuildingsColor = new HashSet<List<string>>();
-    HashSet<List<string>> newBuildingsColor = new HashSet<List<string>>();
+    HashSet<BuildingStuff> oldBuildingsColor = new HashSet<BuildingStuff>();
+    HashSet<BuildingStuff> newBuildingsColor = new HashSet<BuildingStuff>();
 
     IEnumerator Start()
     {
@@ -161,7 +210,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         print("Error downloading: " + www.error);
       } else {
 
-        print("WWW " + www.text);
+        //print("WWW " + www.text);
         parsingString = Regex.Split(www.text, @"[,:{}]+");
 
         // for(int y = 3; y < parsingString.Length; y++){
@@ -203,23 +252,18 @@ public class UpdateCameraGPS : MonoBehaviour {
           //****************************************
 
           if(team != ""){
-            // print("id " + id);
-            // print("stringlat " + stringLat);
-            // print("stringLnge " + stringLnge);
-            // print("alt " + alt);
-            // print("r " + r);
-            // print("g " + g);
-            // print("b " + b);
-            // print("team: " + team);
-            var v0 = new List<string>();
-            v0.Add(id);
-            v0.Add(stringLat);
-            v0.Add(stringLnge);
-            v0.Add(Convert.ToString(alt));
-            v0.Add(r);
-            v0.Add(g);
-            v0.Add(b);
-            newBuildingsColor.Add(v0);
+
+            BuildingStuff BuildingC = new BuildingStuff();
+
+            BuildingC.id = id;
+            BuildingC.Lat = (float)lat;
+            BuildingC.Longe = (float)lnge;
+            BuildingC.alt = (float)alt;
+            BuildingC.r = (float)Convert.ToDouble(r);
+            BuildingC.g = (float)Convert.ToDouble(g);
+            BuildingC.b = (float)Convert.ToDouble(b);
+
+            newBuildingsColor.Add(BuildingC);
           }
 
           // *****************************************
@@ -228,12 +272,14 @@ public class UpdateCameraGPS : MonoBehaviour {
 
           foreach(string idNum in poiList){
             if (idNum.Equals(id)){
-              var v1 = new List<string>();
-              v1.Add(id);
-              v1.Add(stringLat);
-              v1.Add(stringLnge);
-              v1.Add(stringTopAlt);
-              newBuildings.Add(v1);
+
+              BuildingPOIStuff BuildingPOI = new BuildingPOIStuff();
+
+              BuildingPOI.id = id;
+              BuildingPOI.Lat = (float)lat;
+              BuildingPOI.Longe = (float)lnge;
+              BuildingPOI.alt  = (float)alt;
+              newBuildings.Add(BuildingPOI);
             }
           }
         }
@@ -241,45 +287,48 @@ public class UpdateCameraGPS : MonoBehaviour {
         // ***********************************
         //BUILDING HIGHLIGHT DESTROY AND LOAD
         // ***********************************
-        var toLoadColors = new HashSet<List<string>>(newBuildingsColor);
-        var toDestroyColors = new HashSet<List<string>>(oldBuildingsColor);
+        var toLoadColors = new HashSet<BuildingStuff>(newBuildingsColor);
+        var toDestroyColors = new HashSet<BuildingStuff>(oldBuildingsColor);
 
         toDestroyColors.ExceptWith(newBuildingsColor);
         toLoadColors.ExceptWith(oldBuildingsColor);
 
-        foreach (List<string> placement in toDestroyColors){
-          StartCoroutine(destroyColor(placement[0]));
+        foreach (BuildingStuff placement in toDestroyColors){
+          print("Happy");
+          StartCoroutine(destroyColor(placement.id));
         }
 
-        foreach (List<string> placement in toLoadColors){
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]));
+        foreach (BuildingStuff placement in toLoadColors){
+          print("sad");
+          var boxLocation = LatLongAltitude.FromDegrees(placement.Longe, placement.Lat, placement.alt);
           //create RGB from the list
-          Color color = new Color((float)Convert.ToDouble(placement[4]),(float)Convert.ToDouble(placement[5]),(float)Convert.ToDouble(placement[6]), 0.1f);
-          StartCoroutine(MakeHighlight(placement[0], boxLocation, color));
+          Color color = new Color( placement.r/255, placement.g/255, placement.b/255, 0.1f);
+          StartCoroutine(MakeHighlight(placement.id, boxLocation, color));
         }
 
         oldBuildingsColor = newBuildingsColor;
+        newBuildingsColor.Clear();
 
         // ***********************************
         //BUILDING POI DESTROY AND LOAD
         // ***********************************
-        var toLoad = new HashSet<List<string>>(newBuildings);
-        var toDestroy = new HashSet<List<string>>(oldBuildings);
+        var toLoad = new HashSet<BuildingPOIStuff>(newBuildings);
+        var toDestroy = new HashSet<BuildingPOIStuff>(oldBuildings);
 
         toDestroy.ExceptWith(newBuildings);
         toLoad.ExceptWith(oldBuildings);
 
-        foreach (List<string> placement in toDestroy){
-          StartCoroutine(destroy(placement[0]));
+        foreach (BuildingPOIStuff placement in toDestroy){
+          StartCoroutine(destroy(placement.id));
         }
 
-        foreach (List<string> placement in toLoad){
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 20);
-          StartCoroutine(MakeBox(placement[0], boxLocation));
+        foreach (BuildingPOIStuff placement in toLoad){
+          var boxLocation = LatLongAltitude.FromDegrees(placement.Longe, placement.Lat, placement.alt + 20);
+          StartCoroutine(MakeBox(placement.id, boxLocation));
         }
 
         oldBuildings = newBuildings;
-
+        newBuildings.Clear();
       }
     }
 
@@ -396,7 +445,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 
-        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 50);
+        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 60);
 
         pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
 

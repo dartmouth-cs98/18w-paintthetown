@@ -49,18 +49,18 @@ public class HighlightBuildingOnClick : MonoBehaviour
       textArea.enabled = false;
       image.enabled = false;
 
-      if(PlayerPrefs.GetString("color", "no color") == "red")
-      {
-        highlightMaterial.color = Color.red;
-            e_params.startColor = Color.red;
-        print("THE GAME COLOR IS RED");
-      } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
-        highlightMaterial.color = Color.blue;
-            e_params.startColor = Color.blue;
-        print("THE GAME COLOR IS BLUE");
-      } else {
-        print("Error: could not find player color");
-      }
+      // if(PlayerPrefs.GetString("color", "no color") == "red")
+      // {
+      //   highlightMaterial.color = Color.red;
+      //       e_params.startColor = Color.red;
+      //   print("THE GAME COLOR IS RED");
+      // } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
+      //   highlightMaterial.color = Color.blue;
+      //       e_params.startColor = Color.blue;
+      //   print("THE GAME COLOR IS BLUE");
+      // } else {
+      //   print("Error: could not find player color");
+      // }
 
         // particle system stuff
         e_params = new ParticleSystem.EmitParams();
@@ -94,7 +94,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
           mouseDownPosition = Input.mousePosition;
         }
 
-        if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && mainCam.enabled == false)
+        if (mainCam.enabled == false && Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f)
         {
 
             var ray = povCam.ScreenPointToRay(Input.mousePosition);
@@ -121,7 +121,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
                   Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 
-                  Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+                  // Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
 
                 } else if(image.enabled == false){
 
