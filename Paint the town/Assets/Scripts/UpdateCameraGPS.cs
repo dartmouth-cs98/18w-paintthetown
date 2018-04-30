@@ -28,7 +28,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     public Material highlightMaterialBlue;
     public ArrayList poiList;
     public GameObject prefab;
-    private float time = 1f;
+    private float time = 10f;
     public GameObject toBeDestroyedMarker;
     public GameObject[] listOfToBeDestroyed;
     public LatLong centerMapLatLong;
@@ -47,7 +47,9 @@ public class UpdateCameraGPS : MonoBehaviour {
     double lat;
     double alt;
     string team;
-    string rgb;
+    string r;
+    string g;
+    string b;
 
     HashSet<List<string>> oldBuildings = new HashSet<List<string>>();
     HashSet<List<string>> newBuildings = new HashSet<List<string>>();
@@ -158,19 +160,15 @@ public class UpdateCameraGPS : MonoBehaviour {
         print("Error downloading: " + www.error);
       } else {
 
-        // print("WWW " + www.text);
+        print("WWW " + www.text);
         parsingString = Regex.Split(www.text, @"[,:{}]+");
 
         // for(int y = 3; y < parsingString.Length; y++){
         //   print(parsingString[y]);
         // }
 
-        // ************************
-        // Parse the list of buildings returned
-        // ************************
-
         for(int x = 3; x < parsingString.Length - 14; x = x + 14){
-
+          team = "";
           for(int y = 0; y < 14; y ++){
 
             if(parsingString[x + y].Trim('"') == "centroidLng"){
@@ -183,42 +181,59 @@ public class UpdateCameraGPS : MonoBehaviour {
               alt = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
             } else if (parsingString[x + y].Trim('"') == "id"){
               id = parsingString[x + y + 1].Trim('"');
-            } else if (parsingString[x + y].Trim('"') == "team"){
+            // } else if (parsingString[x + y].Trim('"') == "team" && parsingString[x + y - 4].Trim('"') == "rgb"){
+            } else if (parsingString[x + y].Trim('"') == "name" && parsingString[x + y + 2].Trim('"') != "color"){
               team = parsingString[x + y + 1].Trim('"');
             } else if (parsingString[x + y].Trim('"') == "stringTopAlt"){
               stringTopAlt = parsingString[x + y + 1].Trim('"');
               topAlt = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
             } else if (parsingString[x + y].Trim('"') == "rgb"){
-              rgb = parsingString[x + y + 1].Trim('"');
+              r = parsingString[x + y + 1].Trim('[');
+              g = parsingString[x + y + 2].Trim('"');
+              b = parsingString[x + y + 3].Trim(']');
             }
           }
-        }
 
-        //****************************************
-        //add buildings to the new team color hashset
-        // * ID
-        // * Location
-        // * RGB
-        //****************************************
-        var v0 = new List<string>();
-        v0.Add(id);
-        v0.Add(stringLat);
-        v0.Add(stringLnge);
-        v0.Add(stringTopAlt);
-        v0.Add(rgb);
-        newBuildingsColor.Add(v0);
+          //****************************************
+          //add buildings to the new team color hashset
+          // * ID
+          // * Location
+          // * RGB
+          //****************************************
 
-        // *****************************************
-        // add POIs to the new team color hashset
-        // *****************************************
-        foreach(string idNum in poiList){
-          if (idNum.Equals(id)){
-            var v1 = new List<string>();
-            v1.Add(id);
-            v1.Add(stringLat);
-            v1.Add(stringLnge);
-            v1.Add(stringTopAlt);
-            newBuildings.Add(v1);
+          if(team != ""){
+            print("id " + id);
+            print("stringlat " + stringLat);
+            print("stringLnge " + stringLnge);
+            print("alt " + alt);
+            print("r " + r);
+            print("g " + g);
+            print("b " + b);
+            print("team: " + team);
+            var v0 = new List<string>();
+            v0.Add(id);
+            v0.Add(stringLat);
+            v0.Add(stringLnge);
+            v0.Add(Convert.ToString(alt));
+            v0.Add(r);
+            v0.Add(g);
+            v0.Add(b);
+            newBuildingsColor.Add(v0);
+          }
+
+          // *****************************************
+          // add POIs to the new team color hashset
+          // *****************************************
+
+          foreach(string idNum in poiList){
+            if (idNum.Equals(id)){
+              var v1 = new List<string>();
+              v1.Add(id);
+              v1.Add(stringLat);
+              v1.Add(stringLnge);
+              v1.Add(stringTopAlt);
+              newBuildings.Add(v1);
+            }
           }
         }
 
@@ -236,11 +251,10 @@ public class UpdateCameraGPS : MonoBehaviour {
         }
 
         foreach (List<string> placement in toLoadColors){
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 10);
-
+          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]));
           //create RGB from the list
-          Color color = new Color(0,0,0);
-          StartCoroutine(MakeHighlight(placement[0], boxLocation));
+          Color color = new Color((float)Convert.ToDouble(placement[4]),(float)Convert.ToDouble(placement[5]),(float)Convert.ToDouble(placement[6]));
+          StartCoroutine(MakeHighlight(placement[0], boxLocation, color));
         }
 
         oldBuildingsColor = newBuildingsColor;
@@ -270,19 +284,19 @@ public class UpdateCameraGPS : MonoBehaviour {
       }
     }
 
-
     void OnHighlightReceived(bool success, Highlight highlight)
     {
         if (success)
         {
-          //it did work
+          //things good happened
         } else{
-          //it didn't work
+          //print("i didn't do things");
         }
     }
 
-    IEnumerator MakeHighlight(string id, LatLongAltitude latLongAlt){
+    IEnumerator MakeHighlight(string id, LatLongAltitude latLongAlt, Color color){
       Material Highlight = new Material(highlightMaterialRed);
+      Highlight.color = color;
       Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, Highlight, OnHighlightReceived);
       Highlight.name = "highlight:" + id;
       yield return null;
@@ -371,7 +385,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
 
         pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
-        
+
 
         centerMapLatLong = currentLatLong;
         centerMapDistance = distance;

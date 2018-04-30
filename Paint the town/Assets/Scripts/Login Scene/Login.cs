@@ -109,7 +109,7 @@ public class Login : MonoBehaviour {
 			if(www.text == "null"){
 				print(www.error);
 			}else{
-				// print(www.text);
+				print(www.text);
 				// string teamInfo = www.text;
 				teamInfoList = Regex.Split(www.text, @"[,:{}]+");
 
@@ -117,21 +117,28 @@ public class Login : MonoBehaviour {
 				for (int i = 0; i <= teamInfoList.Length - 1; i++) {
 					// print (teamInfoList [i]);
 					if(teamInfoList [i].Trim('"') == "red"){
-						redID = teamInfoList [i - 2].Trim('"');
+						redID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "orange"){
-						orangeID = teamInfoList [i - 2].Trim('"');
+						orangeID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "yellow"){
-						yellowID = teamInfoList [i - 2].Trim('"');
+						yellowID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "green"){
-						greenID = teamInfoList [i - 2].Trim('"');
+						greenID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "blue"){
-						blueID = teamInfoList [i - 2].Trim('"');
+						blueID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "purple"){
-						purpleID = teamInfoList [i - 2].Trim('"');
+						purpleID = teamInfoList [i - 5].Trim('"');
 					}
 				}
+				print("orange team ID" + orangeID);
 				print("Red team ID: " + redID);
+				print("yellow team ID: " + yellowID);
+				print("Green team ID: " + greenID);
+				print("purple team ID: " + purpleID);
 				print("Blue team ID: " + blueID);
+
+				print(PlayerPrefs.GetString("teamID", "no teamID"));
+
 				if( (PlayerPrefs.GetString("teamID", "no teamID")) == redID)
 				{
 					PlayerPrefs.SetString("color", "red");
