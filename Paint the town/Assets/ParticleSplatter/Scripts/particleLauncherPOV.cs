@@ -5,7 +5,7 @@ using UnityEngine;
 // based on https://unity3d.com/learn/tutorials/topics/scripting/droplet-decals?playlist=17117
 
 
-public class particleLauncher : MonoBehaviour {
+public class particleLauncherPOV : MonoBehaviour {
 
     public ParticleSystem pLauncher;
     public ParticleSystem splatterParticles;
@@ -16,6 +16,9 @@ public class particleLauncher : MonoBehaviour {
     public string bID;
     public string owner;
     public string playerColor;
+
+    public ParticleSystem.EmitParams e_params;
+    public Camera setCam;
 
     IEnumerator checkOwnership()
     {
@@ -108,11 +111,31 @@ public class particleLauncher : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
+
         // emit one particle, if the firebutton is held down
         if (Input.GetButton("Fire1")) {
             print("we in that");
-            ParticleSystem.MainModule psMain = pLauncher.main;
-            pLauncher.Emit(1);
+
+            // FIX IT FIX IT FIX IT
+            var screenPos = new Vector3
+            {
+                x = Input.mousePosition.x,
+                y = Input.mousePosition.y,
+                z = setCam.transform.position.z
+            };
+
+            var ray = setCam.ScreenPointToRay(screenPos);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                var viewportPoint = setCam.WorldToViewportPoint(hit.point);
+                var tempPosition = hit.point;
+                e_params.position = tempPosition;
+                pLauncher.Emit(e_params, 1);
+            }
         }
 	}
 
