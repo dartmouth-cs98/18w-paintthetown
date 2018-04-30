@@ -535,10 +535,6 @@ void Update () {
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 
-        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 60);
-
-        pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
-
         centerMapLatLong = currentLatLong;
         centerMapDistance = distance;
         if (!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f)
@@ -552,7 +548,7 @@ void Update () {
 
         if (Physics.Raycast(tempPOVposition,Vector3.down,out hit, 300))
         {
-            tempPOVposition.y = hit.point.y + 2f;
+            tempPOVposition.y = hit.point.y + 15f;
         }
 
         pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
