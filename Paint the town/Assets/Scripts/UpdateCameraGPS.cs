@@ -35,6 +35,18 @@ public class UpdateCameraGPS : MonoBehaviour {
     public double centerMapDistance;
     public bool mapCentered;
 
+    private const float lowPassFilterFactor = 0.2f;
+    private readonly Quaternion baseIdentity = Quaternion.Euler(90, 0, 0);
+    private readonly Quaternion landscapeRight = Quaternion.Euler(0, 0, 90);
+    private readonly Quaternion landscapeLeft = Quaternion.Euler(0, 0, -90);
+    private readonly Quaternion upsideDown = Quaternion.Euler(0, 0, 180);
+    private Quaternion cameraBase = Quaternion.identity;
+    private Quaternion calibration = Quaternion.identity;
+    private Quaternion baseOrientation = Quaternion.Euler(90, 0, 0);
+    private Quaternion baseOrientationRotationFix = Quaternion.identity;
+    private Quaternion referenceRotation = Quaternion.identity;
+
+
     // particle system stuff
     public ParticleSystem pLauncher;
 
@@ -61,6 +73,10 @@ public class UpdateCameraGPS : MonoBehaviour {
     {
         mapCentered = false;
         Input.gyro.enabled = true;
+        ResetBaseOrientation();
+        UpdateCalibration(true);
+        UpdateCameraBaseRotation(true);
+        RecalculateReferenceRotation();
 
         poiList = new ArrayList();
         poiList.Add("71a5f824a0dc35526a4b13078541adee");
@@ -327,7 +343,83 @@ public class UpdateCameraGPS : MonoBehaviour {
         Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
     }
 
-    void Update () {
+	private void UpdateCalibration(bool onlyHorizontal)
+    {
+        if (onlyHorizontal)
+        {
+            var fw = (Input.gyro.attitude) * (-Vector3.forward);
+            fw.z = 0;
+            if (fw == Vector3.zero)
+            {
+                calibration = Quaternion.identity;
+            }
+            else
+            {
+                calibration = (Quaternion.FromToRotation(baseOrientationRotationFix * Vector3.up, fw));
+            }
+        }
+        else
+        {
+            calibration = Input.gyro.attitude;
+        }
+    }
+    
+    private void UpdateCameraBaseRotation(bool onlyHorizontal)
+    {
+        if (onlyHorizontal)
+        {
+            var fw = transform.forward;
+            fw.y = 0;
+            if (fw == Vector3.zero)
+            {
+                cameraBase = Quaternion.identity;
+            }
+            else
+            {
+                cameraBase = Quaternion.FromToRotation(Vector3.forward, fw);
+            }
+        }
+        else
+        {
+            cameraBase = transform.rotation;
+        }
+    }
+    
+    private static Quaternion ConvertRotation(Quaternion q)
+    {
+        return new Quaternion(q.x, q.y, -q.z, -q.w);
+    }
+    
+    private Quaternion GetRotFix()
+    {
+		if (Screen.orientation == ScreenOrientation.Portrait)
+			return Quaternion.identity;
+		
+		if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.Landscape)
+			return landscapeLeft;
+				
+		if (Screen.orientation == ScreenOrientation.LandscapeRight)
+			return landscapeRight;
+				
+		if (Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+			return upsideDown;
+		return Quaternion.identity;
+    }
+
+    private void ResetBaseOrientation()
+    {
+        baseOrientationRotationFix = GetRotFix();
+        baseOrientation = baseOrientationRotationFix * baseIdentity;
+    }
+
+    private void RecalculateReferenceRotation()
+    {
+        referenceRotation = Quaternion.Inverse(baseOrientation) * Quaternion.Inverse(calibration);
+    }
+
+
+
+void Update () {
 
         // handle pinch to zoom
         // if there are two touches
@@ -373,27 +465,31 @@ public class UpdateCameraGPS : MonoBehaviour {
 
             distance += distMagnitudeDiff * zoomSpeed;
         }
-
         var currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
         var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 0);
 
         Api.Instance.CameraApi.GeographicToWorldPoint(currentLocation,setCam);
-
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 
-        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
-
-        pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
-
-
         centerMapLatLong = currentLatLong;
         centerMapDistance = distance;
-
-        if(!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f){
-          mapCentered = true;
-          Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+        if (!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f)
+        {
+            mapCentered = true;
+            Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
         }
-        povCam.transform.Rotate(-Input.gyro.rotationRateUnbiased.x, -Input.gyro.rotationRateUnbiased.y, -Input.gyro.rotationRateUnbiased.z);
+
+        RaycastHit hit;
+        Vector3 tempPOVposition = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z); 
+
+        if (Physics.Raycast(tempPOVposition,Vector3.down,out hit, 300))
+        {
+            tempPOVposition.y = hit.point.y + 2f;
+        }
+
+        pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
+        povCam.transform.position = tempPOVposition;
+        povCam.transform.rotation = Quaternion.Slerp(povCam.transform.rotation,cameraBase * (ConvertRotation(referenceRotation * Input.gyro.attitude) * GetRotFix()), lowPassFilterFactor); ;
 	}
 }
