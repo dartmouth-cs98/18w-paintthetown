@@ -67,13 +67,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
         e_params.startSize = 5.0f;
     }
 
-    void OnEnable()
-    {
-
+    void OnEnable(){
     }
 
     void Update()
     {
+
       if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
         if(image.enabled == true && textArea.enabled == true){
           if (index == strings.Length - 1){
@@ -92,20 +91,17 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-          print("HI!");
           mouseDownPosition = Input.mousePosition;
         }
 
         if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && mainCam.enabled == false)
         {
-            print("this and that " + Vector3.Distance(mouseDownPosition, Input.mousePosition));
 
             var ray = povCam.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
-            {
+            if (Physics.Raycast(ray, out hit)){
                 var viewportPoint = povCam.WorldToViewportPoint(hit.point);
                 var tempPosition = hit.point;
                 tempPosition.y = hit.point.y + 10;
@@ -118,9 +114,9 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
                   location = latLongAlt;
 
-                  print("LONG " + location.GetLongitude());
-                  print("LAT " + location.GetLatitude());
-                  print("ALT " + location.GetAltitude());
+                  // print("LONG " + location.GetLongitude());
+                  // print("LAT " + location.GetLatitude());
+                  // print("ALT " + location.GetAltitude());
 
 
                   Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
@@ -132,15 +128,14 @@ public class HighlightBuildingOnClick : MonoBehaviour
                   Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), checkBuildingExist);
                 }
             }
+
         }
     }
 
 
     void OnHighlightReceived(bool success, Highlight highlight)
     {
-        if (success)
-        {
-
+        if (success){
         }
     }
 
@@ -176,58 +171,11 @@ public class HighlightBuildingOnClick : MonoBehaviour
         PlayerPrefs.SetString("bid", id);
         PlayerPrefs.Save();
 
-        startGetBuildingColor(id);
+        StartCoroutine("captureBuilding");
+        //startGetBuildingColor(id);
       } else {
         print("uh oh");
       }
-    }
-
-    //https://paint-the-town.herokuapp.com/api/buildings/updateTeam
-    //building - building ID
-    //team - teamID
-
-    //function to get building data
-    IEnumerator getBuildingColor()
-    {
-      Hashtable headers = new Hashtable();
-      print("You're retrieving information about a building");
-  		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
-  		WWW www = new WWW(getBuildingIDURL, null, headers);
-  		yield return www;
-
-        print("HERE HERE HERE " + www.text);
-        print(PlayerPrefs.GetString("teamID", "no teamID"));
-        if(www.text == "null"){
-          //the building has never been clicked before
-          print(www.error);
-        }else{
-            string[] subStrings = Regex.Split(www.text, @"[,:{}]+");
-            bool Flag = false;
-            for (int i = 0; i < subStrings.Length; i++){
-              if(subStrings[i].Trim('"') == "team"){
-                if(subStrings[i + 1].Trim('"') == PlayerPrefs.GetString("teamID", "no teamID")){
-                  Flag = true;
-                }
-              }
-            }
-            if(Flag == true){
-              image.enabled = true;
-              textArea.enabled = true;
-              index = 0;
-              characterIndex = 0;
-              strings[0] = sameBuildingColorMessage;
-              StartCoroutine("displayTimer");
-            }else{
-              StartCoroutine("captureBuilding");
-            }
-        }
-    }
-
-    //starter fuction to retrieve building data
-    public void startGetBuildingColor(string buildingID)
-    {
-      getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/buildings/info?id=" + buildingID + "&fields[]=team";
-      StartCoroutine("getBuildingColor");
     }
 
     // check if an id is that of a POI, asynchronously so threads don't lock
@@ -244,7 +192,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
                 isPoi = false;
             }
         }
-
         return null;
     }
 
@@ -272,6 +219,39 @@ public class HighlightBuildingOnClick : MonoBehaviour
         print("building captured!");
         print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
       }
+    }
+
+    // ################ These might not be used for now #######################
+    // ########################################################################
+
+    //https://paint-the-town.herokuapp.com/api/buildings/updateTeam
+    //building - building ID
+    //team - teamID
+
+    //function to get building data
+    IEnumerator getBuildingColor()
+    {
+      Hashtable headers = new Hashtable();
+      print("You're retrieving information about a building");
+  		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+  		WWW www = new WWW(getBuildingIDURL, null, headers);
+  		yield return www;
+
+        print("HERE HERE HERE " + www.text);
+        print(PlayerPrefs.GetString("teamID", "no teamID"));
+        if(www.text == "null"){
+          //the building has never been clicked before
+          print(www.error);
+        }else{
+              StartCoroutine("captureBuilding");
+        }
+    }
+
+    //starter fuction to retrieve building data
+    public void startGetBuildingColor(string buildingID)
+    {
+      getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/buildings/info?id=" + buildingID + "&fields[]=team";
+      StartCoroutine("getBuildingColor");
     }
 
     IEnumerator createBuilding()
@@ -303,15 +283,15 @@ public class HighlightBuildingOnClick : MonoBehaviour
       //var signup = UnityWebRequest.Post("https://paint-the-town.herokuapp.com/api/buildings", signupform);
       //yield return signup.SendWebRequest();
 
-  		if (www.error != null)
-  		{
-  			print("Error downloading: ");
-  		}
-  		else
-  		{
+      if (www.error != null)
+      {
+        print("Error downloading: ");
+      }
+      else
+      {
         print(www.text);
 
-  			print("building signed up!");
+        print("building signed up!");
         StartCoroutine("captureBuilding");
       }
     }
@@ -321,6 +301,9 @@ public class HighlightBuildingOnClick : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         Api.Instance.BuildingsApi.ClearHighlight(highlight);
     }
+
+    // #######################################################################
+    // #######################################################################
 
     IEnumerator displayTimer(){
 

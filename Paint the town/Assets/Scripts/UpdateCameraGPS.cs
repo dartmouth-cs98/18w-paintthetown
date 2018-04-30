@@ -17,7 +17,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     public bool isUnityRemote;
     public Camera povCam;
     public Camera setCam;
-    public float zoomSpeed = .5f; // speed to zoom in or out at
+    public float zoomSpeed = 1.0f; // speed to zoom in or out at
     private double distance = 300.00; // height in Wrld3d api distance terms
     public double uMinLng;
     public double uMinLat;
@@ -34,6 +34,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     public LatLong centerMapLatLong;
     public double centerMapDistance;
     public bool mapCentered;
+    public Shader shader1;
 
     // particle system stuff
     public ParticleSystem pLauncher;
@@ -184,7 +185,7 @@ public class UpdateCameraGPS : MonoBehaviour {
             // } else if (parsingString[x + y].Trim('"') == "team" && parsingString[x + y - 4].Trim('"') == "rgb"){
             } else if (parsingString[x + y].Trim('"') == "name" && parsingString[x + y + 2].Trim('"') != "color"){
               team = parsingString[x + y + 1].Trim('"');
-            } else if (parsingString[x + y].Trim('"') == "stringTopAlt"){
+            } else if (parsingString[x + y].Trim('"') == "topAltitude"){
               stringTopAlt = parsingString[x + y + 1].Trim('"');
               topAlt = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
             } else if (parsingString[x + y].Trim('"') == "rgb"){
@@ -202,14 +203,14 @@ public class UpdateCameraGPS : MonoBehaviour {
           //****************************************
 
           if(team != ""){
-            print("id " + id);
-            print("stringlat " + stringLat);
-            print("stringLnge " + stringLnge);
-            print("alt " + alt);
-            print("r " + r);
-            print("g " + g);
-            print("b " + b);
-            print("team: " + team);
+            // print("id " + id);
+            // print("stringlat " + stringLat);
+            // print("stringLnge " + stringLnge);
+            // print("alt " + alt);
+            // print("r " + r);
+            // print("g " + g);
+            // print("b " + b);
+            // print("team: " + team);
             var v0 = new List<string>();
             v0.Add(id);
             v0.Add(stringLat);
@@ -253,7 +254,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         foreach (List<string> placement in toLoadColors){
           var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]));
           //create RGB from the list
-          Color color = new Color((float)Convert.ToDouble(placement[4]),(float)Convert.ToDouble(placement[5]),(float)Convert.ToDouble(placement[6]));
+          Color color = new Color((float)Convert.ToDouble(placement[4]),(float)Convert.ToDouble(placement[5]),(float)Convert.ToDouble(placement[6]), 0.1f);
           StartCoroutine(MakeHighlight(placement[0], boxLocation, color));
         }
 
@@ -269,13 +270,11 @@ public class UpdateCameraGPS : MonoBehaviour {
         toLoad.ExceptWith(oldBuildings);
 
         foreach (List<string> placement in toDestroy){
-
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 10);
           StartCoroutine(destroy(placement[0]));
         }
 
         foreach (List<string> placement in toLoad){
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 10);
+          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 20);
           StartCoroutine(MakeBox(placement[0], boxLocation));
         }
 
@@ -310,11 +309,12 @@ public class UpdateCameraGPS : MonoBehaviour {
     }
 
     IEnumerator MakeBox(string id, LatLongAltitude latLongAlt){
-      var viewpoint = Wrld.Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
-      var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
-      GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
-      cloneMarker.name = id;
-      yield return null;
+
+        var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
+        var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
+        GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
+        cloneMarker.name = id;
+        yield return null;
     }
 
     IEnumerator destroy(string id){
@@ -328,6 +328,11 @@ public class UpdateCameraGPS : MonoBehaviour {
     }
 
     void Update () {
+
+
+        // var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
+        // var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
+        // if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
 
         // handle pinch to zoom
         // if there are two touches
@@ -372,6 +377,15 @@ public class UpdateCameraGPS : MonoBehaviour {
             //}
 
             distance += distMagnitudeDiff * zoomSpeed;
+            // print(setCam.transform.position.x);
+            // print(setCam.transform.position.y);
+            // print(setCam.transform.position.z);
+            //
+
+            Vector3 temp = new Vector3(0,0,(float)distance);
+            setCam.transform.position += temp;
+
+            // print(setCam.transform.position.z);
         }
 
         var currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
@@ -382,10 +396,9 @@ public class UpdateCameraGPS : MonoBehaviour {
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 
-        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
+        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 50);
 
         pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
-
 
         centerMapLatLong = currentLatLong;
         centerMapDistance = distance;
