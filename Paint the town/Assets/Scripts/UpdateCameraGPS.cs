@@ -14,10 +14,59 @@ using UnityEngine.Networking;
 
 public class UpdateCameraGPS : MonoBehaviour {
 
+    struct BuildingStuff
+    {
+        public string id;
+        public float Lat;
+        public float Longe;
+        public float alt;
+        public float r;
+        public float g;
+        public float b;
+
+        public override bool Equals( object ob ){
+      		if( ob is BuildingStuff ) {
+      			BuildingStuff c = (BuildingStuff) ob;
+      			return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt && r==c.r && g==c.r && b==c.b;
+      		}
+      		else {
+      			return false;
+      		}
+      	}
+
+        // public override int GetHashCode(){
+        //   return id.GetHashCode() + Lat.GetHashCode()  + Longe.GetHashCode() + alt.GetHashCode() + r.GetHashCode() + g.GetHashCode() + b.GetHashCode();
+        // }
+
+    };
+
+    struct BuildingPOIStuff
+    {
+      public string id;
+      public float Lat;
+      public float Longe;
+      public float alt;
+
+      public override bool Equals( object ob ){
+        if( ob is BuildingPOIStuff ) {
+          BuildingPOIStuff c = (BuildingPOIStuff) ob;
+          return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt;
+        }
+        else {
+          return false;
+        }
+      }
+
+      // public override int GetHashCode(){
+      //   return (id.GetHashCode() + Lat.GetHashCode() + Longe.GetHashCode() + alt.GetHashCode());
+      // }
+
+    };
+
     public bool isUnityRemote;
     public Camera povCam;
     public Camera setCam;
-    public float zoomSpeed = .5f; // speed to zoom in or out at
+    public float zoomSpeed = 1.0f; // speed to zoom in or out at
     private double distance = 300.00; // height in Wrld3d api distance terms
     public double uMinLng;
     public double uMinLat;
@@ -28,12 +77,25 @@ public class UpdateCameraGPS : MonoBehaviour {
     public Material highlightMaterialBlue;
     public ArrayList poiList;
     public GameObject prefab;
-    private float time = 10f;
+    private float time = 0.5f;
     public GameObject toBeDestroyedMarker;
     public GameObject[] listOfToBeDestroyed;
     public LatLong centerMapLatLong;
     public double centerMapDistance;
     public bool mapCentered;
+    public Shader shader1;
+
+    private const float lowPassFilterFactor = 0.2f;
+    private readonly Quaternion baseIdentity = Quaternion.Euler(90, 0, 0);
+    private readonly Quaternion landscapeRight = Quaternion.Euler(0, 0, 90);
+    private readonly Quaternion landscapeLeft = Quaternion.Euler(0, 0, -90);
+    private readonly Quaternion upsideDown = Quaternion.Euler(0, 0, 180);
+    private Quaternion cameraBase = Quaternion.identity;
+    private Quaternion calibration = Quaternion.identity;
+    private Quaternion baseOrientation = Quaternion.Euler(90, 0, 0);
+    private Quaternion baseOrientationRotationFix = Quaternion.identity;
+    private Quaternion referenceRotation = Quaternion.identity;
+
 
     // particle system stuff
     public ParticleSystem pLauncherPOV;
@@ -51,16 +113,20 @@ public class UpdateCameraGPS : MonoBehaviour {
     string g;
     string b;
 
-    HashSet<List<string>> oldBuildings = new HashSet<List<string>>();
-    HashSet<List<string>> newBuildings = new HashSet<List<string>>();
+    HashSet<BuildingPOIStuff> oldBuildings = new HashSet<BuildingPOIStuff>();
+    HashSet<BuildingPOIStuff> newBuildings = new HashSet<BuildingPOIStuff>();
 
-    HashSet<List<string>> oldBuildingsColor = new HashSet<List<string>>();
-    HashSet<List<string>> newBuildingsColor = new HashSet<List<string>>();
+    HashSet<BuildingStuff> oldBuildingsColor = new HashSet<BuildingStuff>();
+    HashSet<BuildingStuff> newBuildingsColor = new HashSet<BuildingStuff>();
 
     IEnumerator Start()
     {
         mapCentered = false;
         Input.gyro.enabled = true;
+        ResetBaseOrientation();
+        UpdateCalibration(true);
+        UpdateCameraBaseRotation(true);
+        RecalculateReferenceRotation();
 
         poiList = new ArrayList();
         poiList.Add("71a5f824a0dc35526a4b13078541adee");
@@ -160,7 +226,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         print("Error downloading: " + www.error);
       } else {
 
-        print("WWW " + www.text);
+        //print("WWW " + www.text);
         parsingString = Regex.Split(www.text, @"[,:{}]+");
 
         // for(int y = 3; y < parsingString.Length; y++){
@@ -184,7 +250,7 @@ public class UpdateCameraGPS : MonoBehaviour {
             // } else if (parsingString[x + y].Trim('"') == "team" && parsingString[x + y - 4].Trim('"') == "rgb"){
             } else if (parsingString[x + y].Trim('"') == "name" && parsingString[x + y + 2].Trim('"') != "color"){
               team = parsingString[x + y + 1].Trim('"');
-            } else if (parsingString[x + y].Trim('"') == "stringTopAlt"){
+            } else if (parsingString[x + y].Trim('"') == "topAltitude"){
               stringTopAlt = parsingString[x + y + 1].Trim('"');
               topAlt = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
             } else if (parsingString[x + y].Trim('"') == "rgb"){
@@ -202,23 +268,18 @@ public class UpdateCameraGPS : MonoBehaviour {
           //****************************************
 
           if(team != ""){
-            print("id " + id);
-            print("stringlat " + stringLat);
-            print("stringLnge " + stringLnge);
-            print("alt " + alt);
-            print("r " + r);
-            print("g " + g);
-            print("b " + b);
-            print("team: " + team);
-            var v0 = new List<string>();
-            v0.Add(id);
-            v0.Add(stringLat);
-            v0.Add(stringLnge);
-            v0.Add(Convert.ToString(alt));
-            v0.Add(r);
-            v0.Add(g);
-            v0.Add(b);
-            newBuildingsColor.Add(v0);
+
+            BuildingStuff BuildingC = new BuildingStuff();
+
+            BuildingC.id = id;
+            BuildingC.Lat = (float)lat;
+            BuildingC.Longe = (float)lnge;
+            BuildingC.alt = (float)alt;
+            BuildingC.r = (float)Convert.ToDouble(r);
+            BuildingC.g = (float)Convert.ToDouble(g);
+            BuildingC.b = (float)Convert.ToDouble(b);
+
+            newBuildingsColor.Add(BuildingC);
           }
 
           // *****************************************
@@ -227,12 +288,14 @@ public class UpdateCameraGPS : MonoBehaviour {
 
           foreach(string idNum in poiList){
             if (idNum.Equals(id)){
-              var v1 = new List<string>();
-              v1.Add(id);
-              v1.Add(stringLat);
-              v1.Add(stringLnge);
-              v1.Add(stringTopAlt);
-              newBuildings.Add(v1);
+
+              BuildingPOIStuff BuildingPOI = new BuildingPOIStuff();
+
+              BuildingPOI.id = id;
+              BuildingPOI.Lat = (float)lat;
+              BuildingPOI.Longe = (float)lnge;
+              BuildingPOI.alt  = (float)alt;
+              newBuildings.Add(BuildingPOI);
             }
           }
         }
@@ -240,47 +303,46 @@ public class UpdateCameraGPS : MonoBehaviour {
         // ***********************************
         //BUILDING HIGHLIGHT DESTROY AND LOAD
         // ***********************************
-        var toLoadColors = new HashSet<List<string>>(newBuildingsColor);
-        var toDestroyColors = new HashSet<List<string>>(oldBuildingsColor);
+        var toLoadColors = new HashSet<BuildingStuff>(newBuildingsColor);
+        var toDestroyColors = new HashSet<BuildingStuff>(oldBuildingsColor);
 
         toDestroyColors.ExceptWith(newBuildingsColor);
         toLoadColors.ExceptWith(oldBuildingsColor);
 
-        foreach (List<string> placement in toDestroyColors){
-          StartCoroutine(destroyColor(placement[0]));
+        foreach (BuildingStuff placement in toDestroyColors){
+          StartCoroutine(destroyColor(placement.id));
         }
 
-        foreach (List<string> placement in toLoadColors){
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]));
+        foreach (BuildingStuff placement in toLoadColors){
+          var boxLocation = LatLongAltitude.FromDegrees(placement.Longe, placement.Lat, placement.alt);
           //create RGB from the list
-          Color color = new Color((float)Convert.ToDouble(placement[4]),(float)Convert.ToDouble(placement[5]),(float)Convert.ToDouble(placement[6]));
-          StartCoroutine(MakeHighlight(placement[0], boxLocation, color));
+          Color color = new Color( placement.r/255, placement.g/255, placement.b/255, 0.5f);
+          StartCoroutine(MakeHighlight(placement.id, boxLocation, color));
         }
 
         oldBuildingsColor = newBuildingsColor;
+        newBuildingsColor.Clear();
 
         // ***********************************
         //BUILDING POI DESTROY AND LOAD
         // ***********************************
-        var toLoad = new HashSet<List<string>>(newBuildings);
-        var toDestroy = new HashSet<List<string>>(oldBuildings);
+        var toLoad = new HashSet<BuildingPOIStuff>(newBuildings);
+        var toDestroy = new HashSet<BuildingPOIStuff>(oldBuildings);
 
         toDestroy.ExceptWith(newBuildings);
         toLoad.ExceptWith(oldBuildings);
 
-        foreach (List<string> placement in toDestroy){
-
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 10);
-          StartCoroutine(destroy(placement[0]));
+        foreach (BuildingPOIStuff placement in toDestroy){
+          StartCoroutine(destroy(placement.id));
         }
 
-        foreach (List<string> placement in toLoad){
-          var boxLocation = LatLongAltitude.FromDegrees(Convert.ToDouble(placement[2]), Convert.ToDouble(placement[1]), Convert.ToDouble(placement[3]) + 10);
-          StartCoroutine(MakeBox(placement[0], boxLocation));
+        foreach (BuildingPOIStuff placement in toLoad){
+          var boxLocation = LatLongAltitude.FromDegrees(placement.Longe, placement.Lat, placement.alt + 20);
+          StartCoroutine(MakeBox(placement.id, boxLocation));
         }
 
         oldBuildings = newBuildings;
-
+        newBuildings.Clear();
       }
     }
 
@@ -297,6 +359,23 @@ public class UpdateCameraGPS : MonoBehaviour {
     IEnumerator MakeHighlight(string id, LatLongAltitude latLongAlt, Color color){
       Material Highlight = new Material(highlightMaterialRed);
       Highlight.color = color;
+
+      // // Component[] renderers = GameObject.GetComponentsInChildren(typeof(Renderer));
+      //         // foreach (Renderer curRenderer in renderers)
+      //         // {
+      //         //     Color color;
+      //         //     foreach (Material material in curRenderer.materials)
+      //         //     {
+      // color = Highlight.color;
+      // // change alfa for transparency
+      // color.a -= 0.4f;
+      // if (color.a < 0)
+      // {
+      //     color.a = 0;
+      // }
+      Highlight.color = color;
+
+
       Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, Highlight, OnHighlightReceived);
       Highlight.name = "highlight:" + id;
       yield return null;
@@ -310,11 +389,12 @@ public class UpdateCameraGPS : MonoBehaviour {
     }
 
     IEnumerator MakeBox(string id, LatLongAltitude latLongAlt){
-      var viewpoint = Wrld.Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
-      var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
-      GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
-      cloneMarker.name = id;
-      yield return null;
+
+        var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
+        var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
+        GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
+        cloneMarker.name = id;
+        yield return null;
     }
 
     IEnumerator destroy(string id){
@@ -327,7 +407,88 @@ public class UpdateCameraGPS : MonoBehaviour {
         Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
     }
 
-    void Update () {
+	private void UpdateCalibration(bool onlyHorizontal)
+    {
+        if (onlyHorizontal)
+        {
+            var fw = (Input.gyro.attitude) * (-Vector3.forward);
+            fw.z = 0;
+            if (fw == Vector3.zero)
+            {
+                calibration = Quaternion.identity;
+            }
+            else
+            {
+                calibration = (Quaternion.FromToRotation(baseOrientationRotationFix * Vector3.up, fw));
+            }
+        }
+        else
+        {
+            calibration = Input.gyro.attitude;
+        }
+    }
+
+    private void UpdateCameraBaseRotation(bool onlyHorizontal)
+    {
+        if (onlyHorizontal)
+        {
+            var fw = transform.forward;
+            fw.y = 0;
+            if (fw == Vector3.zero)
+            {
+                cameraBase = Quaternion.identity;
+            }
+            else
+            {
+                cameraBase = Quaternion.FromToRotation(Vector3.forward, fw);
+            }
+        }
+        else
+        {
+            cameraBase = transform.rotation;
+        }
+    }
+
+    private static Quaternion ConvertRotation(Quaternion q)
+    {
+        return new Quaternion(q.x, q.y, -q.z, -q.w);
+    }
+
+    private Quaternion GetRotFix()
+    {
+		if (Screen.orientation == ScreenOrientation.Portrait)
+			return Quaternion.identity;
+
+		if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.Landscape)
+			return landscapeLeft;
+
+		if (Screen.orientation == ScreenOrientation.LandscapeRight)
+			return landscapeRight;
+
+		if (Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+			return upsideDown;
+		return Quaternion.identity;
+    }
+
+    private void ResetBaseOrientation()
+    {
+        baseOrientationRotationFix = GetRotFix();
+        baseOrientation = baseOrientationRotationFix * baseIdentity;
+    }
+
+    private void RecalculateReferenceRotation()
+    {
+        referenceRotation = Quaternion.Inverse(baseOrientation) * Quaternion.Inverse(calibration);
+    }
+
+
+
+void Update () {
+
+
+        // var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
+        // var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
+        // if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
 
         // handle pinch to zoom
         // if there are two touches
@@ -372,28 +533,42 @@ public class UpdateCameraGPS : MonoBehaviour {
             //}
 
             distance += distMagnitudeDiff * zoomSpeed;
-        }
+            // print(setCam.transform.position.x);
+            // print(setCam.transform.position.y);
+            // print(setCam.transform.position.z);
+            //
 
+            Vector3 temp = new Vector3(0,0,(float)distance);
+            setCam.transform.position += temp;
+
+            // print(setCam.transform.position.z);
+        }
         var currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
         var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 0);
 
         Api.Instance.CameraApi.GeographicToWorldPoint(currentLocation,setCam);
-
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 
-        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 40);
-
-        pLauncherPOV.transform.SetPositionAndRotation(povCam.transform.position, povCam.transform.rotation);
-
-
         centerMapLatLong = currentLatLong;
         centerMapDistance = distance;
-
-        if(!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f){
-          mapCentered = true;
-          Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+        if (!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f)
+        {
+            mapCentered = true;
+            Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
         }
-        povCam.transform.Rotate(-Input.gyro.rotationRateUnbiased.x, -Input.gyro.rotationRateUnbiased.y, -Input.gyro.rotationRateUnbiased.z);
-	}
+
+        RaycastHit hit;
+        Vector3 tempPOVposition = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 75);
+
+        if (Physics.Raycast(tempPOVposition,Vector3.down,out hit, 300))
+        {
+            tempPOVposition.y = hit.point.y + 15f;
+        }
+
+        povCam.transform.position = tempPOVposition;
+        povCam.transform.rotation = Quaternion.Slerp(povCam.transform.rotation,cameraBase * (ConvertRotation(referenceRotation * Input.gyro.attitude) * GetRotFix()), lowPassFilterFactor); ;
+        pLauncherPOV.transform.SetPositionAndRotation(povCam.transform.position, povCam.transform.rotation);
+
+    }
 }
