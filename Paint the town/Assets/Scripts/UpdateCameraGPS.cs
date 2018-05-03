@@ -98,7 +98,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 
 
     // particle system stuff
-    public ParticleSystem pLauncher;
+    public ParticleSystem pLauncherPOV;
 
     double topAlt;
     string stringLnge;
@@ -566,8 +566,9 @@ void Update () {
             tempPOVposition.y = hit.point.y + 15f;
         }
 
-        pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
         povCam.transform.position = tempPOVposition;
         povCam.transform.rotation = Quaternion.Slerp(povCam.transform.rotation,cameraBase * (ConvertRotation(referenceRotation * Input.gyro.attitude) * GetRotFix()), lowPassFilterFactor); ;
-	}
+        pLauncherPOV.transform.SetPositionAndRotation(povCam.transform.position, povCam.transform.rotation);
+
+    }
 }
