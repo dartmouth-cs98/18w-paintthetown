@@ -36,7 +36,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     public bool mapCentered;
 
     // particle system stuff
-    public ParticleSystem pLauncher;
+    public ParticleSystem pLauncherPOV;
 
     double topAlt;
     string stringLnge;
@@ -382,9 +382,9 @@ public class UpdateCameraGPS : MonoBehaviour {
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
 
-        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
+        povCam.transform.position = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 40);
 
-        pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
+        pLauncherPOV.transform.SetPositionAndRotation(povCam.transform.position, povCam.transform.rotation);
 
 
         centerMapLatLong = currentLatLong;
