@@ -34,9 +34,9 @@ public class UpdateCameraGPS : MonoBehaviour {
       		}
       	}
 
-        public override int GetHashCode(){
-          return id.GetHashCode() + Lat.GetHashCode()  + Longe.GetHashCode() + alt.GetHashCode() + r.GetHashCode() + g.GetHashCode() + b.GetHashCode();
-        }
+        // public override int GetHashCode(){
+        //   return id.GetHashCode() + Lat.GetHashCode()  + Longe.GetHashCode() + alt.GetHashCode() + r.GetHashCode() + g.GetHashCode() + b.GetHashCode();
+        // }
 
     };
 
@@ -57,9 +57,9 @@ public class UpdateCameraGPS : MonoBehaviour {
         }
       }
 
-      public override int GetHashCode(){
-        return (id.GetHashCode() + Lat.GetHashCode() + Longe.GetHashCode() + alt.GetHashCode());
-      }
+      // public override int GetHashCode(){
+      //   return (id.GetHashCode() + Lat.GetHashCode() + Longe.GetHashCode() + alt.GetHashCode());
+      // }
 
     };
 
@@ -310,15 +310,13 @@ public class UpdateCameraGPS : MonoBehaviour {
         toLoadColors.ExceptWith(oldBuildingsColor);
 
         foreach (BuildingStuff placement in toDestroyColors){
-          print("Happy");
           StartCoroutine(destroyColor(placement.id));
         }
 
         foreach (BuildingStuff placement in toLoadColors){
-          print("sad");
           var boxLocation = LatLongAltitude.FromDegrees(placement.Longe, placement.Lat, placement.alt);
           //create RGB from the list
-          Color color = new Color( placement.r/255, placement.g/255, placement.b/255, 0.1f);
+          Color color = new Color( placement.r/255, placement.g/255, placement.b/255, 0.5f);
           StartCoroutine(MakeHighlight(placement.id, boxLocation, color));
         }
 
@@ -361,6 +359,23 @@ public class UpdateCameraGPS : MonoBehaviour {
     IEnumerator MakeHighlight(string id, LatLongAltitude latLongAlt, Color color){
       Material Highlight = new Material(highlightMaterialRed);
       Highlight.color = color;
+
+      // // Component[] renderers = GameObject.GetComponentsInChildren(typeof(Renderer));
+      //         // foreach (Renderer curRenderer in renderers)
+      //         // {
+      //         //     Color color;
+      //         //     foreach (Material material in curRenderer.materials)
+      //         //     {
+      // color = Highlight.color;
+      // // change alfa for transparency
+      // color.a -= 0.4f;
+      // if (color.a < 0)
+      // {
+      //     color.a = 0;
+      // }
+      Highlight.color = color;
+
+
       Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, Highlight, OnHighlightReceived);
       Highlight.name = "highlight:" + id;
       yield return null;
@@ -544,7 +559,7 @@ void Update () {
         }
 
         RaycastHit hit;
-        Vector3 tempPOVposition = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z);
+        Vector3 tempPOVposition = new Vector3(setCam.transform.position.x, 160, setCam.transform.position.z + 75);
 
         if (Physics.Raycast(tempPOVposition,Vector3.down,out hit, 300))
         {
