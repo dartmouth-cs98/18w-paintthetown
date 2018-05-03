@@ -20,7 +20,7 @@ public class SplatOnCollision : MonoBehaviour {
 
 	void OnParticleCollision(GameObject other)
 	{
-        //print("Got into the the collision callback in the splatOnCollision script");
+        print("Got into the the collision callback in the splatOnCollision script");
 		ParticlePhysicsExtensions.GetCollisionEvents (particleLauncher, other, collisionEvents);
 
         for (int i = 0; i < collisionEvents.Count; i++)
