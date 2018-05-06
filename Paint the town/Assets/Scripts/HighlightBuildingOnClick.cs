@@ -216,8 +216,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
       else
       {
         print(www.text);
-        print("building captured!");
-        print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
+        // print("building captured!");
+        // print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
       }
     }
 

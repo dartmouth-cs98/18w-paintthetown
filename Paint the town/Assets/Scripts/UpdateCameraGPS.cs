@@ -9,6 +9,7 @@ using Wrld.Resources.Buildings;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 // based on tutorials at https://docs.unity3d.com/ScriptReference/LocationService.Start.html and https://wrld3d.com/unity/latest/docs/examples/moving-the-camera/
 // based on tutorial at https://unity3d.com/learn/tutorials/topics/mobile-touch/pinch-zoom
 
@@ -27,7 +28,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         public override bool Equals( object ob ){
       		if( ob is BuildingStuff ) {
       			BuildingStuff c = (BuildingStuff) ob;
-      			return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt && r==c.r && g==c.r && b==c.b;
+      			return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt && r==c.r && g==c.g && b==c.b;
       		}
       		else {
       			return false;
@@ -79,6 +80,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     public GameObject prefab;
     private float time = 0.5f;
     public GameObject toBeDestroyedMarker;
+    public GameObject highlightGameObject;
     public GameObject[] listOfToBeDestroyed;
     public LatLong centerMapLatLong;
     public double centerMapDistance;
@@ -96,6 +98,9 @@ public class UpdateCameraGPS : MonoBehaviour {
     private Quaternion baseOrientationRotationFix = Quaternion.identity;
     private Quaternion referenceRotation = Quaternion.identity;
 
+    private LatLongAltitude lastLocationOfCamera;
+
+    public static Mesh highlightMesh;
 
     // particle system stuff
     public ParticleSystem pLauncher;
@@ -112,6 +117,11 @@ public class UpdateCameraGPS : MonoBehaviour {
     string r;
     string g;
     string b;
+
+
+
+    Dictionary<string, float> oldBuildingsD = new Dictionary<string, float>();
+    Dictionary<string, float> newBuildingsD = new Dictionary<string, float>();
 
     HashSet<BuildingPOIStuff> oldBuildings = new HashSet<BuildingPOIStuff>();
     HashSet<BuildingPOIStuff> newBuildings = new HashSet<BuildingPOIStuff>();
@@ -189,10 +199,10 @@ public class UpdateCameraGPS : MonoBehaviour {
       double lat = Input.location.lastData.latitude;
       double longe = Input.location.lastData.longitude;
 
-      uMinLng = (longe - .003);
-      uMinLat = (lat - .003);
-      uMaxLng = (longe + .003);
-      uMaxLat = (lat + .003);
+      uMinLng = (longe - .01);
+      uMinLat = (lat - .01);
+      uMaxLng = (longe + .01);
+      uMaxLat = (lat + .01);
 
       StartCoroutine("sendUpdateBoundingBox");
     }
@@ -219,23 +229,57 @@ public class UpdateCameraGPS : MonoBehaviour {
       Hashtable header = new Hashtable();
       header.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 
-      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=team&extraFields[3]=baseAltitude&extraFields[4]=topAltitude&extraFields[5]=rgb", null, header);
+      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=team&extraFields[3]=baseAltitude&extraFields[4]=topAltitude&extraFields[5]=rgb&teamOnly=true", null, header);
       yield return www;
       if (www.error != null)
       {
         print("Error downloading: " + www.error);
       } else {
 
-        //print("WWW " + www.text);
+        // print("WWW " + www.text);
         parsingString = Regex.Split(www.text, @"[,:{}]+");
-
+        //
         // for(int y = 3; y < parsingString.Length; y++){
         //   print(parsingString[y]);
         // }
 
-        for(int x = 3; x < parsingString.Length - 14; x = x + 14){
+        for(int x = 3; x < parsingString.Length - 18; x = x + 38){
+          stringLnge = "";
           team = "";
-          for(int y = 0; y < 14; y ++){
+          lnge = -1;
+          stringLat = "";
+          lat = -1;
+          alt = -1;
+          id = "";
+          team = "";
+          stringTopAlt = "";
+          topAlt = -1;
+          r = "";
+          g = "";
+          b = "";
+          for(int y = 0; y < 18; y ++){
+            //
+            // if(parsingString[x + y].Trim('"') == "centroidLng"){
+            //   print("centroidlng: " + parsingString[x + y].Trim('"'));
+            // }
+            // if (parsingString[x + y].Trim('"') == "centroidLat"){
+            //   print("centroidlat: " + parsingString[x + y].Trim('"'));
+            // }
+            // if (parsingString[x + y].Trim('"') == "baseAltitude"){
+            //   print("baseAlit: " + parsingString[x + y].Trim('"'));
+            // }
+            // if (parsingString[x + y].Trim('"') == "id"){
+            //   print("id? " +parsingString[x + y + 1].Trim('"'));
+            // }
+            // if (parsingString[x + y].Trim('"') == "name" && parsingString[x + y + 2].Trim('"') != "color"){
+            //   print("name " + parsingString[x + y].Trim('"'));
+            // }
+            // if (parsingString[x + y].Trim('"') == "topAltitude"){
+            //   print("topAlt " + parsingString[x + y].Trim('"'));
+            // }
+            // if (parsingString[x + y].Trim('"') == "rgb"){
+            //   print("rgb " + parsingString[x + y].Trim('"'));
+            // }
 
             if(parsingString[x + y].Trim('"') == "centroidLng"){
               stringLnge = parsingString[x + y + 1].Trim('"');
@@ -246,8 +290,8 @@ public class UpdateCameraGPS : MonoBehaviour {
             } else if (parsingString[x + y].Trim('"') == "baseAltitude"){
               alt = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
             } else if (parsingString[x + y].Trim('"') == "id"){
+
               id = parsingString[x + y + 1].Trim('"');
-            // } else if (parsingString[x + y].Trim('"') == "team" && parsingString[x + y - 4].Trim('"') == "rgb"){
             } else if (parsingString[x + y].Trim('"') == "name" && parsingString[x + y + 2].Trim('"') != "color"){
               team = parsingString[x + y + 1].Trim('"');
             } else if (parsingString[x + y].Trim('"') == "topAltitude"){
@@ -260,27 +304,56 @@ public class UpdateCameraGPS : MonoBehaviour {
             }
           }
 
-          //****************************************
-          //add buildings to the new team color hashset
-          // * ID
-          // * Location
-          // * RGB
-          //****************************************
-
-          if(team != ""){
-
-            BuildingStuff BuildingC = new BuildingStuff();
-
-            BuildingC.id = id;
-            BuildingC.Lat = (float)lat;
-            BuildingC.Longe = (float)lnge;
-            BuildingC.alt = (float)alt;
-            BuildingC.r = (float)Convert.ToDouble(r);
-            BuildingC.g = (float)Convert.ToDouble(g);
-            BuildingC.b = (float)Convert.ToDouble(b);
-
-            newBuildingsColor.Add(BuildingC);
+          if(id == "0e91d94e8cf9315668e31b33706787a5"){
+            print("LALALLALALALA");
+            print(r);
+            print(g);
+            print(b);
           }
+
+          // ***********************************
+          //BUILDING HIGHLIGHT DESTROY AND LOAD
+          // ***********************************
+
+            var value = (float)Convert.ToDouble(r) + ((float)Convert.ToDouble(g) * 10) + ((float)Convert.ToDouble(b) * 25);
+
+            if(id == "0e91d94e8cf9315668e31b33706787a5"){
+              print(value);
+            }
+
+            if(id != ""){
+
+              var key = id;
+
+              newBuildingsD.Add(key, value);
+
+              if(oldBuildingsD.ContainsKey(key)){
+
+                if(key == "0e91d94e8cf9315668e31b33706787a5"){
+                  print("papi");
+                  print(oldBuildingsD[key]);
+                }
+
+                if(oldBuildingsD[key] != value){
+                  print("WHHAAAAAOOOOOO");
+                    var boxLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
+                    //create RGB from the list
+                    Color color = new Color( (float)Convert.ToDouble(r)/255, (float)Convert.ToDouble(g)/255, (float)Convert.ToDouble(b)/255, 0.7f);
+                    StartCoroutine(MakeHighlight(id, boxLocation, color));
+                }
+              } else{
+                print("THIS HAPPENS FIRST");
+                var boxLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
+                //create RGB from the list
+                Color color = new Color( (float)Convert.ToDouble(r)/255, (float)Convert.ToDouble(g)/255, (float)Convert.ToDouble(b)/255, 0.7f);
+                StartCoroutine(MakeHighlight(id, boxLocation, color));
+              }
+            } else {
+              if(value > 0){
+                print("OH NOOOOOO");
+              }
+            }
+
 
           // *****************************************
           // add POIs to the new team color hashset
@@ -298,30 +371,24 @@ public class UpdateCameraGPS : MonoBehaviour {
               newBuildings.Add(BuildingPOI);
             }
           }
+
         }
 
-        // ***********************************
-        //BUILDING HIGHLIGHT DESTROY AND LOAD
-        // ***********************************
-        var toLoadColors = new HashSet<BuildingStuff>(newBuildingsColor);
-        var toDestroyColors = new HashSet<BuildingStuff>(oldBuildingsColor);
+        foreach(KeyValuePair<string, float> entry in oldBuildingsD){
 
-        toDestroyColors.ExceptWith(newBuildingsColor);
-        toLoadColors.ExceptWith(oldBuildingsColor);
-
-        foreach (BuildingStuff placement in toDestroyColors){
-          StartCoroutine(destroyColor(placement.id));
+            if(newBuildingsD.ContainsKey(entry.Key)){
+              if(newBuildingsD[entry.Key] != entry.Value){
+                 StartCoroutine(destroyColor(entry.Key));
+              }
+            } else{
+              StartCoroutine(destroyColor(entry.Key));
+            }
         }
 
-        foreach (BuildingStuff placement in toLoadColors){
-          var boxLocation = LatLongAltitude.FromDegrees(placement.Longe, placement.Lat, placement.alt);
-          //create RGB from the list
-          Color color = new Color( placement.r/255, placement.g/255, placement.b/255, 0.5f);
-          StartCoroutine(MakeHighlight(placement.id, boxLocation, color));
-        }
+        oldBuildingsD = new Dictionary<string, float>(newBuildingsD);
 
-        oldBuildingsColor = newBuildingsColor;
-        newBuildingsColor.Clear();
+        newBuildingsD.Clear();
+
 
         // ***********************************
         //BUILDING POI DESTROY AND LOAD
@@ -348,9 +415,8 @@ public class UpdateCameraGPS : MonoBehaviour {
 
     void OnHighlightReceived(bool success, Highlight highlight)
     {
-        if (success)
-        {
-          //things good happened
+        if (success){
+
         } else{
           //print("i didn't do things");
         }
@@ -360,26 +426,13 @@ public class UpdateCameraGPS : MonoBehaviour {
       Material Highlight = new Material(highlightMaterialRed);
       Highlight.color = color;
 
-      // // Component[] renderers = GameObject.GetComponentsInChildren(typeof(Renderer));
-      //         // foreach (Renderer curRenderer in renderers)
-      //         // {
-      //         //     Color color;
-      //         //     foreach (Material material in curRenderer.materials)
-      //         //     {
-      // color = Highlight.color;
-      // // change alfa for transparency
-      // color.a -= 0.4f;
-      // if (color.a < 0)
-      // {
-      //     color.a = 0;
-      // }
-      Highlight.color = color;
-
-
       Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, Highlight, OnHighlightReceived);
       Highlight.name = "highlight:" + id;
+
       yield return null;
     }
+
+
 
     IEnumerator destroyColor(string id){
       string material_name = "hightlight:" + id;
@@ -482,12 +535,80 @@ public class UpdateCameraGPS : MonoBehaviour {
     }
 
 
-
 void Update () {
 
+      // if(setCam.enabled){
+      //     var yourlocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude,  Input.location.lastData.altitude);
+      //
+      //     //var viewportpoint = setCam.WorldToViewportPoint(setCam.transform.position);
+      //
+      //     // var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(yourlocation);
+      //     var playerWorldPoint = Api.Instance.CameraApi.GeographicToWorldPoint(yourlocation);
+      //
+      //     var cameraWorldPoint = setCam.transform.position;
+      //
+      //     var differenceX = playerWorldPoint.x - cameraWorldPoint.x;
+      //     var differenceY = playerWorldPoint.z - cameraWorldPoint.z;
+      //
+      //     print("CAMERA X: " + cameraWorldPoint.x);
+      //     print("CAMERA Y: " + cameraWorldPoint.y);
+      //     print("PLAYER X: " + playerWorldPoint.x);
+      //     print("PLAYER Y: " + playerWorldPoint.y);
+      //
+      //
+      //     // if (differenceX < -500 || differenceX > 500 || differenceY < -500 || differenceY > 500){
+      //     if (differenceX < -500){
+      //       var tempWorldPoint = cameraWorldPoint;
+      //
+      //       tempWorldPoint.x = playerWorldPoint.x-450;
+      //
+      //       print("GOING TO x: " + Convert.ToString(playerWorldPoint.x-450));
+      //
+      //       var tempViewportPoint = setCam.WorldToViewportPoint(tempWorldPoint);
+      //       var tempGeoPoint = Api.Instance.CameraApi.ViewportToGeographicPoint(tempViewportPoint);
+      //
+      //       Api.Instance.CameraApi.AnimateTo(tempGeoPoint.GetLatLong(), 0, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0, transitionDuration: 0);
+      //     }
+      //     else if(differenceX > 500){
+      //       var tempWorldPoint = cameraWorldPoint;
+      //
+      //       tempWorldPoint.x = playerWorldPoint.x + 450;
+      //
+      //       print("GOING TO x: " + Convert.ToString(playerWorldPoint.x + 450));
+      //
+      //       var tempViewportPoint = setCam.WorldToViewportPoint(tempWorldPoint);
+      //       var tempGeoPoint = Api.Instance.CameraApi.ViewportToGeographicPoint(tempViewportPoint);
+      //
+      //       Api.Instance.CameraApi.AnimateTo(tempGeoPoint.GetLatLong(), 0, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0, transitionDuration: 0);
+      //     }
+      //     else if (differenceY < -500){
+      //       var tempWorldPoint = cameraWorldPoint;
+      //
+      //       tempWorldPoint.y = playerWorldPoint.y - 450;
+      //
+      //       print("GOING TO y: " + Convert.ToString(playerWorldPoint.y - 450));
+      //
+      //       var tempViewportPoint = setCam.WorldToViewportPoint(tempWorldPoint);
+      //       var tempGeoPoint = Api.Instance.CameraApi.ViewportToGeographicPoint(tempViewportPoint);
+      //
+      //       Api.Instance.CameraApi.AnimateTo(tempGeoPoint.GetLatLong(), 0, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0, transitionDuration: 0);
+      //
+      //     }
+      //     else if (differenceY > 500){
+      //       var tempWorldPoint = cameraWorldPoint;
+      //
+      //       tempWorldPoint.y = playerWorldPoint.y + 450;
+      //
+      //       print("GOING TO y: " + Convert.ToString(playerWorldPoint.y + 450));
+      //
+      //       var tempViewportPoint = setCam.WorldToViewportPoint(tempWorldPoint);
+      //       var tempGeoPoint = Api.Instance.CameraApi.ViewportToGeographicPoint(tempViewportPoint);
+      //
+      //       Api.Instance.CameraApi.AnimateTo(tempGeoPoint.GetLatLong(), 0, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0, transitionDuration: 0);
+      //
+      //     }
+      //   }
 
-        // var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
-        // var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
         // if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
 
         // handle pinch to zoom
@@ -531,17 +652,6 @@ void Update () {
             //    // clamp the fov to make sure it's between 0 and 180.
             //    setCam.fieldOfView = Mathf.Clamp(setCam.fieldOfView, 0.1f, 179.9f);
             //}
-
-            distance += distMagnitudeDiff * zoomSpeed;
-            // print(setCam.transform.position.x);
-            // print(setCam.transform.position.y);
-            // print(setCam.transform.position.z);
-            //
-
-            Vector3 temp = new Vector3(0,0,(float)distance);
-            setCam.transform.position += temp;
-
-            // print(setCam.transform.position.z);
         }
         var currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
         var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 0);
@@ -552,10 +662,12 @@ void Update () {
 
         centerMapLatLong = currentLatLong;
         centerMapDistance = distance;
+
         if (!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f)
         {
             mapCentered = true;
             Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+            lastLocationOfCamera = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, Input.location.lastData.altitude);
         }
 
         RaycastHit hit;
