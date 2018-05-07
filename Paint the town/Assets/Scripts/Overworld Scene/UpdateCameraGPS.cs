@@ -41,7 +41,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     private LatLongAltitude lastLocationOfCamera;
 
     // particle system stuff
-    public ParticleSystem pLauncher;
+    public ParticleSystem pLauncherPOV;
 
     IEnumerator Start()
     {
@@ -229,14 +229,14 @@ void Update () {
 
         // Create temp Vector 3, dynamically change its height
         RaycastHit hit;
-        Vector3 tempPOVposition = new Vector3(setCam.transform.position.x, 400, setCam.transform.position.z);
+        Vector3 tempPOVposition = new Vector3(setCam.transform.position.x, 400, setCam.transform.position.z + 40);
         if (Physics.Raycast(tempPOVposition,Vector3.down,out hit, 600))
         {
             tempPOVposition.y = hit.point.y + 15f;
         }
 
         // Set POV cam to the temp Vector 3 created above
-        pLauncher.transform.SetPositionAndRotation(setCam.transform.position, setCam.transform.rotation);
+        pLauncherPOV.transform.SetPositionAndRotation(povCam.transform.position, povCam.transform.rotation);
         povCam.transform.position = tempPOVposition;
         povCam.transform.rotation = Quaternion.Slerp(povCam.transform.rotation,cameraBase * (ConvertRotation(referenceRotation * Input.gyro.attitude) * GetRotFix()), lowPassFilterFactor);
 
