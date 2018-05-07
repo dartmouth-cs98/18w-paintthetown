@@ -486,7 +486,7 @@ MonoBehaviour:
   centerMapDistance: 0
   mapCentered: 0
   myGlobalInt: 0
-  pLauncher: {fileID: 300762916}
+  pLauncherPOV: {fileID: 1469582719}
 --- !u!114 &220022119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,7 +512,6 @@ MonoBehaviour:
   stopFlag: 0
   mainCam: {fileID: 739109162}
   povCam: {fileID: 330341061}
-  pLauncher: {fileID: 300762916}
 --- !u!114 &220022120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5860,7 +5859,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1842813548
+  randomSeed: -1338623326
   InitialModule:
     serializedVersion: 3
     enabled: 1

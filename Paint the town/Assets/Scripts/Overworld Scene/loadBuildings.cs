@@ -24,7 +24,7 @@ public class loadBuildings : MonoBehaviour {
   string r;
   string g;
   string b;
-	private float time = 0.5f;
+	private float time = 0.25f;
 	public string[] parsingString;
 	public ArrayList poiList;
 

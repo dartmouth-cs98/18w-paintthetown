@@ -5,7 +5,11 @@ licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - prefab: {fileID: 1723291844528510, guid: 72aec96d7d1374185bc56a1d6e311ca4, type: 2}
+  - highlightMaterialRed: {fileID: 2100000, guid: 87c21b5592c604688bc800ad86855c79,
+      type: 2}
+  - setCam: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -37,10 +37,7 @@ public class UpdateCameraGPS : MonoBehaviour {
     private Quaternion referenceRotation = Quaternion.identity;
 
     public int myGlobalInt;
-
     private LatLongAltitude lastLocationOfCamera;
-
-    // particle system stuff
     public ParticleSystem pLauncherPOV;
 
     IEnumerator Start()

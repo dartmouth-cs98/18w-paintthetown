@@ -45,16 +45,16 @@ public class HighlightBuildingOnClick : MonoBehaviour
       textArea.enabled = false;
       image.enabled = false;
 
-      if(PlayerPrefs.GetString("color", "no color") == "red")
-      {
-        highlightMaterial.color = Color.red;
-        print("THE GAME COLOR IS RED");
-      } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
-        highlightMaterial.color = Color.blue;
-        print("THE GAME COLOR IS BLUE");
-      } else {
-        print("Error: could not find player color");
-      }
+      // if(PlayerPrefs.GetString("color", "no color") == "red")
+      // {
+      //   highlightMaterial.color = Color.red;
+      //   print("THE GAME COLOR IS RED");
+      // } else if(PlayerPrefs.GetString("color", "no color") == "blue"){
+      //   highlightMaterial.color = Color.blue;
+      //   print("THE GAME COLOR IS BLUE");
+      // } else {
+      //   print("Error: could not find player color");
+      // }
     }
 
     void OnEnable()
@@ -111,7 +111,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
                   Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
 
-                  Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
+                  // Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, highlightMaterial, OnHighlightReceived);
 
                 } else if(image.enabled == false){
 
