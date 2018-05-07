@@ -483,8 +483,6 @@ MonoBehaviour:
   povCam: {fileID: 330341061}
   setCam: {fileID: 739109162}
   zoomSpeed: 0.5
-<<<<<<< HEAD
-=======
   uMinLng: 0
   uMinLat: 0
   uMaxLng: 0
@@ -498,7 +496,6 @@ MonoBehaviour:
   toBeDestroyedMarker: {fileID: 0}
   highlightGameObject: {fileID: 0}
   listOfToBeDestroyed: []
->>>>>>> 2934e9dcb292f2fd5771e15771635fd9e41db880
   centerMapDistance: 0
   mapCentered: 0
   myGlobalInt: 0
