@@ -422,6 +422,7 @@ GameObject:
   - component: {fileID: 220022116}
   - component: {fileID: 220022118}
   - component: {fileID: 220022119}
+  - component: {fileID: 220022120}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -482,6 +483,8 @@ MonoBehaviour:
   povCam: {fileID: 330341061}
   setCam: {fileID: 739109162}
   zoomSpeed: 0.5
+<<<<<<< HEAD
+=======
   uMinLng: 0
   uMinLat: 0
   uMaxLng: 0
@@ -495,10 +498,11 @@ MonoBehaviour:
   toBeDestroyedMarker: {fileID: 0}
   highlightGameObject: {fileID: 0}
   listOfToBeDestroyed: []
+>>>>>>> 2934e9dcb292f2fd5771e15771635fd9e41db880
   centerMapDistance: 0
   mapCentered: 0
-  shader1: {fileID: 0}
-  pLauncher: {fileID: 300762916}
+  myGlobalInt: 0
+  pLauncherPOV: {fileID: 1469582719}
 --- !u!114 &220022119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,7 +528,22 @@ MonoBehaviour:
   stopFlag: 0
   mainCam: {fileID: 739109162}
   povCam: {fileID: 330341061}
-  pLauncher: {fileID: 300762916}
+--- !u!114 &220022120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 220022115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebdb9cb785c6d244da9b8439e0a3a893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parsingString: []
+  prefab: {fileID: 1723291844528510, guid: 72aec96d7d1374185bc56a1d6e311ca4, type: 2}
+  highlightMaterialRed: {fileID: 2100000, guid: 87c21b5592c604688bc800ad86855c79,
+    type: 2}
+  setCam: {fileID: 739109162}
 --- !u!1 &300762915
 GameObject:
   m_ObjectHideFlags: 0
@@ -5856,7 +5875,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1842813548
+  randomSeed: -1338623326
   InitialModule:
     serializedVersion: 3
     enabled: 1
