@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -137,14 +137,14 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 109850357}
-  m_LocalRotation: {x: -0, y: -0.32102123, z: -0, w: 0.947072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.39138487, y: 2.185044, z: 1}
   m_Children:
   - {fileID: 1256019259}
   m_Father: {fileID: 555835332}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: -37.449, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -606, y: 245.26123}
@@ -493,6 +493,7 @@ MonoBehaviour:
     type: 2}
   prefab: {fileID: 1723291844528510, guid: 72aec96d7d1374185bc56a1d6e311ca4, type: 2}
   toBeDestroyedMarker: {fileID: 0}
+  highlightGameObject: {fileID: 0}
   listOfToBeDestroyed: []
   centerMapDistance: 0
   mapCentered: 0
@@ -604,7 +605,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1208470021
+  randomSeed: 1809486057
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3911,7 +3912,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 300762915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c2ca4cfb8d436b458155382c1d57c10, type: 3}
   m_Name: 
@@ -5396,7 +5397,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: GPS
 --- !u!222 &1256019261
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9315,7 +9316,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: POV
 --- !u!222 &1626666676
 CanvasRenderer:
   m_ObjectHideFlags: 0
