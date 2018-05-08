@@ -15,18 +15,13 @@ using UnityEngine.Networking;
 
 public class UpdateCameraGPS : MonoBehaviour {
 
-    public bool isUnityRemote;
     public Camera povCam;
     public Camera setCam;
+
     public float zoomSpeed = 1.0f; // speed to zoom in or out at
     private double distance = 300.00; // height in Wrld3d api distance terms
-
-    public LatLong centerMapLatLong;
-    public double centerMapDistance;
+    public bool isUnityRemote;
     public bool mapCentered;
-
-    public int myGlobalInt;
-    private LatLongAltitude lastLocationOfCamera;
 
     IEnumerator Start()
     {
@@ -101,24 +96,20 @@ void Update () {
             float distMagnitudeDiff = prevTouchDistanceMag - touchDistanceMag;
         }
 
-        var currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
-        var currentLocation = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, myGlobalInt);
+        LatLong currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+        LatLongAltitude currentLatLongAlt = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 0);
 
-        Api.Instance.CameraApi.GeographicToWorldPoint(currentLocation,setCam);
+        Api.Instance.CameraApi.GeographicToWorldPoint(currentLatLongAlt,setCam);
         Api.Instance.StreamResourcesForCamera(setCam);
         Api.Instance.Update();
-
-        centerMapLatLong = currentLatLong;
-        centerMapDistance = distance;
 
         // Runs on first time user GPS is received
         if (!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f)
         {
             mapCentered = true;
-            Api.Instance.CameraApi.AnimateTo(centerMapLatLong, centerMapDistance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
-            lastLocationOfCamera = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, Input.location.lastData.altitude);
+            Api.Instance.CameraApi.AnimateTo(currentLatLong, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
         }
 
-        print("x: " + setCam.transform.position.x + "  y: " + setCam.transform.position.y + "  z: " + setCam.transform.position.z + "  g: " + myGlobalInt);
+        print("x: " + setCam.transform.position.x + "  y: " + setCam.transform.position.y + "  z: " + setCam.transform.position.z );
 	}
 }
