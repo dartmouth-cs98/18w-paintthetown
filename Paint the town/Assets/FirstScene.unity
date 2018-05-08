@@ -449,7 +449,7 @@ MonoBehaviour:
   m_distanceToInterest: 300
   m_headingDegrees: 0
   m_coordSystem: 0
-  m_streamingLodBasedOnDistance: 0
+  m_streamingLodBasedOnDistance: 1
   m_materialDirectory: WrldMaterials/
   m_overrideLandmarkMaterial: {fileID: 0}
   m_useBuiltInCameraControls: 1
@@ -480,13 +480,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5d1af630c28834a9911254b745a8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUnityRemote: 1
   povCam: {fileID: 330341061}
   setCam: {fileID: 739109162}
   zoomSpeed: 0.5
-  centerMapDistance: 0
+  isUnityRemote: 1
   mapCentered: 0
-  myGlobalInt: 0
 --- !u!114 &220022119
 MonoBehaviour:
   m_ObjectHideFlags: 0

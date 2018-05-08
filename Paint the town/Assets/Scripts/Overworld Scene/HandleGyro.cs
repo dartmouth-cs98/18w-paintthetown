@@ -9,6 +9,10 @@ using Wrld.Resources.Buildings;
 
 using UnityEngine;
 using UnityEngine.Networking;
+
+// ***********************************************************
+// Written by Heyworks Unity Studio http://unity.heyworks.com/
+// ***********************************************************
 public class HandleGyro : MonoBehaviour {
 
 	public Camera povCam;

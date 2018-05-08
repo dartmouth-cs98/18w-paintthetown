@@ -22,6 +22,9 @@ public class UpdateCameraGPS : MonoBehaviour {
     private double distance = 300.00; // height in Wrld3d api distance terms
     public bool isUnityRemote;
     public bool mapCentered;
+    private LatLong lastCorrectHeightLatLong;
+    private LatLongAltitude lastCorrectHeightLatLongAlt;
+    private int MAX_CAMERA_HEIGHT = 1200;
 
     IEnumerator Start()
     {
@@ -78,7 +81,7 @@ public class UpdateCameraGPS : MonoBehaviour {
 void Update () {
         if (Input.touchCount == 2 && setCam.enabled)
         {
-            print("Pinch gesture detected!");
+            //print("Pinch gesture detected!");
 
             // store them
             Touch touch0 = Input.GetTouch(0);
@@ -97,7 +100,7 @@ void Update () {
         }
 
         LatLong currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
-        LatLongAltitude currentLatLongAlt = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 0);
+        LatLongAltitude currentLatLongAlt = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 500);
 
         Api.Instance.CameraApi.GeographicToWorldPoint(currentLatLongAlt,setCam);
         Api.Instance.StreamResourcesForCamera(setCam);
@@ -110,6 +113,17 @@ void Update () {
             Api.Instance.CameraApi.AnimateTo(currentLatLong, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
         }
 
-        print("x: " + setCam.transform.position.x + "  y: " + setCam.transform.position.y + "  z: " + setCam.transform.position.z );
+        RaycastHit hit;
+        if ( Physics.Raycast(setCam.transform.position,Vector3.down,out hit, 2000) )
+        {
+              if (setCam.transform.position.y - hit.point.y > MAX_CAMERA_HEIGHT){
+                Api.Instance.CameraApi.AnimateTo(lastCorrectHeightLatLong,lastCorrectHeightLatLongAlt,null,true);
+              }else{
+                lastCorrectHeightLatLong = currentLatLong;
+                lastCorrectHeightLatLongAlt = currentLatLongAlt;
+              }
+        }
+
+        //print("x: " + setCam.transform.position.x + "  y: " + setCam.transform.position.y + "  z: " + setCam.transform.position.z );
 	}
 }
