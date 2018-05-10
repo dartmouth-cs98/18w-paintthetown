@@ -58,7 +58,7 @@ public class particleLauncherPOV : MonoBehaviour {
 
     IEnumerator captureBuilding()
     {
-        print("You're capturing a building");
+        //print("You're capturing a building");
 
         WWWForm captureform = new WWWForm();
 
@@ -76,9 +76,9 @@ public class particleLauncherPOV : MonoBehaviour {
         }
         else
         {
-            print(www.text);
-            print("building captured!");
-            print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
+            // print(www.text);
+            // print("building captured!");
+            // print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
         }
     }
 

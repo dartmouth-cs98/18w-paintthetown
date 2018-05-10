@@ -10,7 +10,7 @@ using Wrld.Resources.Buildings;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class loadBuildings : MonoBehaviour {
+public class LoadBuildings : MonoBehaviour {
 
   double topAlt;
   string stringLnge;

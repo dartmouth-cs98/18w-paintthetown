@@ -82,7 +82,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-          print("HI!");
           mouseDownPosition = Input.mousePosition;
         }
 
@@ -132,7 +131,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void checkBuildingExist(bool success, Building b){
       if(success){
-        print("MEMEMEMEMEMEMEMEMEMEMEM");
         image.enabled = true;
         textArea.enabled = true;
         index = 0;
@@ -176,12 +174,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
     IEnumerator getBuildingColor()
     {
       Hashtable headers = new Hashtable();
-      print("You're retrieving information about a building");
   		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
   		WWW www = new WWW(getBuildingIDURL, null, headers);
   		yield return www;
 
-        print("HERE HERE HERE " + www.text);
         print(PlayerPrefs.GetString("teamID", "no teamID"));
         if(www.text == "null"){
           //the building has never been clicked before
@@ -236,7 +232,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     IEnumerator captureBuilding()
     {
-      print("You're capturing a building");
+      //print("You're capturing a building");
 
       WWWForm captureform = new WWWForm();
 
@@ -254,27 +250,27 @@ public class HighlightBuildingOnClick : MonoBehaviour
       }
       else
       {
-        print(www.text);
-        print("building captured!");
-        print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
+      //  print(www.text);
+      //  print("building captured!");
+      //  print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
       }
     }
 
     IEnumerator createBuilding()
     {
-      print ("You're making a building");
+      //print ("You're making a building");
 
       WWWForm signupform = new WWWForm();
 
       signupform.AddField("name", "I am a name");
-      print(location);
+      //print(location);
       string lat = "" + location.GetLatitude();
       string longi = "" + location.GetLongitude();
       List<string> array = new List<string>();
       array.Add(lat);
       array.Add(longi);
-      print(array[0]);
-      print(array[1]);
+      //print(array[0]);
+      //print(array[1]);
       //TODO: BUG HERE
       signupform.AddField("id", id);
       signupform.AddField("centroid[]", array[0]);
@@ -295,9 +291,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		}
   		else
   		{
-        print(www.text);
-
-  			print("building signed up!");
+        //print(www.text);
+  			//print("building signed up!");
         StartCoroutine("captureBuilding");
       }
     }
