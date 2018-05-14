@@ -37,17 +37,23 @@ public class LoadBuildings : MonoBehaviour {
 	double uMaxLat;
 
 	public Material highlightMaterialRed;
+  public Material highlightOuter;
 	public static Mesh highlightMesh;
 	public Camera setCam;
 
+  private List<Material> materialList = new List<Material>();
+
   Dictionary<string, float> oldBuildingsD = new Dictionary<string, float>();
   Dictionary<string, float> newBuildingsD = new Dictionary<string, float>();
+
+  Dictionary<GameObject, Color> HighlightsColors = new Dictionary<GameObject, Color>();
 
   HashSet<BuildingPOIStuff> oldBuildings = new HashSet<BuildingPOIStuff>();
   HashSet<BuildingPOIStuff> newBuildings = new HashSet<BuildingPOIStuff>();
 
   HashSet<BuildingStuff> oldBuildingsColor = new HashSet<BuildingStuff>();
   HashSet<BuildingStuff> newBuildingsColor = new HashSet<BuildingStuff>();
+
 
 	struct BuildingStuff
 	{
@@ -178,22 +184,11 @@ public class LoadBuildings : MonoBehaviour {
 					}
 				}
 
-				if(id == "0e91d94e8cf9315668e31b33706787a5"){
-					// print("LALALLALALALA");
-					// print(r);
-					// print(g);
-					// print(b);
-				}
-
 				// ***********************************
 				//BUILDING HIGHLIGHT DESTROY AND LOAD
 				// ***********************************
 
 					var value = (float)Convert.ToDouble(r) + ((float)Convert.ToDouble(g) * 10) + ((float)Convert.ToDouble(b) * 25);
-
-					if(id == "0e91d94e8cf9315668e31b33706787a5"){
-						// print(value);
-					}
 
 					if(id != ""){
 
@@ -202,29 +197,20 @@ public class LoadBuildings : MonoBehaviour {
 						newBuildingsD.Add(key, value);
 
 						if(oldBuildingsD.ContainsKey(key)){
-
-							if(key == "0e91d94e8cf9315668e31b33706787a5"){
-								// print("papi");
-								// print(oldBuildingsD[key]);
-							}
-
 							if(oldBuildingsD[key] != value){
-								// print("WHHAAAAAOOOOOO");
 									var boxLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
 									//create RGB from the list
 									Color color = new Color( (float)Convert.ToDouble(r)/255, (float)Convert.ToDouble(g)/255, (float)Convert.ToDouble(b)/255, 0.7f);
 									StartCoroutine(MakeHighlight(id, boxLocation, color));
 							}
 						} else{
-							// print("THIS HAPPENS FIRST");
 							var boxLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
 							//create RGB from the list
-							Color color = new Color( (float)Convert.ToDouble(r)/255, (float)Convert.ToDouble(g)/255, (float)Convert.ToDouble(b)/255, 0.7f);
+							Color color = new Color( (float)Convert.ToDouble(r)/255, (float)Convert.ToDouble(g)/255, (float)Convert.ToDouble(b)/255, 0.5f);
 							StartCoroutine(MakeHighlight(id, boxLocation, color));
 						}
 					} else {
 						if(value > 0){
-							// print("OH NOOOOOO");
 						}
 					}
 
@@ -281,23 +267,61 @@ public class LoadBuildings : MonoBehaviour {
 			oldBuildings = newBuildings;
 			newBuildings.Clear();
 		}
-	}
-
-	IEnumerator MakeBox(string id, LatLongAltitude latLongAlt){
-
-			var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
-			var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
-			GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
-			cloneMarker.name = id;
-			yield return null;
-	}
+  }
 
 	void OnHighlightReceived(bool success, Highlight highlight)
 	{
 			if (success){
+        var Highlights = transform.Find("Highlights");
+        var HighlightContainer = GameObject.Find("HighlightContainer");
 
+				foreach (Transform child in Highlights.transform){
+          if(child.name != "do not" && child.localRotation[0] != 0 && child.localRotation[1] != 0 && child.localRotation[2] != 0){
+            if(child.name.Substring(child.name.Length - 2) != "do"){  //&& child.name != "do"
+
+              GameObject newHighlight = new GameObject();
+              newHighlight.name = "do not";
+
+              Mesh mesh = child.gameObject.GetComponent<MeshFilter>().mesh;
+              MeshFilter filter = newHighlight.AddComponent<MeshFilter>();
+              MeshRenderer renderer = newHighlight.AddComponent<MeshRenderer>();
+              filter.mesh = mesh;
+
+              clonedHighlight clonedH = newHighlight.AddComponent<clonedHighlight>();
+              clonedH.originalHighlight = child.gameObject;
+
+              Renderer matRend = newHighlight.GetComponent<Renderer>();
+
+              child.name = child.name + "do";
+
+              newHighlight.transform.position = child.position;
+              newHighlight.transform.localRotation = child.localRotation;
+
+              newHighlight.transform.SetParent(Highlights.transform);
+
+              Mesh mesh2 = filter.mesh;
+              mesh2.RecalculateNormals();
+              matRend.material = new Material(highlightMaterialRed);
+              Vector3[] vertices = mesh2.vertices;
+              Vector3[] normals = mesh2.normals;
+
+              for (int i = 0; i < vertices.Length; i++) {
+                  vertices[i] += normals [i] * .8f;
+              }
+
+              mesh2.vertices = vertices;
+
+              filter.mesh.RecalculateBounds();
+
+              filter.mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 2000);
+
+              child.GetComponent<MeshRenderer>().enabled = false;
+
+            }
+          }
+        }
 			} else{
-				//print("i didn't do things");
+        print("why tho");
 			}
 	}
 
@@ -306,17 +330,28 @@ public class LoadBuildings : MonoBehaviour {
 		Highlight.color = color;
 
 		Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, Highlight, OnHighlightReceived);
-		Highlight.name = "highlight:" + id;
+		Highlight.name = id + "0_INDEX0";
+
+    materialList.Add(Highlight);
 
 		yield return null;
 	}
 
 	IEnumerator destroyColor(string id){
-		string material_name = "hightlight:" + id;
+		string material_name = id + "0_INDEX0";
 		Material toBeDestroyedHighlight = (Material)Resources.Load(material_name, typeof(Material));
 		Destroy(toBeDestroyedHighlight);
 		yield return null;
 	}
+
+  IEnumerator MakeBox(string id, LatLongAltitude latLongAlt){
+
+      var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
+      var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
+      GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
+      cloneMarker.name = id;
+      yield return null;
+  }
 
 	IEnumerator destroy(string id){
 		toBeDestroyedMarker = GameObject.Find(id);
@@ -326,6 +361,14 @@ public class LoadBuildings : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+    var Highlights = transform.Find("Highlights");
 
-	}
+    foreach (Transform child in Highlights.transform){
+      if(child.name == "do not"){
+        child.position = child.GetComponent<clonedHighlight>().getOriginalCenter();
+        child.GetComponent<Renderer>().material.color = child.GetComponent<clonedHighlight>().originalHighlight.GetComponent<Renderer>().material.color;
+      }
+    }
+  }
+
 }
