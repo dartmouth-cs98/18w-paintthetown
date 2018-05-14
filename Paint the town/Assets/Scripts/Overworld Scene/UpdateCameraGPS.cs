@@ -156,14 +156,17 @@ public class UpdateCameraGPS : MonoBehaviour {
                   }
             }
 
-            // Snaps user back to current location if they stray too far HORIZONTALLY
-            // LatLong setCamToLatLong = Api.Instance.CameraApi.WorldToGeographicPoint(setCam.transform.position,setCam).GetLatLong();
-            // if( setCamToLatLong.GetLatitude() > 0.0f && setCamToLatLong.GetLongitude() != 0.0f && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f ){
-            //   if ( distanceFromLatLong(setCamToLatLong.GetLatitude(),setCamToLatLong.GetLongitude(),currentLatLong.GetLatitude(),currentLatLong.GetLongitude()) > OverworldGlobals.MAX_CAMERA_DISTANCE){
-            //     Api.Instance.CameraApi.AnimateTo(currentLatLong,lastCorrectHeightLatLongAlt,null,true);
-            //     myTB.show(OverworldGlobals.ERROR_CAMERA_TOO_FAR);
-            //   }
-            // }
-            // print(setCam.size);
+
+            if(!Api.Instance.CameraApi.IsTransitioning && mapCentered){
+                //Snaps user back to current location if they stray too far HORIZONTALLY
+                LatLong setCamToLatLong = Api.Instance.CameraApi.WorldToGeographicPoint(setCam.transform.position,setCam).GetLatLong();
+                if( setCamToLatLong.GetLatitude() > 0.0f && setCamToLatLong.GetLongitude() != 0.0f && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f ){
+                  if ( distanceFromLatLong(setCamToLatLong.GetLatitude(),setCamToLatLong.GetLongitude(),currentLatLong.GetLatitude(),currentLatLong.GetLongitude()) > OverworldGlobals.MAX_CAMERA_DISTANCE){
+                    Api.Instance.CameraApi.AnimateTo(currentLatLong,lastCorrectHeightLatLongAlt,null,true);
+                    myTB.show(OverworldGlobals.ERROR_CAMERA_TOO_FAR);
+                  }
+                }
+                // print(setCam.size);
+            }
     	}
 }
