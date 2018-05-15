@@ -424,6 +424,7 @@ GameObject:
   - component: {fileID: 220022119}
   - component: {fileID: 220022121}
   - component: {fileID: 220022120}
+  - component: {fileID: 220022122}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -541,6 +542,22 @@ MonoBehaviour:
     type: 2}
   highlightOuter: {fileID: 2100000, guid: c098e432d929b42caa082f184a27bea0, type: 2}
   setCam: {fileID: 739109162}
+--- !u!114 &220022122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 220022115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50937650ef79532418bcbaca49a55173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textArea: {fileID: 1264300695}
+  image: {fileID: 1715559694}
+  speed: 0.001
+  strings:
+  - '""'
 --- !u!1 &300762915
 GameObject:
   m_ObjectHideFlags: 0
@@ -5481,7 +5498,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
