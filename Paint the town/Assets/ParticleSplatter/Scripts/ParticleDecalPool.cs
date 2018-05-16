@@ -13,6 +13,7 @@ public class ParticleDecalPool : MonoBehaviour {
     public float decalSizeMax = 1.5f;
     private ParticleSystem.Particle[] particles;
     private ParticleSystem decalPS;
+    private ParticleSystem.MainModule decalMain;
     private string colorString;
     private Color plrColor;
 
@@ -22,15 +23,7 @@ public class ParticleDecalPool : MonoBehaviour {
 
         colorString = PlayerPrefs.GetString("color");
 
-        if (colorString.Equals("red"))
-        {
-            plrColor = Color.red;
-        }
-
-        else
-        {
-            plrColor = Color.blue;
-        }
+        
 
         decalPS = GetComponent<ParticleSystem>();
 
@@ -41,8 +34,41 @@ public class ParticleDecalPool : MonoBehaviour {
         {
             pd[i] = new ParticleDecalData();
         }
-		
-	}
+
+        decalMain = decalPS.main;
+
+        // set color
+        if (colorString == "blue")
+        {
+            decalMain.startColor = Color.blue;
+        }
+
+        if (colorString == "red")
+        {
+            decalMain.startColor = Color.red;
+        }
+
+        if (colorString == "green")
+        {
+            decalMain.startColor = Color.green;
+        }
+
+        if (colorString == "orange")
+        {
+            decalMain.startColor = new Color(0.5f, 0.5f, 0.0f);
+        }
+
+        if (colorString == "yellow")
+        {
+            decalMain.startColor = Color.yellow;
+        }
+
+        if (colorString == "purple")
+        {
+            decalMain.startColor = new Color(0.5f, 0.0f, 0.5f);
+        }
+
+    }
 
     public void particleHit(ParticleCollisionEvent particleCollisionEvent)
     {
