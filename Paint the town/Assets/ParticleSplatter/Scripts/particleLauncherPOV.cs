@@ -16,6 +16,7 @@ public class particleLauncherPOV : MonoBehaviour {
     public string bID;
     public string owner;
     public string playerColor;
+    private ParticleSystem.MainModule psMain;
 
     public ParticleSystem.EmitParams e_params;
     public Camera setCam;
@@ -88,6 +89,38 @@ public class particleLauncherPOV : MonoBehaviour {
         bID = PlayerPrefs.GetString("bid");
         playerColor = PlayerPrefs.GetString("color");
         InvokeRepeating("startOwnershipCheck", 5.0f, 2.0f);
+        psMain = splatterParticles.main;
+
+        // set color
+        if (playerColor == "blue")
+        {
+            psMain.startColor = Color.blue;
+        }
+
+        if (playerColor == "red")
+        {
+            psMain.startColor = Color.red;
+        }
+
+        if (playerColor == "green")
+        {
+            psMain.startColor = Color.green;
+        }
+
+        if (playerColor == "orange")
+        {
+            psMain.startColor = new Color(0.5f, 0.5f, 0.0f);
+        }
+
+        if (playerColor == "yellow")
+        {
+            psMain.startColor = Color.yellow;
+        }
+
+        if (playerColor == "purple")
+        {
+            psMain.startColor = new Color(0.5f, 0.0f, 0.5f);
+        }
     }
 
     void OnParticleCollision(GameObject other)
