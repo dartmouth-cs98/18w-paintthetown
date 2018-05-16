@@ -41,31 +41,37 @@ public class ParticleDecalPool : MonoBehaviour {
         if (colorString == "blue")
         {
             decalMain.startColor = Color.blue;
+            plrColor = Color.blue;
         }
 
         if (colorString == "red")
         {
             decalMain.startColor = Color.red;
+            plrColor = Color.red;
         }
 
         if (colorString == "green")
         {
             decalMain.startColor = Color.green;
+            plrColor = Color.green;
         }
 
         if (colorString == "orange")
         {
             decalMain.startColor = new Color(0.5f, 0.5f, 0.0f);
+            plrColor = new Color(0.5f, 0.5f, 0.0f);
         }
 
         if (colorString == "yellow")
         {
             decalMain.startColor = Color.yellow;
+            plrColor = Color.yellow;
         }
 
         if (colorString == "purple")
         {
             decalMain.startColor = new Color(0.5f, 0.0f, 0.5f);
+            plrColor = new Color(0.5f, 0.0f, 0.5f);
         }
 
     }
