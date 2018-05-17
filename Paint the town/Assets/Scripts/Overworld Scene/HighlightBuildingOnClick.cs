@@ -46,6 +46,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
       textArea.enabled = false;
       image.enabled = false;
       myTB = GetComponent<ShowTextBox>();
+
+
     }
 
     void OnEnable()
@@ -55,11 +57,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void Update()
     {
+
+
         if (Input.GetMouseButtonDown(0)) { mouseDownPosition = Input.mousePosition; }
 
         if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && mainCam.enabled == false)
         {
-            print("this and that " + Vector3.Distance(mouseDownPosition, Input.mousePosition));
 
             var ray = povCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -71,9 +74,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
                 if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
 
                     location = latLongAlt;
-                    print("LONG " + location.GetLongitude());
-                    print("LAT " + location.GetLatitude());
-                    print("ALT " + location.GetAltitude());
 
                     Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
                 }
@@ -142,24 +142,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
           print(www.error);
         }else{
             string[] subStrings = Regex.Split(www.text, @"[,:{}]+");
-            bool Flag = false;
-            for (int i = 0; i < subStrings.Length; i++){
-              if(subStrings[i].Trim('"') == "team"){
-                if(subStrings[i + 1].Trim('"') == PlayerPrefs.GetString("teamID", "no teamID")){
-                  Flag = true;
-                }
-              }
-            }
-            if(Flag == true){
-              image.enabled = true;
-              textArea.enabled = true;
-              index = 0;
-              characterIndex = 0;
-              strings[0] = sameBuildingColorMessage;
-              StartCoroutine("displayTimer");
-            }else{
-              StartCoroutine("captureBuilding");
-            }
+            StartCoroutine("captureBuilding");
         }
     }
 
@@ -208,9 +191,16 @@ public class HighlightBuildingOnClick : MonoBehaviour
       }
       else
       {
-      //  print(www.text);
-      //  print("building captured!");
-      //  print("THIS IS COLOR " + PlayerPrefs.GetString("color", "no color"));
+        print(www.text);
+
+        string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
+
+        for(int x =0; x < parsingString.Length; x ++){
+
+          if(parsingString[x] == "paintLeft"){
+            PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+          }
+        }
       }
     }
 
