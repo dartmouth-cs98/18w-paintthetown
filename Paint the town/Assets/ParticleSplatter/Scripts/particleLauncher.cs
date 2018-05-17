@@ -17,6 +17,9 @@ public class particleLauncher : MonoBehaviour {
     public string owner;
     public string playerColor;
 
+    private ParticleSystem.MainModule psMain;
+    private ParticleSystem.MainModule psSplat;
+
     IEnumerator checkOwnership()
     {
         int red = 0;
@@ -85,6 +88,46 @@ public class particleLauncher : MonoBehaviour {
         bID = PlayerPrefs.GetString("bid");
         playerColor = PlayerPrefs.GetString("color");
         InvokeRepeating("startOwnershipCheck", 5.0f, 2.0f);
+
+        psMain = pLauncher.main;
+        psSplat = splatterParticles.main;
+
+        // set color
+        if (playerColor == "blue")
+        {
+            psMain.startColor = Color.blue;
+            psSplat.startColor = Color.blue;
+        }
+
+        if (playerColor == "red")
+        {
+            psMain.startColor = Color.red;
+            psSplat.startColor = Color.red;
+        }
+
+        if (playerColor == "green")
+        {
+            psMain.startColor = Color.green;
+            psSplat.startColor = Color.green;
+        }
+
+        if (playerColor == "orange")
+        {
+            psMain.startColor = new Color(0.5f, 0.5f, 0.0f);
+            psSplat.startColor = new Color(0.5f, 0.5f, 0.0f);
+        }
+
+        if (playerColor == "yellow")
+        {
+            psMain.startColor = Color.yellow;
+            psSplat.startColor = Color.yellow;
+        }
+
+        if (playerColor == "purple")
+        {
+            psMain.startColor = new Color(0.5f, 0.0f, 0.5f);
+            psSplat.startColor = new Color(0.5f, 0.0f, 0.5f);
+        }
     }
 
     void OnParticleCollision(GameObject other)
