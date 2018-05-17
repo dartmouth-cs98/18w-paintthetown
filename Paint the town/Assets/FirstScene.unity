@@ -4288,6 +4288,7 @@ MonoBehaviour:
   SettingsSceneButton: {fileID: 2142870916}
   ChallengesSceneButton: {fileID: 936853978}
   ProfileSceneButton: {fileID: 991449099}
+  SlideMenuPanel: {fileID: 429726100}
   SlidePanelAnim: {fileID: 429726104}
   menuIn: 0
 --- !u!114 &555835337
