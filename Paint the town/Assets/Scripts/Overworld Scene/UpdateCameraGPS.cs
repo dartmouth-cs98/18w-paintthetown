@@ -141,6 +141,7 @@ public class UpdateCameraGPS : MonoBehaviour {
             {
                 mapCentered = true;
                 Api.Instance.CameraApi.AnimateTo(currentLatLong, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+
             }
 
             // Snaps user back to current location if they stray too far VERTICALLY
@@ -154,6 +155,11 @@ public class UpdateCameraGPS : MonoBehaviour {
                     lastCorrectHeightLatLong = currentLatLong;
                     lastCorrectHeightLatLongAlt = currentLatLongAlt;
                   }
+            }
+
+            if(!Api.Instance.CameraApi.IsTransitioning){
+              //transition has ended therefore the map is ready to be shown
+              PlayerPrefs.SetString("main scene loaded", "true");
             }
 
             //Snaps user back to current location if they stray too far HORIZONTALLY
