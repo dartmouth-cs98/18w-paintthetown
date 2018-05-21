@@ -123,7 +123,7 @@ public class ParticleDecalPool : MonoBehaviour {
                     else if (subStrings[x].Trim('"') == "color")
                     {
                         string htmlColorString = subStrings[x + 1];
-                        // set color
+                        // set color from the string name
                         if (htmlColorString == "blue")
                         {
                             newParticle.color = Color.blue;
@@ -154,7 +154,10 @@ public class ParticleDecalPool : MonoBehaviour {
                             newParticle.color = new Color(0.5f, 0.0f, 0.5f);
                         }
                     }
-
+                    else if (subStrings[x].Trim('"') == "building")
+                    {
+                        newParticle.building = subStrings[x + 1];
+                    }
                 }
             }
 
