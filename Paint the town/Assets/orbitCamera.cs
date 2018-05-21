@@ -24,7 +24,7 @@ public class orbitCamera : MonoBehaviour {
     float x = 0.0f;
     float y = 0.0f;
 
-    public float zoomSpeed = .5f; // speed to zoom in or out at 
+    public float zoomSpeed = .5f; // speed to zoom in or out at
 
     // Use this for initialization
     void Start()

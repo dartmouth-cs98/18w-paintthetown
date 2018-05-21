@@ -33,43 +33,13 @@ public class ParticleDecalPool : MonoBehaviour {
 
         colorString = PlayerPrefs.GetString("color");
 
-        
-
         decalPS = GetComponent<ParticleSystem>();
-
 
         pd = new ParticleDecalData[maxParticleDecals];
         particles = new ParticleSystem.Particle[maxParticleDecals];
 
-        string buildingID = PlayerPrefs.GetString("bid");
 
-        string getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/particles?id=" + buildingID;
-
-        Hashtable headers = new Hashtable();
-        headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
-        WWW www = new WWW(getBuildingIDURL, null, headers);
-        yield return www;
-
-        if (www.error == "null")
-        {
-            // handle getting the first particle out
-            newParticle = JsonUtility.FromJson<downloadedParticle>(www.text);
-
-            // save it in
-
-            // loop through and repeat
-
-        }
-        else
-        {
-            // only do this in the event that the retrived particle array is null
-            for (int i = 0; i < maxParticleDecals; i++)
-            {
-                pd[i] = new ParticleDecalData();
-            }
-        }
-
-        
+        StartCoroutine("downloadParticleData");
 
         decalMain = decalPS.main;
 
@@ -110,6 +80,37 @@ public class ParticleDecalPool : MonoBehaviour {
             plrColor = new Color(0.5f, 0.0f, 0.5f);
         }
 
+    }
+
+    IEnumerator downloadParticleData()
+    {
+        string buildingID = PlayerPrefs.GetString("bid");
+
+        string getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/particles?id=" + buildingID;
+
+        Hashtable headers = new Hashtable();
+        headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+        WWW www = new WWW(getBuildingIDURL, null, headers);
+        yield return www;
+
+        if (www.error == "null")
+        {
+            // handle getting the first particle out
+            newParticle = JsonUtility.FromJson<downloadedParticle>(www.text);
+
+            // save it in
+
+            // loop through and repeat
+
+        }
+        else
+        {
+            // only do this in the event that the retrived particle array is null
+            for (int i = 0; i < maxParticleDecals; i++)
+            {
+                pd[i] = new ParticleDecalData();
+            }
+        }
     }
 
     public void particleHit(ParticleCollisionEvent particleCollisionEvent)
