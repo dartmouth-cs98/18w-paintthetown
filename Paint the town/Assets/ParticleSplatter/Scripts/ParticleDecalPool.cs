@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 // based on https://unity3d.com/learn/tutorials/topics/scripting/droplet-decals?playlist=17117
@@ -93,14 +94,69 @@ public class ParticleDecalPool : MonoBehaviour {
         WWW www = new WWW(getBuildingIDURL, null, headers);
         yield return www;
 
+        newParticle = new downloadedParticle();
+
         if (www.error == "null")
         {
-            // handle getting the first particle out
-            newParticle = JsonUtility.FromJson<downloadedParticle>(www.text);
+           
+            if (www.text == "null")
+            {
+                //the building has never been clicked before
+                print(www.error);
 
-            // save it in
+            }
+            else
+            {
+                string[] subStrings = Regex.Split(www.text, @"[,:{}]+");
+                for (int x = 0; x < subStrings.Length; x++)
+                {
+                    if (subStrings[x].Trim('"') == "pos")
+                    {
+                        string[] stringArray = subStrings[x + 1].Trim('(').Trim(')').Split(',');
+                        newParticle.position = new Vector3(float.Parse(stringArray[0]), float.Parse(stringArray[1]), float.Parse(stringArray[2]));
+                    }
+                    else if (subStrings[x].Trim('"') == "rotation")
+                    {
+                        string[] stringArray = subStrings[x + 1].Trim('(').Trim(')').Split(',');
+                        newParticle.rotation = new Vector3(float.Parse(stringArray[0]), float.Parse(stringArray[1]), float.Parse(stringArray[2]));
+                    }
+                    else if (subStrings[x].Trim('"') == "color")
+                    {
+                        string htmlColorString = subStrings[x + 1];
+                        // set color
+                        if (htmlColorString == "blue")
+                        {
+                            newParticle.color = Color.blue;
+                        }
 
-            // loop through and repeat
+                        if (htmlColorString == "red")
+                        {
+                            newParticle.color = Color.red;
+                        }
+
+                        if (htmlColorString == "green")
+                        {
+                            newParticle.color = Color.green;
+                        }
+
+                        if (htmlColorString == "orange")
+                        {
+                            newParticle.color = new Color(0.5f, 0.5f, 0.0f);
+                        }
+
+                        if (htmlColorString == "yellow")
+                        {
+                            newParticle.color = Color.yellow;
+                        }
+
+                        if (htmlColorString == "purple")
+                        {
+                            newParticle.color = new Color(0.5f, 0.0f, 0.5f);
+                        }
+                    }
+
+                }
+            }
 
         }
         else
@@ -111,6 +167,8 @@ public class ParticleDecalPool : MonoBehaviour {
                 pd[i] = new ParticleDecalData();
             }
         }
+
+        
     }
 
     public void particleHit(ParticleCollisionEvent particleCollisionEvent)
