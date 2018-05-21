@@ -157,9 +157,9 @@ public class UpdateCameraGPS : MonoBehaviour {
                   }
             }
 
-            if(!Api.Instance.CameraApi.IsTransitioning){
+            if(!Api.Instance.CameraApi.IsTransitioning && mapCentered){
               //transition has ended therefore the map is ready to be shown
-              PlayerPrefs.SetString("main scene loaded", "true");
+              PlayerPrefs.SetString("main scene loaded", "happy");
             }
 
             //Snaps user back to current location if they stray too far HORIZONTALLY

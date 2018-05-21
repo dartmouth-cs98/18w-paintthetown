@@ -26,6 +26,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 		yield return www;
 
 			if(www.text == "null"){
+				print("AHSDFHASFHE");
 				print(www.error);
 			}else{
 				print(www.text);
@@ -102,7 +103,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading RED: " + www.error);
 		}
 		else
 		{
@@ -129,7 +130,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading ORANGE: " + www.error);
 		}
 		else
 		{
@@ -156,7 +157,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading YELLOW: " + www.error);
 		}
 		else
 		{
@@ -183,7 +184,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading GREEN: " + www.error);
 		}
 		else
 		{
@@ -210,7 +211,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading BLUE: " + www.error);
 		}
 		else
 		{
@@ -237,7 +238,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading PURPLE: " + www.error);
 		}
 		else
 		{

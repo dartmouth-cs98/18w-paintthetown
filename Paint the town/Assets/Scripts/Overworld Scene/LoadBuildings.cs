@@ -99,6 +99,26 @@ public class LoadBuildings : MonoBehaviour {
 		poiList = new ArrayList();
 		poiList.Add("71a5f824a0dc35526a4b13078541adee");
 
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+    print("I LIKE DICK");
+
+
 		InvokeRepeating("updateMap", 2.0f, time);
 	}
 

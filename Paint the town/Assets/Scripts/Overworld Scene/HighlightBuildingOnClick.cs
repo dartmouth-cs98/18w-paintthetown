@@ -197,8 +197,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
         for(int x =0; x < parsingString.Length; x ++){
 
-          if(parsingString[x] == "paintLeft"){
+          if(parsingString[x].Trim('"') == "paintLeft"){
+
             PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+            print(PlayerPrefs.GetString("Energy", "nooooo"));
           }
         }
       }

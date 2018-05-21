@@ -32,6 +32,7 @@ public class Login : MonoBehaviour {
 
 	void Start () {
 		GoToSignUpButton.onClick.AddListener(goToSignUp);
+		PlayerPrefs.SetString("main scene loaded", "false");
 	}
 
 	public void goToSignUp() {
@@ -97,8 +98,8 @@ public class Login : MonoBehaviour {
 			}
 		}
 
-		loadScene = true;
 		//SceneManager.LoadScene("FirstScene");
+		 SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
 	}
 
 	public IEnumerator getColorFromID()
@@ -183,10 +184,10 @@ public class Login : MonoBehaviour {
 		Username = username.GetComponent<InputField> ().text;
 		Password = password.GetComponent<InputField> ().text;
 
-		if(loadScene == true){
-			loadScene = false;
-			StartCoroutine(LoadNewScene());
-
+		if(PlayerPrefs.GetString("main scene loaded", "false") == "happy"){
+			SceneManager.SetActiveScene(SceneManager.GetSceneByName("FirstScene"));
+			Debug.Log("Active Scene : " + SceneManager.GetActiveScene().name);
+			SceneManager.UnloadSceneAsync("LoginScene");
 		}
 
 	}
@@ -209,15 +210,4 @@ public class Login : MonoBehaviour {
 			showPopUp = false;
 		}
 	}
-
-	IEnumerator LoadNewScene() {
-
-		AsyncOperation async = Application.LoadLevelAsync("FirstScene");
-
-		 while (PlayerPrefs.GetString("main scene loaded", "scene not loaded") == "scene not loaded") {
-
-			 yield return null;
-		 }
-	}
-
 }
