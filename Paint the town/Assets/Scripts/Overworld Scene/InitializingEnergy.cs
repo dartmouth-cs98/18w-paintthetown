@@ -24,7 +24,10 @@ public class InitializingEnergy : MonoBehaviour {
 			for(int x = 0; x < subStrings.Length; x++){
 				if(subStrings[x].Trim('"') == "paintLeft"){
 					PlayerPrefs.SetString("Energy", subStrings[x+1]);
+				}else if(subStrings[x].Trim('"') == "timeLeft"){
+
 				}
+
 			}
 		}
 	}

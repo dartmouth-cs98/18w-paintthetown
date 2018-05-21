@@ -25,7 +25,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 		WWW www = new WWW(url, null, headers);
 		yield return www;
 
-			if(www.text == "null"){
+			if (www.error != null){
 				print("AHSDFHASFHE");
 				print(www.error);
 			}else{
