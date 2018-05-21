@@ -108,6 +108,11 @@ public class UpdateCameraGPS : MonoBehaviour {
     //   print("DONE");
     // }
 
+    public void centerCam(){
+      LatLong centerLoc = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);  LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+      Api.Instance.CameraApi.AnimateTo(centerLoc, 0, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+    }
+
     void Update () {
             if (Input.touchCount == 2 && setCam.enabled)
             {

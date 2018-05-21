@@ -25,6 +25,9 @@ public class Login : MonoBehaviour {
 	public string blueID;
 	public string purpleID;
 
+	public Image loading;
+	public Text loadingText;
+
 	private bool loadScene = false;
 
 	private bool showPopUp = false;
@@ -33,6 +36,9 @@ public class Login : MonoBehaviour {
 	void Start () {
 		GoToSignUpButton.onClick.AddListener(goToSignUp);
 		PlayerPrefs.SetString("main scene loaded", "false");
+
+		loadingText.enabled = false;
+		loading.enabled = false;
 	}
 
 	public void goToSignUp() {
@@ -100,6 +106,9 @@ public class Login : MonoBehaviour {
 
 		//SceneManager.LoadScene("FirstScene");
 		 SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+		 loading.enabled = true;
+		 loadingText.enabled = true;
+
 	}
 
 	public IEnumerator getColorFromID()
@@ -188,6 +197,10 @@ public class Login : MonoBehaviour {
 			SceneManager.SetActiveScene(SceneManager.GetSceneByName("FirstScene"));
 			Debug.Log("Active Scene : " + SceneManager.GetActiveScene().name);
 			SceneManager.UnloadSceneAsync("LoginScene");
+
+		}
+		if(loading.enabled){
+			loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, Mathf.PingPong(Time.time, 1));
 		}
 
 	}
