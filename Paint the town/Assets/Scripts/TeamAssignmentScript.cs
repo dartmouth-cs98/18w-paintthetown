@@ -16,16 +16,24 @@ public class TeamAssignmentScript : MonoBehaviour {
 	public string purpleID;
 	public string orangeID;
 
+	public Image loading;
+	public Text loadingText;
+
   IEnumerator Start()
   {
+		
+		PlayerPrefs.SetString("main scene loaded", "false");
+		loadingText.enabled = false;
+		loading.enabled = false;
 		Hashtable headers = new Hashtable();
+
 		print("You're retrieving information about teams");
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 		print (PlayerPrefs.GetString ("token", "no token"));
 		WWW www = new WWW(url, null, headers);
 		yield return www;
 
-			if(www.text == "null"){
+			if (www.error != null){
 				print(www.error);
 			}else{
 				print(www.text);
@@ -102,7 +110,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading RED: " + www.error);
 		}
 		else
 		{
@@ -110,7 +118,11 @@ public class TeamAssignmentScript : MonoBehaviour {
 			PlayerPrefs.SetString("teamID", redID);
 			PlayerPrefs.SetString("color", "red");
 			PlayerPrefs.Save();
-			SceneManager.LoadScene("FirstScene");
+
+			SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+			loading.enabled = true;
+			loadingText.enabled = true;
+			//SceneManager.LoadScene("FirstScene");
 		}
 	}
 
@@ -129,7 +141,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading ORANGE: " + www.error);
 		}
 		else
 		{
@@ -137,7 +149,11 @@ public class TeamAssignmentScript : MonoBehaviour {
 			PlayerPrefs.SetString("color", "orange");
 			PlayerPrefs.Save();
 			print("user assigned to ORANGE!!");
-			SceneManager.LoadScene("FirstScene");
+
+			SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+			loading.enabled = true;
+			loadingText.enabled = true;
+			//SceneManager.LoadScene("FirstScene");
 		}
 	}
 
@@ -156,7 +172,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading YELLOW: " + www.error);
 		}
 		else
 		{
@@ -164,7 +180,11 @@ public class TeamAssignmentScript : MonoBehaviour {
 			PlayerPrefs.SetString("color", "yellow");
 			PlayerPrefs.Save();
 			print("user assigned to YELLOW!!");
-			SceneManager.LoadScene("FirstScene");
+
+			SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+			loading.enabled = true;
+			loadingText.enabled = true;
+			//SceneManager.LoadScene("FirstScene");
 		}
 	}
 
@@ -183,7 +203,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading GREEN: " + www.error);
 		}
 		else
 		{
@@ -191,7 +211,11 @@ public class TeamAssignmentScript : MonoBehaviour {
 			PlayerPrefs.SetString("color", "green");
 			PlayerPrefs.Save();
 			print("user assigned to GREEN!!");
-			SceneManager.LoadScene("FirstScene");
+
+			SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+			loading.enabled = true;
+			loadingText.enabled = true;
+			//SceneManager.LoadScene("FirstScene");
 		}
 	}
 
@@ -210,7 +234,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading BLUE: " + www.error);
 		}
 		else
 		{
@@ -218,7 +242,11 @@ public class TeamAssignmentScript : MonoBehaviour {
 			PlayerPrefs.SetString("color", "blue");
 			PlayerPrefs.Save();
 			print("user assigned to BLUE!!");
-			SceneManager.LoadScene("FirstScene");
+
+			SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+			loading.enabled = true;
+			loadingText.enabled = true;
+			//SceneManager.LoadScene("FirstScene");
 		}
 	}
 
@@ -237,7 +265,7 @@ public class TeamAssignmentScript : MonoBehaviour {
 
 		if (www.error != null)
 		{
-			print("Error downloading: ");
+			print("Error downloading PURPLE: " + www.error);
 		}
 		else
 		{
@@ -245,7 +273,23 @@ public class TeamAssignmentScript : MonoBehaviour {
 			PlayerPrefs.SetString("color", "purple");
 			PlayerPrefs.Save();
 			print("user assigned to PURPLE!!");
-			SceneManager.LoadScene("FirstScene");
+
+			SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+			loading.enabled = true;
+			loadingText.enabled = true;
+			//SceneManager.LoadScene("FirstScene");
+		}
+	}
+
+	public void Update() {
+		if(PlayerPrefs.GetString("main scene loaded", "false") == "happy"){
+			SceneManager.SetActiveScene(SceneManager.GetSceneByName("FirstScene"));
+			Debug.Log("Active Scene : " + SceneManager.GetActiveScene().name);
+			SceneManager.UnloadSceneAsync("TeamAssignment");
+
+		}
+		if(loading.enabled){
+			loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, Mathf.PingPong(Time.time, 1));
 		}
 	}
 }

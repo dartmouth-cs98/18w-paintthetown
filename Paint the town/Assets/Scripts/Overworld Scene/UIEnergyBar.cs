@@ -10,7 +10,7 @@ public class UIEnergyBar : MonoBehaviour {
 
 	public Slider Energy;
 
-	private int MAX_ENERGY = 21000;
+	private float MAX_ENERGY = 25000.0f;
 
 	private Color sliderColor;
 
@@ -84,7 +84,7 @@ public class UIEnergyBar : MonoBehaviour {
 			int energyInt = 0;
 
 			Int32.TryParse(energyString, out energyInt);
-			Energy.value = energyInt/MAX_ENERGY;
+			Energy.value = (float)energyInt/MAX_ENERGY;
 
 		} else{
 
