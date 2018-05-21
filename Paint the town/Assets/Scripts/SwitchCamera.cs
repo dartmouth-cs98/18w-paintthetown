@@ -12,12 +12,13 @@ public class SwitchCamera : MonoBehaviour {
     public Camera povCam;
     public Camera setCam;
     public Button switchBtn;
+    private DisplayTimer myDT;
 
 	// Use this for initialization
 	void Start () {
         Button btn = switchBtn.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
-
+        myDT = gameObject.GetComponent<DisplayTimer>();
         //Api.Instance.CameraApi.SetControlledCamera(null);
         uiCam.enabled = true;
         setCam.enabled = true;
@@ -37,6 +38,7 @@ public class SwitchCamera : MonoBehaviour {
 
         if(povCam.enabled == true){
           Api.Instance.CameraApi.SetControlledCamera(null);
+          myDT.startCountdown(5,59);
         }else{
           Api.Instance.CameraApi.SetControlledCamera(setCam);
         }

@@ -53,13 +53,25 @@ public class SignUp : MonoBehaviour {
 			string[] subStrings = Regex.Split(signup.downloadHandler.text, @"[,:{}]+");
 
 			if(subStrings[1].Trim('"') != "error"){
-				PlayerPrefs.SetString("token", subStrings[2].Trim('"'));
-				PlayerPrefs.Save();
 
-				SceneManager.LoadScene("TeamAssignment");
+				for(int x = 0; x < subStrings.Length; x++){
+					print(subStrings[x]);
+					if(subStrings[x].Trim('"') == "token"){
+						PlayerPrefs.SetString("token", subStrings[x+1].Trim('"'));
+						PlayerPrefs.Save();
+
+						SceneManager.LoadScene("TeamAssignment");
+					}
+				}
+
 			}else{
 				showPopUp = true;
-				errorMessage = subStrings[5];
+				for(int y = 0; y < subStrings.Length; y++){
+					if(subStrings[y].Trim('"') == "errmsg"){
+						print(subStrings[y + 1]);
+						errorMessage = subStrings[y+1];
+					}
+				}
 			}
 		}
 	}

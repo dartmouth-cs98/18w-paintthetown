@@ -108,6 +108,11 @@ public class UpdateCameraGPS : MonoBehaviour {
     //   print("DONE");
     // }
 
+    public void centerCam(){
+      LatLong centerLoc = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);  LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+      Api.Instance.CameraApi.AnimateTo(centerLoc, 0, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+    }
+
     void Update () {
             if (Input.touchCount == 2 && setCam.enabled)
             {
@@ -141,6 +146,7 @@ public class UpdateCameraGPS : MonoBehaviour {
             {
                 mapCentered = true;
                 Api.Instance.CameraApi.AnimateTo(currentLatLong, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+
             }
 
             // Snaps user back to current location if they stray too far VERTICALLY
@@ -154,6 +160,11 @@ public class UpdateCameraGPS : MonoBehaviour {
                     lastCorrectHeightLatLong = currentLatLong;
                     lastCorrectHeightLatLongAlt = currentLatLongAlt;
                   }
+            }
+
+            if(!Api.Instance.CameraApi.IsTransitioning && mapCentered){
+              //transition has ended therefore the map is ready to be shown
+              PlayerPrefs.SetString("main scene loaded", "happy");
             }
 
             //Snaps user back to current location if they stray too far HORIZONTALLY
