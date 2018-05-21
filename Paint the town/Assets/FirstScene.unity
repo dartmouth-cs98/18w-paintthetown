@@ -4712,7 +4712,6 @@ GameObject:
   - component: {fileID: 555835337}
   - component: {fileID: 555835338}
   - component: {fileID: 555835339}
-  - component: {fileID: 555835340}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4884,19 +4883,6 @@ MonoBehaviour:
   green: {fileID: 1924035296}
   blue: {fileID: 398962080}
   purple: {fileID: 272254146}
---- !u!114 &555835340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 555835331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e8bd58872951e0428890c6d13d45847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 582102587}
-  timePanel: {fileID: 1172333501}
 --- !u!1 &558690779
 GameObject:
   m_ObjectHideFlags: 0
@@ -10829,6 +10815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802654321}
   - component: {fileID: 1802654320}
+  - component: {fileID: 1802654322}
   m_Layer: 0
   m_Name: EnergyInitializer
   m_TagString: Untagged
@@ -10860,6 +10847,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1802654322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802654319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8bd58872951e0428890c6d13d45847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeText: {fileID: 582102587}
+  timePanel: {fileID: 1172333501}
 --- !u!1 &1807202102
 GameObject:
   m_ObjectHideFlags: 0
