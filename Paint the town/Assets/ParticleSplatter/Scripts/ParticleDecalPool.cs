@@ -5,6 +5,15 @@ using UnityEngine;
 // based on https://unity3d.com/learn/tutorials/topics/scripting/droplet-decals?playlist=17117
 
 
+// used to save data from JSON into a usable format
+public class downloadedParticle
+{
+    public Vector3 position;
+    public Vector3 rotation;
+    public Color color;
+    public string building;
+}
+
 public class ParticleDecalPool : MonoBehaviour {
     private int particleDataIndex;
     public int maxParticleDecals = 200;
@@ -16,6 +25,7 @@ public class ParticleDecalPool : MonoBehaviour {
     private ParticleSystem.MainModule decalMain;
     private string colorString;
     private Color plrColor;
+    private downloadedParticle newParticle;
 
 	// Use this for initialization
 	void Start () {
@@ -27,13 +37,39 @@ public class ParticleDecalPool : MonoBehaviour {
 
         decalPS = GetComponent<ParticleSystem>();
 
+
         pd = new ParticleDecalData[maxParticleDecals];
         particles = new ParticleSystem.Particle[maxParticleDecals];
 
-        for (int i = 0; i < maxParticleDecals; i++)
+        string buildingID = PlayerPrefs.GetString("bid");
+
+        string getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/particles?id=" + buildingID;
+
+        Hashtable headers = new Hashtable();
+        headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+        WWW www = new WWW(getBuildingIDURL, null, headers);
+        yield return www;
+
+        if (www.error == "null")
         {
-            pd[i] = new ParticleDecalData();
+            // handle getting the first particle out
+            newParticle = JsonUtility.FromJson<downloadedParticle>(www.text);
+
+            // save it in
+
+            // loop through and repeat
+
         }
+        else
+        {
+            // only do this in the event that the retrived particle array is null
+            for (int i = 0; i < maxParticleDecals; i++)
+            {
+                pd[i] = new ParticleDecalData();
+            }
+        }
+
+        
 
         decalMain = decalPS.main;
 
