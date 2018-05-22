@@ -11,8 +11,6 @@ public class DisplayTimer : MonoBehaviour {
 	public Image timePanel;
 	public System.DateTime startTime, endTime;
 	public System.TimeSpan elapsed;
-	private int startMin, startSec;
-
 
 	// Use this for initialization
 	void Start () {
@@ -22,12 +20,12 @@ public class DisplayTimer : MonoBehaviour {
 
 	// Use this to start timer
 	public void startCountdown(int timeMin, int timeSec){
-		startTime = System.DateTime.Now;
+		TimeSpan buffer = new TimeSpan(0,timeMin,timeSec);
+		endTime = System.DateTime.Now.Add(buffer);
+
 		timeText.text = timeMin + ":" + timeSec;
 		timePanel.enabled = true;
 		timeText.enabled = true;
-		startMin = timeMin;
-		startSec = timeSec;
 	}
 
 	public void setMax(){
@@ -82,11 +80,11 @@ public class DisplayTimer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(timeText.text != "MAX"){
-			endTime = System.DateTime.Now;
+			startTime = System.DateTime.Now;
 			elapsed = endTime.Subtract(startTime);
-			timeText.text = (startMin - elapsed.Minutes) + ":" + (startSec - elapsed.Seconds);
+			timeText.text = elapsed.Minutes + ":" + elapsed.Seconds;
 		}
-		if(startMin == 0 && startSec < 2){
+		if(elapsed.Minutes <= 0 && elapsed.Seconds < 2){
 			StartCoroutine("sendRequest");
 		}
 	}
