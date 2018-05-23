@@ -744,6 +744,7 @@ GameObject:
   - component: {fileID: 569478571}
   - component: {fileID: 569478573}
   - component: {fileID: 569478572}
+  - component: {fileID: 569478574}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -881,6 +882,27 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 569478566}
+--- !u!114 &569478574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 569478566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66600788fd6a94b1ba703bf286f086a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 1654550372}
+  grid: {fileID: 1654550373}
+  buttonCompletePrefab: {fileID: 1477157653834734, guid: 8e8778ef0e75f44c2ba8d33b7fd98554,
+    type: 2}
+  buttonIncompletePrefab: {fileID: 1224234945354752, guid: 9d8633458a8cf4cfcaaf284469d93441,
+    type: 2}
+  challenges: 
+  col: 0
+  row: 1
+  challengeNum: 0
 --- !u!1 &1151363061
 GameObject:
   m_ObjectHideFlags: 0
