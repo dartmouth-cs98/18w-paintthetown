@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.496413, b: 0.5748175, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1396,14 +1396,14 @@ RectTransform:
   m_GameObject: {fileID: 1387957401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.321539, y: 3.3215394, z: 3.3215394}
+  m_LocalScale: {x: 3.6204774, y: 3.6204782, z: 3.6204782}
   m_Children: []
   m_Father: {fileID: 258349952}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 24.3, y: -101.9599}
+  m_AnchoredPosition: {x: -0.0000038146973, y: -73}
   m_SizeDelta: {x: 344.4, y: 31.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1387957403
@@ -1469,15 +1469,15 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1399288294}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 6.525798, y: 3.9277318, z: 1.2436604}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 9.496339, y: 5.715633, z: 1.8097739}
   m_Children: []
   m_Father: {fileID: 258349952}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 649.1316, y: -391.77234}
+  m_AnchoredPosition: {x: 883, y: -503}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1399288296
@@ -2223,8 +2223,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1876480778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1.9364567, y: 1.1566098, z: 1.2436604}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.8143475, y: 1.6809578, z: 1.8074728}
   m_Children:
   - {fileID: 1541481118}
   - {fileID: 511692080}
@@ -2237,7 +2237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27, y: -56.01181}
+  m_AnchoredPosition: {x: 27, y: -52}
   m_SizeDelta: {x: 599.30005, y: 400.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1876480780
