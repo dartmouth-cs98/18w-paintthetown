@@ -19,9 +19,17 @@ public class TeamAssignmentScript : MonoBehaviour {
 	public Image loading;
 	public Text loadingText;
 
+	private ShowTextBox myTB;
+
+	private string welcome_1 = "Welcome to the world of Paint the Town!";
+	private string welcome_2 = "In this game you will compete alongside your teammates to control as much of the world as you can";
+	private string welcome_3 = "But before anything else, you have to choose a team!";
+	private string welcome_4 = "Tap on the paint splotch of the color team you’d like to join.";
+
   IEnumerator Start()
   {
-		
+
+		PlayerPrefs.SetString("Tutorial", "true");
 		PlayerPrefs.SetString("main scene loaded", "false");
 		loadingText.enabled = false;
 		loading.enabled = false;
@@ -63,36 +71,55 @@ public class TeamAssignmentScript : MonoBehaviour {
 					print("purple team ID: " + purpleID);
 			}
 
+			myTB = GetComponent<ShowTextBox>();
+			string[] array = new string[4];
+			array[0] = welcome_1;
+			array[1] = welcome_2;
+			array[2] = welcome_3;
+			array[3] = welcome_4;
+			myTB.show(array);
   }
 
 	public void startAssignPlayerRED()
 	{
-		StartCoroutine("assignPlayerRED");
+		if(myTB.image.enabled == false){
+			StartCoroutine("assignPlayerRED");
+		}
 	}
 
 	public void startAssignPlayerORANGE()
 	{
-		StartCoroutine("assignPlayerORANGE");
+		if(myTB.image.enabled == false){
+			StartCoroutine("assignPlayerORANGE");
+		}
 	}
 
 	public void startAssignPlayerYELLOW()
 	{
-		StartCoroutine("assignPlayerYELLOW");
+		if(myTB.image.enabled == false){
+			StartCoroutine("assignPlayerYELLOW");
+		}
 	}
 
 	public void startAssignPlayerGREEN()
 	{
-		StartCoroutine("assignPlayerGREEN");
+		if(myTB.image.enabled == false){
+			StartCoroutine("assignPlayerGREEN");
+		}
 	}
 
 	public void startAssignPlayerBLUE()
 	{
-		StartCoroutine("assignPlayerBLUE");
+		if(myTB.image.enabled == false){
+			StartCoroutine("assignPlayerBLUE");
+		}
 	}
 
 	public void startAssignPlayerPURPLE()
 	{
-		StartCoroutine("assignPlayerPURPLE");
+		if(myTB.image.enabled == false){
+			StartCoroutine("assignPlayerPURPLE");
+		}
 	}
 
 	IEnumerator assignPlayerRED()

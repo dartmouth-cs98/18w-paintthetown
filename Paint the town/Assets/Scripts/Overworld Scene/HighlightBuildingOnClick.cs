@@ -9,8 +9,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
-
-
+	
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
 
 public class HighlightBuildingOnClick : MonoBehaviour
@@ -94,7 +93,9 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void checkBuildingExist(bool success, Building b){
       if(success){
-        myTB.show(OverworldGlobals.ERROR_BUILDING_TOO_FAR);
+        string[] array = new string[1];
+        array[0] = OverworldGlobals.ERROR_BUILDING_TOO_FAR;
+        myTB.show(array);
       }
     }
 
@@ -196,12 +197,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
         string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
 
         for(int x =0; x < parsingString.Length; x ++){
-
-          if(parsingString[x].Trim('"') == "paintLeft"){
-
-            PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
-            print(PlayerPrefs.GetString("Energy", "nooooo"));
-          }
+          	if(parsingString[x].Trim('"') == "paintLeft"){
+				PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+            	print(PlayerPrefs.GetString("Energy", "nooooo"));
+			} else if (parsingString[x].Trim('"') == "challenges"){
+				PlayerPrefs.SetString ("Challenges", parsingString[x+1].Trim('"'));
+			}
         }
       }
     }

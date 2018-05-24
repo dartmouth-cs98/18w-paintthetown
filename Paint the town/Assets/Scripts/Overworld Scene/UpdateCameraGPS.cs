@@ -154,7 +154,9 @@ public class UpdateCameraGPS : MonoBehaviour {
             if ( Physics.Raycast(setCam.transform.position,Vector3.down,out hit, 2000) )
             {
                   if (setCam.transform.position.y - hit.point.y > OverworldGlobals.MAX_CAMERA_HEIGHT){
-                    myTB.show(OverworldGlobals.ERROR_CAMERA_TOO_HIGH);
+                    string[] array = new string[1];
+                    array[0] = OverworldGlobals.ERROR_CAMERA_TOO_HIGH;
+                    myTB.show(array);
                     Api.Instance.CameraApi.AnimateTo(lastCorrectHeightLatLong,lastCorrectHeightLatLongAlt,null,true);
                   }else{
                     lastCorrectHeightLatLong = currentLatLong;
@@ -172,7 +174,9 @@ public class UpdateCameraGPS : MonoBehaviour {
                 LatLong setCamToLatLong = Api.Instance.CameraApi.WorldToGeographicPoint(setCam.transform.position,setCam).GetLatLong();
                 if( setCamToLatLong.GetLatitude() > 0.0f && setCamToLatLong.GetLongitude() != 0.0f && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f ){
                     if ( distanceFromLatLong(setCamToLatLong.GetLatitude(),setCamToLatLong.GetLongitude(),currentLatLong.GetLatitude(),currentLatLong.GetLongitude()) > OverworldGlobals.MAX_CAMERA_DISTANCE){
-                        myTB.show(OverworldGlobals.ERROR_CAMERA_TOO_FAR);
+                        string[] array = new string[1];
+                        array[0] = OverworldGlobals.ERROR_CAMERA_TOO_FAR;
+                        myTB.show(array);
                         Api.Instance.CameraApi.AnimateTo(currentLatLong,lastCorrectHeightLatLongAlt,null,true);
                     }
                 }
