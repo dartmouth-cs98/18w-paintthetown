@@ -6,6 +6,7 @@ public class audio_controller : MonoBehaviour {
 
     // sound stuff
     AudioSource pAudioSource;
+    public Camera povCam;
 
     // Use this for initialization
     void Start () {
@@ -16,9 +17,10 @@ public class audio_controller : MonoBehaviour {
     void Update () {
         if (Input.GetButtonDown("Fire1"))
         {
-
+            if (povCam.enabled) { 
             // play the sound
             pAudioSource.Play();
+            }
         }
 
         if (Input.GetButtonUp("Fire1"))
