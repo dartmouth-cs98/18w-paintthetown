@@ -93,7 +93,9 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void checkBuildingExist(bool success, Building b){
       if(success){
-        myTB.show(OverworldGlobals.ERROR_BUILDING_TOO_FAR);
+        string[] array = new string[1];
+        array[0] = OverworldGlobals.ERROR_BUILDING_TOO_FAR;
+        myTB.show(array);
       }
     }
 
