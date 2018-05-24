@@ -8,7 +8,7 @@ public class SlideMenu : MonoBehaviour {
 
 	public Button MenuButton;
 	public Button ReturnToPlayButton;
-	public Button ShopSceneButton;
+	//public Button ShopSceneButton;
 	public Button SettingsSceneButton;
 	public Button ChallengesSceneButton;
 	public Button ProfileSceneButton;
@@ -20,7 +20,7 @@ public class SlideMenu : MonoBehaviour {
 	{
 		MenuButton.onClick.AddListener(slideMenu);
 		ReturnToPlayButton.onClick.AddListener(goToPlay);
-		ShopSceneButton.onClick.AddListener(goToShop);
+		//ShopSceneButton.onClick.AddListener(goToShop);
 		SettingsSceneButton.onClick.AddListener(goToSettings);
 		ChallengesSceneButton.onClick.AddListener(goToChallenges);
 		ProfileSceneButton.onClick.AddListener(goToProfile);
