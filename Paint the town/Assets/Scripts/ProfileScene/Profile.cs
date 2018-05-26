@@ -7,6 +7,13 @@ using UnityEngine.Networking;
 using System;
 
 
+[Serializable] public class City {
+	public string name;
+	public string country;
+	public int[] centroid;
+	public int[] bbox;
+}
+
 [Serializable] public class Player {
 	public string role;
 	public string lastName;
@@ -14,20 +21,26 @@ using System;
 	public string typeOfLogin;
 	public string team;
 	public string[] friends;
+	public int buildingsPainted;
+	public string[] citiesPainted;
 }
 
 public class Profile : MonoBehaviour {
 
 	public string userURL = "https://paint-the-town.herokuapp.com/api/users";
 	public string teamurl = "https://paint-the-town.herokuapp.com/api/teams";
+	public string citiesURL = "https://paint-the-town.herokuapp.com/api/cities/names";
+
 	public string redID;
 	public string blueID;
 	public string fullName;
 	public string team;
+	public int buildingsPainted;
+	public string[] citiesPainted = new string[0];
 	public string[] friendsList = new string[0];
 	public string token = "";
 	public Player player;
-	public string[] teamInfoList;		
+	public string[] teamInfoList;
 
 	// Use this for initialization
 	IEnumerator Start () {
@@ -48,7 +61,19 @@ public class Profile : MonoBehaviour {
 		}else{
 			// user data we can use for this scene
 			player = JsonUtility.FromJson<Player>(userwww.text);
+			headers.Add ("cities", player.citiesPainted);
 		}
+			
+		WWW citieswww = new WWW(citiesURL, null, headers);
+		yield return citieswww;
+		if(citieswww.text == "null"){
+			print(citieswww.error);
+		}else{
+			print(citieswww.text);
+			string cities = citieswww.text;
+			print ("hi i give you cities: " + cities);
+		}
+
 
 		// get the IDs for team data
 		WWW teamwww = new WWW(teamurl, null, headers);
@@ -89,66 +114,72 @@ public class Profile : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		if (!GameObject.Find ("Canvas").GetComponent<SlideMenu> ().menuIn) {
-			// to manipulate font sizes and colors
-			GUIStyle style = new GUIStyle ();
+		// to manipulate font sizes and colors
+		GUIStyle style = new GUIStyle();
 
-			if (GUI.Button (new Rect (500, 70, 75, 30), "Edit Profile")) {
-				// load the edit profile scene
-				SceneManager.LoadScene ("ProfileEditScene");
+		if (GUI.Button (new Rect (500, 70, 75, 30), "Edit Profile")) {
+			// load the edit profile scene
+			SceneManager.LoadScene ("ProfileEditScene");
+		}
+
+		if (GUI.Button (new Rect (500, 150, 75, 30), "Logout")) {
+			// load the login scene
+			PlayerPrefs.DeleteAll();
+			SceneManager.LoadScene ("LoginScene");
+		}
+
+		// set font color and size for Name
+		GUI.contentColor = Color.black;
+		style.fontSize = 35;
+		// print name in top left corner
+		GUI.Label(new Rect(200, 50, 100, 20), fullName, style);
+
+		// set font size and color to team color?
+		GUI.contentColor = Color.black;	//black for now
+		style.fontSize = 30;
+		// print team in top right corner
+		GUI.Label(new Rect(500, 50, 700, 20), team);
+
+		// set font size and color to team color?
+		GUI.contentColor = Color.black;	//black for now
+		style.fontSize = 30;
+
+		//stats
+		buildingsPainted = player.buildingsPainted;
+		print ("citiesPainted is :"+player.citiesPainted);
+		citiesPainted = player.citiesPainted;
+		GUI.Label(new Rect(200, 100, 200, 20), "Your stats:");
+		GUI.Label(new Rect(200, 125, 200, 20), "# buildings: " + buildingsPainted);
+		GUI.Label(new Rect(200, 150, 200, 20), "Towns: ");
+		int yCities = 175;
+
+		if (citiesPainted.Length > 0) {
+			print ("CITIES ARE HERE " + citiesPainted.GetValue(0));
+			print ("your city painted id should be: " +citiesPainted[0]+" and the name is " +citiesPainted[0]);
+			foreach (var city in citiesPainted) {
+				GUI.Label (new Rect (200, yCities, 700, 20), city);
+				yCities += 25;
 			}
-
-			if (GUI.Button (new Rect (500, 150, 75, 30), "Logout")) {
-				// load the login scene
-				PlayerPrefs.DeleteAll ();
-				SceneManager.LoadScene ("LoginScene");
-			}
-
-			// set font color and size for Name
-			GUI.contentColor = Color.black;
-			style.fontSize = 35;
-			// print name in top left corner
-			GUI.Label (new Rect (200, 50, 100, 20), fullName, style);
-
-			// set font size and color to team color?
-			GUI.contentColor = Color.black;	//black for now
-			style.fontSize = 30;
-			// print team in top right corner
-			GUI.Label (new Rect (500, 50, 700, 20), team);
-
-			//stats
-			int buildingNum = 3;
-			string[] towns = { "Hanover" };
-			// set font size and color to team color?
-			GUI.contentColor = Color.black;	//black for now
-			style.fontSize = 30;
-			GUI.Label (new Rect (200, 100, 200, 20), "Your stats:");
-			GUI.Label (new Rect (200, 125, 200, 20), "# buildings: " + buildingNum);
-			GUI.Label (new Rect (200, 150, 200, 20), "Towns: ");
-			int yTowns = 175;
-			foreach (string town in towns) {
-				GUI.Label (new Rect (200, yTowns, 700, 20), town);
-				yTowns += 25;
-			}
+		} else {
+			GUI.Label (new Rect (200, yCities, 700, 20), "Hanover, man");
+		}       
 			
 
-			// set font color and size for "Your friends:" subheading
-			GUI.contentColor = Color.magenta;
-			style.fontSize = 25;
-			// print below name
-			GUI.Label (new Rect (200, 200, 100, 20), "Your friends:");
-			int y = 225;
-			// lower font size for list of friends
-			style.fontSize = 20;
-			if (friendsList.Length != 0) {
-				foreach (var friend in friendsList) {
-					GUI.Label (new Rect (200, y, 100, 20), friend);
-					y += 25;
-				}
-			} else {
-				GUI.Label (new Rect (200, y, 1000, 20), "No friends yet!");
+		// set font color and size for "Your friends:" subheading
+		GUI.contentColor = Color.magenta;
+		style.fontSize = 25;
+		// print below name
+		GUI.Label(new Rect(200, 200, 100, 20), "Your friends:");
+		int y = 225;
+		// lower font size for list of friends
+		style.fontSize = 20;
+		if (friendsList.Length != 0) {
+			foreach (var friend in friendsList) {
+				GUI.Label (new Rect (200, y, 100, 20), friend);
+				y += 25;
 			}
-		
+		} else {
+			GUI.Label (new Rect (200, y, 1000, 20), "No friends yet!");
 		}
 	}
 }
