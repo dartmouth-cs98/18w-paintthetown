@@ -35,13 +35,16 @@ public class ChallengeScene : MonoBehaviour {
 		
 
 		print (challenges);
-		challenges = "{\"description\": \"This is the first challenge.\", \"completed\": \"false\", \"reward\": \"10 cool points\"}; {\"description\": \"This is the second challenge.\", \"completed\": \"true\", \"reward\": \"50 cool points\"}";
-		//print (challenges);
+
+		// separate into each challenge
 		string[] challengesStringList = challenges.Split (';');
+		// get num of challenges to display
 		challengeNum = challengesStringList.Length;
+		// remove quotes from first and last index?
 		challengesStringList [0] = challengesStringList [0].Remove (0, 1);
 		challengesStringList [challengeNum - 1] = challengesStringList [challengeNum - 1].Remove (challengesStringList [challengeNum - 2].Length, 1);
 
+		// list of buttons to display -- may not actually need this, will see
 		Button[] toDisplay = new Button[challengeNum];
 		GameObject tempButton;
 		Challenge tempChallenge;
@@ -49,20 +52,23 @@ public class ChallengeScene : MonoBehaviour {
 
 		foreach (string challenge in challengesStringList) {
 			// cast to serializable class
-			tempChallenge = JsonUtility.FromJson<Challenge>(challenge);
+			tempChallenge = JsonUtility.FromJson<Challenge> (challenge);
 
 			// completed challenge
 			if (tempChallenge.completed == true) {
-				tempButton = (GameObject)Instantiate(buttonCompletePrefab);
+				// make temp button in complete prefab
+				tempButton = (GameObject)Instantiate (buttonCompletePrefab);
 
 			} else { //incomplete challenge
-				tempButton = (GameObject)Instantiate(buttonIncompletePrefab);
+				// make temp button in incomplete prefab
+				tempButton = (GameObject)Instantiate (buttonIncompletePrefab);
 
 			}
 
+			// set parent to parent panel; set challenge description as button text; add button to button list
 			tempButton.transform.SetParent(parent);
 			tempButton.transform.GetChild (0).GetComponent<Text> ().text = tempChallenge.description;
-			toDisplay[i] = tempButton.GetComponent<Button>();
+			toDisplay[i] 		= tempButton.GetComponent<Button>();
 			i++;
 		}
 
