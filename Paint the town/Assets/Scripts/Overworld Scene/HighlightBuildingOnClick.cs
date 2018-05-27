@@ -193,15 +193,14 @@ public class HighlightBuildingOnClick : MonoBehaviour
       else
       {
         print(www.text);
+	
+		PlayerPrefs.SetString ("UpdateTeamData", www.text);
 
         string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
-
         for(int x =0; x < parsingString.Length; x ++){
           	if(parsingString[x].Trim('"') == "paintLeft"){
 				PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
             	print(PlayerPrefs.GetString("Energy", "nooooo"));
-			} else if (parsingString[x].Trim('"') == "challenges"){
-				PlayerPrefs.SetString ("Challenges", parsingString[x+1].Trim('"'));
 			}
         }
       }

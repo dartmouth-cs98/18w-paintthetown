@@ -8,8 +8,8 @@ using UnityEngine.UI;
 [Serializable] public class Challenge {
 	public string description;
 	public bool completed;
-	public string reward;
 }
+
 
 public class ChallengeScene : MonoBehaviour {
 	public RectTransform parent;
@@ -17,62 +17,72 @@ public class ChallengeScene : MonoBehaviour {
 	public GameObject buttonCompletePrefab;
 	public GameObject buttonIncompletePrefab;
 	public string challenges;
+	public string updateTeamData;
 	public int col,row = 1;
 	public int challengeNum;
 
 	// Use this for initialization
 	void Start () {
-		challenges = PlayerPrefs.GetString("Challenges", "no challenges");
-		challengeNum = challenges.Length;
-
-		parent = gameObject.GetComponent<RectTransform> ();
-		grid = gameObject.GetComponent<GridLayoutGroup> ();
+		updateTeamData = PlayerPrefs.GetString ("UpdateTeamData", "no team data");
 
 		displayChallenges ();
 	}
 
 	void displayChallenges() {
-		
 
-		print (challenges);
+		if (updateTeamData != "no team data") {
+			// manipulating server info to extract challenges
+			string finder = "\"challenges\":[";
+			string finder2 = "\"team\":\"";
+			int index = updateTeamData.IndexOf(finder);
+			int index2 = updateTeamData.IndexOf(finder2);
+			int toCut = index2 - index;
+			challenges = updateTeamData.Substring(index, toCut);
+			challenges = challenges.Remove (0, finder.Length);
+			challenges = challenges.Remove (challenges.Length - 2, 2);
 
-		// separate into each challenge
-		string[] challengesStringList = challenges.Split (';');
-		// get num of challenges to display
-		challengeNum = challengesStringList.Length;
-		// remove quotes from first and last index?
-		challengesStringList [0] = challengesStringList [0].Remove (0, 1);
-		challengesStringList [challengeNum - 1] = challengesStringList [challengeNum - 1].Remove (challengesStringList [challengeNum - 2].Length, 1);
+			// separate into each challenge
+			string[] challengesStringList = challenges.Split ('}');
+			// get num of challenges to display
+			challengeNum = challengesStringList.Length;
 
-		// list of buttons to display -- may not actually need this, will see
-		Button[] toDisplay = new Button[challengeNum];
-		GameObject tempButton;
-		Challenge tempChallenge;
-		int i = 0;
+			GameObject tempButton;
+			string tempString;
+			Challenge tempChallenge;
+			int i = 0;
+			foreach (string challenge in challengesStringList) {
+				if (challenge == "") {
+					break;
+				}
 
-		foreach (string challenge in challengesStringList) {
-			// cast to serializable class
-			tempChallenge = JsonUtility.FromJson<Challenge> (challenge);
+				// fix syntax for JSON parsing
+				tempString = challenge;
+				if (!tempString [tempString.Length - 1].Equals ('}')) {
+					tempString = tempString + "}";
+				}
+				if (tempString [0].Equals (',')) {
+					tempString = tempString.Remove (0, 1);
+				}
 
-			// completed challenge
-			if (tempChallenge.completed == true) {
-				// make temp button in complete prefab
-				tempButton = (GameObject)Instantiate (buttonCompletePrefab);
+				// cast to serializable class
+				tempChallenge = JsonUtility.FromJson<Challenge> (tempString);
+				// completed challenge
+				if (tempChallenge.completed == true) {
+					// make temp button in complete prefab
+					tempButton = (GameObject)Instantiate (buttonCompletePrefab);
 
-			} else { //incomplete challenge
-				// make temp button in incomplete prefab
-				tempButton = (GameObject)Instantiate (buttonIncompletePrefab);
+				} else { //incomplete challenge
+					// make temp button in incomplete prefab
+					tempButton = (GameObject)Instantiate (buttonIncompletePrefab);
 
+				}
+
+				// set parent to parent panel; make the button a layout element; set challenge description as button text
+				tempButton.transform.SetParent (parent);
+				tempButton.AddComponent<LayoutElement> ();
+				tempButton.SetActive (true);
+				tempButton.transform.GetChild (0).GetComponent<Text> ().text = tempChallenge.description;
 			}
-
-			// set parent to parent panel; set challenge description as button text; add button to button list
-			tempButton.transform.SetParent(parent);
-			tempButton.transform.GetChild (0).GetComponent<Text> ().text = tempChallenge.description;
-			toDisplay[i] 		= tempButton.GetComponent<Button>();
-			i++;
 		}
-
-		// still need to do something about adjusting the number of rows as number of challenges increases?
-
 	}
 }
