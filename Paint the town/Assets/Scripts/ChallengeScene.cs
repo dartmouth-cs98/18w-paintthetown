@@ -68,6 +68,5 @@ public class ChallengeScene : MonoBehaviour {
 
 		// still need to do something about adjusting the number of rows as number of challenges increases?
 
-
 	}
 }
