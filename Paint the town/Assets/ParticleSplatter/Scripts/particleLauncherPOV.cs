@@ -22,6 +22,8 @@ public class particleLauncherPOV : MonoBehaviour {
     public ParticleSystem.EmitParams e_params;
     public Camera setCam;
 
+    
+
     IEnumerator checkOwnership()
     {
         int red = 0;
@@ -93,6 +95,7 @@ public class particleLauncherPOV : MonoBehaviour {
         psMain = pLauncher.main;
         psSplat = splatterParticles.main;
 
+
         // set color
         if (playerColor == "blue")
         {
@@ -156,7 +159,8 @@ public class particleLauncherPOV : MonoBehaviour {
 
         // emit one particle, if the firebutton is held down
         if (Input.GetButton("Fire1")) {
-           // print("we in that");
+
+            
 
             // FIX IT FIX IT FIX IT
             var screenPos = new Vector3
