@@ -12,6 +12,10 @@ public class SwitchCamera : MonoBehaviour {
     public Camera povCam;
     public Camera setCam;
     public Button switchBtn;
+    public Button switchView;
+    public Image overhead;
+    public Image pov;
+    public Image mainPic;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +43,12 @@ public class SwitchCamera : MonoBehaviour {
 
       }else{
         Api.Instance.CameraApi.SetControlledCamera(setCam);
+      }
+
+      if(povCam.enabled){
+        mainPic.sprite = pov.sprite;
+      }else{
+        mainPic.sprite = overhead.sprite;
       }
 
       print("Cameras switched!");
