@@ -637,7 +637,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuButton: {fileID: 1385942540}
   ReturnToPlayButton: {fileID: 371508639}
-  ShopSceneButton: {fileID: 0}
   SettingsSceneButton: {fileID: 1151363065}
   ChallengesSceneButton: {fileID: 2138355090}
   ProfileSceneButton: {fileID: 1491724016}
@@ -904,7 +903,7 @@ RectTransform:
   m_GameObject: {fileID: 1206803419}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.38263696, y: 0.3971266, z: 0.38300025}
+  m_LocalScale: {x: 0.4170743, y: 0.432868, z: 0.41747028}
   m_Children:
   - {fileID: 110717462}
   m_Father: {fileID: 569478570}
@@ -912,7 +911,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.31877154, y: 406}
+  m_AnchoredPosition: {x: -0.31877154, y: 423.93213}
   m_SizeDelta: {x: 1045.2043, y: 585.17993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1241631162
