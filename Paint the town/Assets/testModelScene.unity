@@ -1310,6 +1310,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 532329160}
+--- !u!1 &723675252 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1560517332906664, guid: ff5eded233b11354abc5fa81665a2548,
+    type: 2}
+  m_PrefabInternal: {fileID: 1695763971}
+--- !u!114 &723675254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 723675252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db380c7edc1e272429cd6976e0aeb006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  povCam: {fileID: 1581368365}
 --- !u!1 &758426063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,6 +2307,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1561410029}
+--- !u!20 &1581368365 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 20806399266668628, guid: ff5eded233b11354abc5fa81665a2548,
+    type: 2}
+  m_PrefabInternal: {fileID: 1695763971}
 --- !u!1 &1633785102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,6 +2581,11 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 82565704323919172, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0215909c595ac134c991001427e8e8db, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff5eded233b11354abc5fa81665a2548, type: 2}
   m_IsPrefabParent: 0
