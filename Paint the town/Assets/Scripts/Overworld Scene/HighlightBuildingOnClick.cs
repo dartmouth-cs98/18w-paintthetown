@@ -34,6 +34,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     private string sameBuildingColorMessage = "That building is already owned by your team!";
     public Camera mainCam;
     public Camera povCam;
+	public GameObject PlayerLevel;
 
     private ShowTextBox myTB;
     int index = 0;
@@ -41,10 +42,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void Start()
     {
-      stopFlag = false;
-      textArea.enabled = false;
-      image.enabled = false;
-      myTB = GetComponent<ShowTextBox>();
+      	stopFlag = false;
+      	textArea.enabled = false;
+      	image.enabled = false;
+      	myTB = GetComponent<ShowTextBox>();
+
+		PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "1");
 
 
     }
@@ -193,15 +196,17 @@ public class HighlightBuildingOnClick : MonoBehaviour
       else
       {
         print(www.text);
+	
+		PlayerPrefs.SetString ("UpdateTeamData", www.text);
 
         string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
-
         for(int x =0; x < parsingString.Length; x ++){
           	if(parsingString[x].Trim('"') == "paintLeft"){
 				PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
             	print(PlayerPrefs.GetString("Energy", "nooooo"));
-			} else if (parsingString[x].Trim('"') == "challenges"){
-				PlayerPrefs.SetString ("Challenges", parsingString[x+1].Trim('"'));
+			} else if(parsingString[x].Trim('"') == "level"){
+				PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
+				PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
 			}
         }
       }
