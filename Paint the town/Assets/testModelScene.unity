@@ -1233,7 +1233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -760, y: 340}
+  m_AnchoredPosition: {x: -660, y: 330}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &532329162
@@ -1949,7 +1949,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -600, y: -330}
+  m_AnchoredPosition: {x: -575, y: -330}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1275684702
@@ -2586,6 +2586,11 @@ Prefab:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 0215909c595ac134c991001427e8e8db, type: 3}
+    - target: {fileID: 82592384193940656, guid: ff5eded233b11354abc5fa81665a2548,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff5eded233b11354abc5fa81665a2548, type: 2}
   m_IsPrefabParent: 0
@@ -3038,13 +3043,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   distance: 30
-  xSpeed: 60
-  ySpeed: 60
-  yMinLimit: -20
+  xSpeed: 30
+  ySpeed: 30
+  yMinLimit: 0
   yMaxLimit: 80
-  distanceMin: 15
-  distanceMax: 100
-  zoomSpeed: 0.5
+  distanceMin: 30
+  distanceMax: 70
+  zoomSpeed: 0.2
 --- !u!1 &1875604214
 GameObject:
   m_ObjectHideFlags: 0
