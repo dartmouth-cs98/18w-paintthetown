@@ -900,6 +900,7 @@ MonoBehaviour:
   buttonIncompletePrefab: {fileID: 1224234945354752, guid: 9d8633458a8cf4cfcaaf284469d93441,
     type: 2}
   challenges: 
+  updateTeamData: 
   col: 0
   row: 1
   challengeNum: 0
@@ -1553,7 +1554,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
+  m_CellSize: {x: 180, y: 180}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
