@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
-	
+
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
 
 public class HighlightBuildingOnClick : MonoBehaviour
@@ -196,25 +196,25 @@ public class HighlightBuildingOnClick : MonoBehaviour
       else
       {
         print(www.text);
-	
+
 		PlayerPrefs.SetString ("UpdateTeamData", www.text);
 
         string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
         for(int x =0; x < parsingString.Length; x ++){
           	if(parsingString[x].Trim('"') == "paintLeft"){
-				PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+							PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+							PlayerPrefs.SetString("SendTimerUpdate", "true");
             	print(PlayerPrefs.GetString("Energy", "nooooo"));
-			} else if(parsingString[x].Trim('"') == "level"){
-				PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
-				PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
-			}
-        }
-      }
+						} else if(parsingString[x].Trim('"') == "level"){
+							PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
+							PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
+					  }
+         }
+       }
     }
 
     IEnumerator createBuilding()
     {
-      //print ("You're making a building");
 
       WWWForm signupform = new WWWForm();
 
