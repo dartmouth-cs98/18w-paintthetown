@@ -205,12 +205,15 @@ public class HighlightBuildingOnClick : MonoBehaviour
 							PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
 							PlayerPrefs.SetString("SendTimerUpdate", "true");
             	print(PlayerPrefs.GetString("Energy", "nooooo"));
-						} else if(parsingString[x].Trim('"') == "level"){
-							PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
-							PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
-					  }
-         }
-       }
+			} else if(parsingString[x].Trim('"') == "level"){
+				PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
+				PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
+			}
+        }
+
+		PlayerPrefs.Save ();
+      }
+
     }
 
     IEnumerator createBuilding()
