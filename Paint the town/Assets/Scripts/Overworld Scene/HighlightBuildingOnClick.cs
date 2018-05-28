@@ -209,6 +209,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
 				PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
 			}
         }
+
+		PlayerPrefs.Save ();
       }
     }
 

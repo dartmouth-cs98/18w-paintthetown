@@ -17,8 +17,6 @@ public class SignUp : MonoBehaviour {
 	public GameObject signupLastName;
 	private string SignupName;
 	private string SignupLastName;
-	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
-	public string[] teamInfoList;
 	public Button GoToLoginButton;
 	public Button SignUpButton;
 	private bool showPopUp = false;
@@ -73,6 +71,11 @@ public class SignUp : MonoBehaviour {
 					}
 				}
 			}
+
+			// start at level 1
+			PlayerPrefs.SetString("Level", "1");
+			PlayerPrefs.Save();
+
 		}
 	}
 

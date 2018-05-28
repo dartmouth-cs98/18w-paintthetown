@@ -100,6 +100,9 @@ public class Login : MonoBehaviour {
 					print("TEAM ID: " + teamInfo[x + 1]);
 					PlayerPrefs.SetString("teamID", teamInfo[x + 1].Trim('"'));
 					PlayerPrefs.Save();
+				} else if(teamInfo[x].Trim('"') == "level"){
+					PlayerPrefs.SetString("Level", teamInfo[x + 1].Trim('"'));
+					PlayerPrefs.Save();
 				}
 			}
 		}

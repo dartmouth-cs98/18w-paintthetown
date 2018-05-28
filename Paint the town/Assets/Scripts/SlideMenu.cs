@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class SlideMenu : MonoBehaviour {
 
 	public Button MenuButton;
+	public Button LogoutButton;
 	public Button ReturnToPlayButton;
+	public Button ChallengesSceneButton;
+	public Button MuteButton;
 	//public Button ShopSceneButton;
 	//public Button SettingsSceneButton;
-	public Button ChallengesSceneButton;
 	//public Button ProfileSceneButton;
 
 	public Animation SlidePanelAnim;
@@ -18,14 +20,16 @@ public class SlideMenu : MonoBehaviour {
 
 	void Start()
 	{
+		LogoutButton.onClick.AddListener (logout);
 		MenuButton.onClick.AddListener(slideMenu);
 		ReturnToPlayButton.onClick.AddListener(goToPlay);
+		MuteButton.onClick.AddListener(mute);
 		//ShopSceneButton.onClick.AddListener(goToShop);
 		//SettingsSceneButton.onClick.AddListener(goToSettings);
 		ChallengesSceneButton.onClick.AddListener(goToChallenges);
 		//ProfileSceneButton.onClick.AddListener(goToProfile);
 	}
-
+		
 	void slideMenu()
 	{
 		if (menuIn == false) {
@@ -36,6 +40,15 @@ public class SlideMenu : MonoBehaviour {
 			menuIn = false;
 		}
 
+	}
+
+	void logout() {
+		PlayerPrefs.DeleteAll ();
+		SceneManager.LoadScene ("LoginScene");
+	}
+
+	void mute() {
+		// do this
 	}
 
 	/*
