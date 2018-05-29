@@ -112,6 +112,7 @@ public class ParticleDecalPool : MonoBehaviour {
             plrColor = new Color(0.5f, 0.0f, 0.5f);
         }
 
+        InvokeRepeating("startSetBuildingParticles", 2.0f, 2.0f);
     }
 
     //starter fuction to retrieve building data
@@ -137,6 +138,7 @@ public class ParticleDecalPool : MonoBehaviour {
 
         if (www.text == "{\"particles\":[]}")
         {
+            print("in the empty particle array section");
             //the building has no saved particles
             pd = new ParticleDecalData[maxParticleDecals];
             for (int i = 0; i < maxParticleDecals; i++)
@@ -147,6 +149,7 @@ public class ParticleDecalPool : MonoBehaviour {
         }
         else
         {
+            print("in the saved particle array section");
             pd = JsonHelper.FromJson<ParticleDecalData>(www.text);
             print(www.text);
         }
