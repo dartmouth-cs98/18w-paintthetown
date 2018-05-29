@@ -28,6 +28,7 @@ public class DisplayTimer : MonoBehaviour {
 		timeText.enabled = true;
 	}
 
+	// show the user that they are at the max capacity of paint
 	public void setMax(){
 		timeText.text = "MAX";
 		timePanel.enabled = true;
@@ -46,32 +47,31 @@ public class DisplayTimer : MonoBehaviour {
 			print(www.error);
 
 		}else{
-
+			// separate out server response
 			string[] subStrings = Regex.Split(www.text, @"[,:{}]+");
 			string timeMin = "";
 			string timeSec = "";
 
+			// iterate through server response to grab paintLeft and timeLeftMin/Sec
 			for(int x = 0; x < subStrings.Length; x++){
 				if(subStrings[x].Trim('"') == "paintLeft"){
 					PlayerPrefs.SetString("Energy", subStrings[x+1]);
-					//print("energy: " + subStrings[x+1]);
 				}else if(subStrings[x].Trim('"') == "timeLeftMin"){
 					timeMin = subStrings[x+1];
-					//PlayerPrefs.SetString("TimeMin", subStrings[x+1]);
 				} else if (subStrings[x].Trim('"') == "timeLeftSec"){
 					timeSec = subStrings[x+1];
-					//PlayerPrefs.SetString("TimeSec", subStrings[x+1]);
 				}
 			}
 
-
+			// user is at max capacity of paint
 			if(timeMin == "null" && timeSec == "null"){
 				setMax();
 			} else{
-
+				// get mins
 				int MinInt = 0;
 				Int32.TryParse(timeMin, out MinInt);
 
+				// get secs
 				int SecInt = 0;
 				Int32.TryParse(timeSec, out SecInt);
 				startCountdown(MinInt, SecInt);
@@ -81,7 +81,7 @@ public class DisplayTimer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		// if not at max, calculate time until refill
 		if(timeText.text != "MAX"){
 			startTime = System.DateTime.Now;
 			elapsed = endTime.Subtract(startTime);
@@ -95,9 +95,13 @@ public class DisplayTimer : MonoBehaviour {
 
 			timeText.text = elapsed.Minutes.ToString() + ":" + sec;
 		}
+
+		// send request to update timer
 		if(elapsed.Minutes <= 0 && elapsed.Seconds == 0){
 			StartCoroutine("sendRequest");
 		}
+
+		// send request to update timer
 		if(PlayerPrefs.GetString("SendTimerUpdate", "false") == "true" && timeText.text == "MAX"){
 			StartCoroutine("sendRequest");
 			PlayerPrefs.SetString("SendTimerUpdate", "false");
