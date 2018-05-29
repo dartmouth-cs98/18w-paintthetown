@@ -9,7 +9,7 @@ public class particleLauncherPOV : MonoBehaviour {
 
     public ParticleSystem pLauncher;
     public ParticleSystem splatterParticles;
-    public ParticleDecalPool PDP;
+    public ParticleDecalPoolPOV PDP;
 
     List<ParticleCollisionEvent> cEvents;
 
