@@ -29,6 +29,7 @@ public class HandleGyro : MonoBehaviour {
 	private Quaternion baseOrientation = Quaternion.Euler(90, 0, 0);
 	private Quaternion baseOrientationRotationFix = Quaternion.identity;
 	private Quaternion referenceRotation = Quaternion.identity;
+
 	// Use this for initialization
 	void Start () {
 			Input.gyro.enabled = true;
@@ -40,76 +41,76 @@ public class HandleGyro : MonoBehaviour {
 
 	private void UpdateCalibration(bool onlyHorizontal)
 	{
-			if (onlyHorizontal)
+		if (onlyHorizontal)
+		{
+			var fw = (Input.gyro.attitude) * (-Vector3.forward);
+			fw.z = 0;
+			if (fw == Vector3.zero)
 			{
-					var fw = (Input.gyro.attitude) * (-Vector3.forward);
-					fw.z = 0;
-					if (fw == Vector3.zero)
-					{
-							calibration = Quaternion.identity;
-					}
-					else
-					{
-							calibration = (Quaternion.FromToRotation(baseOrientationRotationFix * Vector3.up, fw));
-					}
+				calibration = Quaternion.identity;
 			}
 			else
 			{
-					calibration = Input.gyro.attitude;
+				calibration = (Quaternion.FromToRotation(baseOrientationRotationFix * Vector3.up, fw));
 			}
+		}
+		else
+		{
+			calibration = Input.gyro.attitude;
+		}
 	}
 
 	private void UpdateCameraBaseRotation(bool onlyHorizontal)
 	{
-			if (onlyHorizontal)
+		if (onlyHorizontal)
+		{
+			var fw = transform.forward;
+			fw.y = 0;
+			if (fw == Vector3.zero)
 			{
-					var fw = transform.forward;
-					fw.y = 0;
-					if (fw == Vector3.zero)
-					{
-							cameraBase = Quaternion.identity;
-					}
-					else
-					{
-							cameraBase = Quaternion.FromToRotation(Vector3.forward, fw);
-					}
+				cameraBase = Quaternion.identity;
 			}
 			else
 			{
-					cameraBase = transform.rotation;
+				cameraBase = Quaternion.FromToRotation(Vector3.forward, fw);
 			}
+		}
+		else
+		{
+			cameraBase = transform.rotation;
+		}
 	}
 
 	private static Quaternion ConvertRotation(Quaternion q)
 	{
-			return new Quaternion(q.x, q.y, -q.z, -q.w);
+		return new Quaternion(q.x, q.y, -q.z, -q.w);
 	}
 
 	private Quaternion GetRotFix()
 	{
-			if (Screen.orientation == ScreenOrientation.Portrait)
-				return Quaternion.identity;
-
-			if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.Landscape)
-				return landscapeLeft;
-
-			if (Screen.orientation == ScreenOrientation.LandscapeRight)
-				return landscapeRight;
-
-			if (Screen.orientation == ScreenOrientation.PortraitUpsideDown)
-				return upsideDown;
+		if (Screen.orientation == ScreenOrientation.Portrait)
 			return Quaternion.identity;
+
+		if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.Landscape)
+			return landscapeLeft;
+
+		if (Screen.orientation == ScreenOrientation.LandscapeRight)
+			return landscapeRight;
+
+		if (Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+			return upsideDown;
+		return Quaternion.identity;
 	}
 
 	private void ResetBaseOrientation()
 	{
-			baseOrientationRotationFix = GetRotFix();
-			baseOrientation = baseOrientationRotationFix * baseIdentity;
+		baseOrientationRotationFix = GetRotFix();
+		baseOrientation = baseOrientationRotationFix * baseIdentity;
 	}
 
 	private void RecalculateReferenceRotation()
 	{
-			referenceRotation = Quaternion.Inverse(baseOrientation) * Quaternion.Inverse(calibration);
+		referenceRotation = Quaternion.Inverse(baseOrientation) * Quaternion.Inverse(calibration);
 	}
 
 
@@ -120,7 +121,7 @@ public class HandleGyro : MonoBehaviour {
 		Vector3 tempPOVposition = new Vector3(setCam.transform.position.x, 400, setCam.transform.position.z + 40);
 		if (Physics.Raycast(tempPOVposition,Vector3.down,out hit, 600))
 		{
-				tempPOVposition.y = hit.point.y + 15f;
+			tempPOVposition.y = hit.point.y + 15f;
 		}
 
 		// Set POV cam to the temp Vector 3 created above
