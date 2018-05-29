@@ -10,14 +10,19 @@ public class Login : MonoBehaviour {
 
 	// the two URL strings that we need to use
 	string signinURL = "https://paint-the-town.herokuapp.com/api/signin";
+	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 
 	public Button GoToSignUpButton;
 	public GameObject username;
 	public GameObject password;
 	private string Username;
 	private string Password;
-	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
 	public string[] teamInfoList;
+	public Image loading;
+	public Text loadingText;
+	private bool loadScene = false;
+	private bool showPopUp = false;
+
 	public string redID;
 	public string orangeID;
 	public string yellowID;
@@ -25,14 +30,7 @@ public class Login : MonoBehaviour {
 	public string blueID;
 	public string purpleID;
 
-	public Image loading;
-	public Text loadingText;
-
-	private bool loadScene = false;
-
-	private bool showPopUp = false;
-	public string[] subReturnStrings;
-
+	// set our initial state; add listener for signup button
 	void Start () {
 		GoToSignUpButton.onClick.AddListener(goToSignUp);
 		PlayerPrefs.SetString("main scene loaded", "false");
@@ -41,10 +39,12 @@ public class Login : MonoBehaviour {
 		loading.enabled = false;
 	}
 
+	// load the signup scene if player does not have account
 	public void goToSignUp() {
 		SceneManager.LoadScene("SignUpScene");
 	}
 
+	// 
 	public IEnumerator SigninButton(){
 
 		WWWForm f = new WWWForm();
@@ -84,20 +84,21 @@ public class Login : MonoBehaviour {
 
 	//get the player team when they sign in before loading the game scene
 	public IEnumerator setPlayercolor(){
+		// request user info from the server
 		Hashtable headers = new Hashtable();
-		print("You're retrieving information about the user");
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 		WWW www = new WWW(userUrl, null, headers);
 		yield return www;
+
+		// got an error
 		if(www.text == "null"){
 			print(www.error);
 		}else{
-
+			// set response for later use in challenge scene
 			PlayerPrefs.SetString ("ChallengeChunk", www.text);
 			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk"));
 
-
+			// split
 			string[] teamInfo = Regex.Split(www.text, @"[,:{}]+");
 
 			for(int x = 0; x < teamInfo.Length - 1; x ++){
@@ -119,25 +120,25 @@ public class Login : MonoBehaviour {
 
 	}
 
+	// get the team color from the server based on team ID we have
 	public IEnumerator getColorFromID()
 	{
+		// request team info from server
 		Hashtable headers = new Hashtable();
-		print("You're retrieving information about teams");
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
-		print (PlayerPrefs.GetString ("token", "no token"));
 		WWW www = new WWW("https://paint-the-town.herokuapp.com/api/teams", null, headers);
 		yield return www;
 
+			// got an error
 			if(www.text == "null"){
 				print(www.error);
 			}else{
+				// print what we received
 				print(www.text);
-				// string teamInfo = www.text;
 				teamInfoList = Regex.Split(www.text, @"[,:{}]+");
 
-
+				// iterate through info from server to get each color id
 				for (int i = 0; i <= teamInfoList.Length - 1; i++) {
-					// print (teamInfoList [i]);
 					if(teamInfoList [i].Trim('"') == "red"){
 						redID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "orange"){
@@ -152,17 +153,11 @@ public class Login : MonoBehaviour {
 						purpleID = teamInfoList [i - 5].Trim('"');
 					}
 				}
-				print("orange team ID" + orangeID);
-				print("Red team ID: " + redID);
-				print("yellow team ID: " + yellowID);
-				print("Green team ID: " + greenID);
-				print("purple team ID: " + purpleID);
-				print("Blue team ID: " + blueID);
-
+				
 				print(PlayerPrefs.GetString("teamID", "no teamID"));
 
-				if( (PlayerPrefs.GetString("teamID", "no teamID")) == redID)
-				{
+			// match up the ID we have with the correct color; set Player Prefs color
+				if(PlayerPrefs.GetString("teamID", "no teamID") == redID){
 					PlayerPrefs.SetString("color", "red");
 				} else if (PlayerPrefs.GetString("teamID", "no teamID") == orangeID) {
 					PlayerPrefs.SetString("color", "orange");
@@ -175,44 +170,45 @@ public class Login : MonoBehaviour {
 				} else if (PlayerPrefs.GetString("teamID", "no teamID") == purpleID) {
 					PlayerPrefs.SetString("color", "purple");
 				}else{
-					print("Critical error, could not find team color");
+					print("Critical error: could not find team color");
 				}
 			}
 	}
 
+	// coroutine to work around IEnumerator
 	public void workAroundSignIn() {
-		print("You are signing in");
 		StartCoroutine("SigninButton");
 	}
-
-
-	public void GoToSignUp() {
-		SceneManager.LoadScene ("SignUpScene");
-	}
-
+		
+	// grab user input constantly until they enter
 	public void Update() {
 
+		// if they press enter
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			if (Password != "" && Username != "") {
 				StartCoroutine("SigninButton");
 			}
 		}
 
+		// grab input text
 		Username = username.GetComponent<InputField> ().text;
 		Password = password.GetComponent<InputField> ().text;
 
+		// transition between login scene and main scene
 		if(PlayerPrefs.GetString("main scene loaded", "false") == "happy"){
 			SceneManager.SetActiveScene(SceneManager.GetSceneByName("FirstScene"));
 			Debug.Log("Active Scene : " + SceneManager.GetActiveScene().name);
 			SceneManager.UnloadSceneAsync("LoginScene");
 
 		}
+
 		if(loading.enabled){
 			loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, Mathf.PingPong(Time.time, 1));
 		}
 
 	}
 
+	// popup window if popup flag is signaled for signin error from server
 	void OnGUI(){
 		if (showPopUp) {
 			GUI.Window(0, new Rect((Screen.width/2)-150, (Screen.height/2)-75
@@ -220,11 +216,12 @@ public class Login : MonoBehaviour {
 		}
 	}
 
+	// gui to show popup window
 	void ShowGUI(int windowID) {
 		// put a label to show a message to the player
 		GUI.Label(new Rect(45, 40, 200, 30), "Invalid username or password");
 
-		// You may put a button to close the pop up too
+		// clear the window
 		if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
 			username.GetComponent<InputField> ().text = "";
 			password.GetComponent<InputField> ().text = "";
