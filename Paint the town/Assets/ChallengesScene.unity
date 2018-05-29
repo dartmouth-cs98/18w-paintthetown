@@ -211,7 +211,7 @@ RectTransform:
   m_GameObject: {fileID: 110717461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8.521493, y: 3.7093666, z: 3.9411886}
+  m_LocalScale: {x: 6.791341, y: 3.7093663, z: 3.9411879}
   m_Children:
   - {fileID: 371508636}
   - {fileID: 2138355087}
@@ -222,7 +222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035156, y: -109.46538}
+  m_AnchoredPosition: {x: 45, y: -77}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &110717463
@@ -898,10 +898,8 @@ MonoBehaviour:
   buttonIncompletePrefab: {fileID: 1224234945354752, guid: 9d8633458a8cf4cfcaaf284469d93441,
     type: 2}
   challenges: 
-  updateTeamData: 
-  col: 0
-  row: 1
-  challengeNum: 0
+  challengeChunk: 
+  userUrl: https://paint-the-town.herokuapp.com/api/users
 --- !u!1 &850932678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,7 +1051,7 @@ RectTransform:
   m_GameObject: {fileID: 1206803419}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.19289687, y: 0.45992085, z: 0.41747028}
+  m_LocalScale: {x: 0.20815355, y: 0.39553192, z: 0.3590244}
   m_Children:
   - {fileID: 1470124496}
   - {fileID: 110717462}
@@ -1062,7 +1060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -508.3011, y: -7}
+  m_AnchoredPosition: {x: -495, y: -7}
   m_SizeDelta: {x: 1016.6022, y: 585.17993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1241631162
@@ -1468,14 +1466,14 @@ RectTransform:
   m_GameObject: {fileID: 1470124495}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.173936, y: 2.2521908, z: 2.3929443}
+  m_LocalScale: {x: 4.1234508, y: 2.2521904, z: 2.3929436}
   m_Children: []
   m_Father: {fileID: 1206803423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 828.3012, y: -181}
+  m_AnchoredPosition: {x: 891, y: -154}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1470124497
@@ -1565,7 +1563,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 180, y: 180}
+  m_CellSize: {x: 170, y: 170}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
