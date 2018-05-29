@@ -136,6 +136,8 @@ public class ParticleDecalPool : MonoBehaviour {
         WWW www = new WWW(getBuildingParticlesURL, null, headers);
         yield return www;
 
+        print(www.text);
+
         if (www.text == "{\"particles\":[]}")
         {
             print("in the empty particle array section");
@@ -145,7 +147,6 @@ public class ParticleDecalPool : MonoBehaviour {
             {
                 pd[i] = new ParticleDecalData();
             }
-            print(www.error);
         }
         else
         {
@@ -157,16 +158,27 @@ public class ParticleDecalPool : MonoBehaviour {
 
     IEnumerator setBuildingParticles()
     {
+        print("Attempting to upload the array");
         WWWForm updateform = new WWWForm();
 
         updateform.AddField("buildingId", buildingID);
         string particles = JsonHelper.ToJson<ParticleDecalData>(pd);
+        print(particles);
         updateform.AddField("particles", particles);
 
         Hashtable headers = new Hashtable();
         headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
         WWW www = new WWW(setBuildingParticlesURL, updateform.data, headers);
         yield return www;
+
+        if (www.error != null)
+        {
+            print("Error uploading: " + www.error);
+        }
+        else
+        {
+            print(www.text);
+        }
     }
 
     public void particleHit(ParticleCollisionEvent particleCollisionEvent)

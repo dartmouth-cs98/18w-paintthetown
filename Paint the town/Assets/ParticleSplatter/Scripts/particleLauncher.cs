@@ -153,7 +153,7 @@ public class particleLauncher : MonoBehaviour {
 
         // emit one particle, if the firebutton is held down
         if (Input.GetButton("Fire1")) {
-            print("we in that");
+            // print("we in that");
             ParticleSystem.MainModule psMain = pLauncher.main;
             pLauncher.Emit(1);
 
