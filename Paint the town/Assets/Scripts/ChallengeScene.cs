@@ -62,6 +62,9 @@ public class ChallengeScene : MonoBehaviour {
 				}
 
 				// cast to serializable class
+				if(tempString[0] == ']'){
+					break;
+				}
 				tempChallenge = JsonUtility.FromJson<Challenge> (tempString);
 				// completed challenge
 				if (tempChallenge.completed == true) {
@@ -79,7 +82,9 @@ public class ChallengeScene : MonoBehaviour {
 				tempButton.AddComponent<LayoutElement> ();
 				tempButton.SetActive (true);
 				tempButton.transform.GetChild (0).GetComponent<Text> ().text = tempChallenge.description;
+
 			}
+
 		} else {
 			print ("under the else statement");
 			StartCoroutine ("getUserData");
