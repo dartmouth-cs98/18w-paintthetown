@@ -4,6 +4,36 @@ using UnityEngine;
 
 // based on https://unity3d.com/learn/tutorials/topics/scripting/droplet-decals?playlist=17117
 
+// json helper taken from https://stackoverflow.com/questions/36239705/serialize-and-deserialize-json-and-json-array-in-unity?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+public static class JsonHelper
+{
+    public static T[] FromJson<T>(string json)
+    {
+        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+        return wrapper.Items;
+    }
+
+    public static string ToJson<T>(T[] array)
+    {
+        Wrapper<T> wrapper = new Wrapper<T>();
+        wrapper.Items = array;
+        return JsonUtility.ToJson(wrapper);
+    }
+
+    public static string ToJson<T>(T[] array, bool prettyPrint)
+    {
+        Wrapper<T> wrapper = new Wrapper<T>();
+        wrapper.Items = array;
+        return JsonUtility.ToJson(wrapper, prettyPrint);
+    }
+
+    [System.Serializable]
+    private class Wrapper<T>
+    {
+        public T[] Items;
+    }
+}
+
 
 public class ParticleDecalPool : MonoBehaviour {
     private int particleDataIndex;
@@ -16,18 +46,26 @@ public class ParticleDecalPool : MonoBehaviour {
     private ParticleSystem.MainModule decalMain;
     private string colorString;
     private Color plrColor;
+    public string getBuildingParticlesURL;
+    public string setBuildingParticlesURL;
+    public string buildingID;
 
-	// Use this for initialization
-	void Start () {
+
+
+    // Use this for initialization
+    void Start () {
         particleDataIndex = 0;
 
         colorString = PlayerPrefs.GetString("color");
 
-        
-
         decalPS = GetComponent<ParticleSystem>();
 
+        buildingID = PlayerPrefs.GetString("bid");
+
+        startGetBuildingParticles();
+
         pd = new ParticleDecalData[maxParticleDecals];
+
         particles = new ParticleSystem.Particle[maxParticleDecals];
 
         for (int i = 0; i < maxParticleDecals; i++)
@@ -74,6 +112,58 @@ public class ParticleDecalPool : MonoBehaviour {
             plrColor = new Color(0.5f, 0.0f, 0.5f);
         }
 
+    }
+
+    //starter fuction to retrieve building data
+    public void startGetBuildingParticles()
+    {
+        getBuildingParticlesURL = "https://paint-the-town.herokuapp.com/api/particles?buildingId=" + buildingID;
+        StartCoroutine("getBuildingParticles");
+    }
+
+    // starter function for saving building particle data
+    public void startSetBuildingParticles()
+    {
+        setBuildingParticlesURL = "https://paint-the-town.herokuapp.com/api/particles";
+        StartCoroutine("setBuildingParticles");
+    }
+
+    IEnumerator getBuildingParticles()
+    {
+        Hashtable headers = new Hashtable();
+        headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+        WWW www = new WWW(getBuildingParticlesURL, null, headers);
+        yield return www;
+
+        if (www.text == "{\"particles\":[]}")
+        {
+            //the building has no saved particles
+            pd = new ParticleDecalData[maxParticleDecals];
+            for (int i = 0; i < maxParticleDecals; i++)
+            {
+                pd[i] = new ParticleDecalData();
+            }
+            print(www.error);
+        }
+        else
+        {
+            pd = JsonHelper.FromJson<ParticleDecalData>(www.text);
+            print(www.text);
+        }
+    }
+
+    IEnumerator setBuildingParticles()
+    {
+        WWWForm updateform = new WWWForm();
+
+        updateform.AddField("buildingId", buildingID);
+        string particles = JsonHelper.ToJson<ParticleDecalData>(pd);
+        updateform.AddField("particles", particles);
+
+        Hashtable headers = new Hashtable();
+        headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+        WWW www = new WWW(setBuildingParticlesURL, updateform.data, headers);
+        yield return www;
     }
 
     public void particleHit(ParticleCollisionEvent particleCollisionEvent)

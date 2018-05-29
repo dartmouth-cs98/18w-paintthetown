@@ -156,6 +156,7 @@ public class particleLauncher : MonoBehaviour {
             print("we in that");
             ParticleSystem.MainModule psMain = pLauncher.main;
             pLauncher.Emit(1);
+
         }
 	}
 
