@@ -490,7 +490,7 @@ SketchUpImporter:
       name: window
     second: {fileID: 2800000, guid: fdf8904bfd493cc48be873057beb6552, type: 3}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 2
     materialSearch: 0
     materialLocation: 1

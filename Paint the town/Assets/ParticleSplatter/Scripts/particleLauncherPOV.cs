@@ -9,7 +9,7 @@ public class particleLauncherPOV : MonoBehaviour {
 
     public ParticleSystem pLauncher;
     public ParticleSystem splatterParticles;
-    public ParticleDecalPool PDP;
+    public ParticleDecalPoolPOV PDP;
 
     List<ParticleCollisionEvent> cEvents;
 
@@ -22,7 +22,7 @@ public class particleLauncherPOV : MonoBehaviour {
     public ParticleSystem.EmitParams e_params;
     public Camera setCam;
 
-    
+
 
     IEnumerator checkOwnership()
     {
@@ -179,7 +179,12 @@ public class particleLauncherPOV : MonoBehaviour {
                 var viewportPoint = setCam.WorldToViewportPoint(hit.point);
                 var tempPosition = hit.point;
                 e_params.position = tempPosition;
-                pLauncher.Emit(e_params, 1);
+                // if the povCam is in use emit a particle, otherwise do not 
+                if (setCam.enabled)
+                {
+                    pLauncher.Emit(e_params, 1);
+                }
+                // pLauncher.Emit(e_params, 1);
             }
         }
 	}
