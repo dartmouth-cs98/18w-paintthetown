@@ -17,39 +17,36 @@ public class ChallengeScene : MonoBehaviour {
 	public GameObject buttonCompletePrefab;
 	public GameObject buttonIncompletePrefab;
 	public string challenges;
-	public string updateTeamData;
-	public int col,row = 1;
-	public int challengeNum;
+	public string challengeChunk;
+	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
+
 
 	// Use this for initialization
 	void Start () {
-		updateTeamData = PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk");
-
+		challengeChunk = PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk");
+		print ("challengeChunk: " + challengeChunk);
 		displayChallenges ();
 	}
 
 	void displayChallenges() {
 
-		if (updateTeamData != "no team data") {
+		if (challengeChunk != "no challenge chunk") {
 			// manipulating server info to extract challenges
 			string finder = "\"challenges\":[";
 			string finder2 = "\"team\":\"";
-			int index = updateTeamData.IndexOf(finder);
-			int index2 = updateTeamData.IndexOf(finder2);
+			int index = challengeChunk.IndexOf (finder);
+			int index2 = challengeChunk.IndexOf (finder2);
 			int toCut = index2 - index;
-			challenges = updateTeamData.Substring(index, toCut);
+			challenges = challengeChunk.Substring (index, toCut);
 			challenges = challenges.Remove (0, finder.Length);
 			challenges = challenges.Remove (challenges.Length - 2, 2);
 
 			// separate into each challenge
 			string[] challengesStringList = challenges.Split ('}');
-			// get num of challenges to display
-			challengeNum = challengesStringList.Length;
 
 			GameObject tempButton;
 			string tempString;
 			Challenge tempChallenge;
-			int i = 0;
 			foreach (string challenge in challengesStringList) {
 				if (challenge == "") {
 					break;
@@ -58,7 +55,7 @@ public class ChallengeScene : MonoBehaviour {
 				// fix syntax for JSON parsing
 				tempString = challenge;
 				if (!tempString [tempString.Length - 1].Equals ('}')) {
-					tempString = tempString + "}";
+					tempString = tempString + '}';
 				}
 				if (tempString [0].Equals (',')) {
 					tempString = tempString.Remove (0, 1);
@@ -83,6 +80,29 @@ public class ChallengeScene : MonoBehaviour {
 				tempButton.SetActive (true);
 				tempButton.transform.GetChild (0).GetComponent<Text> ().text = tempChallenge.description;
 			}
+		} else {
+			print ("under the else statement");
+			StartCoroutine ("getUserData");
+		}
+	}
+
+
+	IEnumerator getUserData() {
+		print ("came in this function");
+		Hashtable headers = new Hashtable();
+		print("You're retrieving information about the user");
+		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+		WWW www = new WWW(userUrl, null, headers);
+		yield return www;
+		if (www.text == "null") {
+			print (www.error);
+		} else {
+			print ("getting it here");
+			challengeChunk = www.text;
+			PlayerPrefs.SetString ("ChallengeChunk", www.text);
+			PlayerPrefs.Save ();
+			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
+			displayChallenges ();
 		}
 	}
 }

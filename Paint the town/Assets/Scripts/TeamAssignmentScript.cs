@@ -141,11 +141,6 @@ public class TeamAssignmentScript : MonoBehaviour {
 		}
 		else
 		{
-			PlayerPrefs.SetString ("ChallengeChunk", www.text);
-			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
-
-
 			print("user assigned to RED!!");
 			PlayerPrefs.SetString("teamID", redID);
 			PlayerPrefs.SetString("color", "red");
@@ -177,11 +172,6 @@ public class TeamAssignmentScript : MonoBehaviour {
 		}
 		else
 		{
-			PlayerPrefs.SetString ("ChallengeChunk", www.text);
-			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
-
-
 			PlayerPrefs.SetString("teamID", orangeID);
 			PlayerPrefs.SetString("color", "orange");
 			PlayerPrefs.Save();
@@ -213,11 +203,6 @@ public class TeamAssignmentScript : MonoBehaviour {
 		}
 		else
 		{
-			PlayerPrefs.SetString ("ChallengeChunk", www.text);
-			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
-
-
 			PlayerPrefs.SetString("teamID", yellowID);
 			PlayerPrefs.SetString("color", "yellow");
 			PlayerPrefs.Save();
@@ -249,11 +234,6 @@ public class TeamAssignmentScript : MonoBehaviour {
 		}
 		else
 		{
-			PlayerPrefs.SetString ("ChallengeChunk", www.text);
-			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
-
-
 			PlayerPrefs.SetString("teamID", greenID);
 			PlayerPrefs.SetString("color", "green");
 			PlayerPrefs.Save();
@@ -285,11 +265,6 @@ public class TeamAssignmentScript : MonoBehaviour {
 		}
 		else
 		{
-			PlayerPrefs.SetString ("ChallengeChunk", www.text);
-			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
-
-
 			PlayerPrefs.SetString("teamID", blueID);
 			PlayerPrefs.SetString("color", "blue");
 			PlayerPrefs.Save();
@@ -321,11 +296,6 @@ public class TeamAssignmentScript : MonoBehaviour {
 		}
 		else
 		{
-			PlayerPrefs.SetString ("ChallengeChunk", www.text);
-			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
-
-
 			PlayerPrefs.SetString("teamID", purpleID);
 			PlayerPrefs.SetString("color", "purple");
 			PlayerPrefs.Save();

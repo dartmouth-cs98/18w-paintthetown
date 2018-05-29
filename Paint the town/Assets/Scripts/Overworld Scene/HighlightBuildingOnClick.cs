@@ -18,6 +18,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     private Vector3 mouseDownPosition;
     public string token;
     public string getBuildingIDURL; //https://paint-the-town.herokuapp.com/api/buildings/info?id=<buildingid>&fields[]=team
+	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
     public LatLongAltitude location;
     public string baseAlt;
     public string topAlt;
@@ -48,8 +49,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
       	myTB = GetComponent<ShowTextBox>();
 
 		PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "1");
-
-
     }
 
     void OnEnable()
@@ -93,7 +92,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
         }
     }
-
+		
     void checkBuildingExist(bool success, Building b){
       if(success){
         string[] array = new string[1];
@@ -199,7 +198,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
 		PlayerPrefs.SetString ("ChallengeChunk", www.text);
 		PlayerPrefs.Save ();
-		print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
+		print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk"));
 
 
         string[] parsingString = Regex.Split(www.text, @"[,:{}]+");

@@ -95,7 +95,7 @@ public class Login : MonoBehaviour {
 
 			PlayerPrefs.SetString ("ChallengeChunk", www.text);
 			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
+			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk"));
 
 
 			string[] teamInfo = Regex.Split(www.text, @"[,:{}]+");
