@@ -7,25 +7,29 @@ using UnityEngine.SceneManagement;
 public class SlideMenu : MonoBehaviour {
 
 	public Button MenuButton;
+	public Button LogoutButton;
 	public Button ReturnToPlayButton;
-	//public Button ShopSceneButton;
-	public Button SettingsSceneButton;
 	public Button ChallengesSceneButton;
-	public Button ProfileSceneButton;
+	public Button MuteButton;
+	//public Button ShopSceneButton;
+	//public Button SettingsSceneButton;
+	//public Button ProfileSceneButton;
 
 	public Animation SlidePanelAnim;
 	public bool menuIn = false;
 
 	void Start()
 	{
+		LogoutButton.onClick.AddListener (logout);
 		MenuButton.onClick.AddListener(slideMenu);
 		ReturnToPlayButton.onClick.AddListener(goToPlay);
+		MuteButton.onClick.AddListener(mute);
 		//ShopSceneButton.onClick.AddListener(goToShop);
-		SettingsSceneButton.onClick.AddListener(goToSettings);
+		//SettingsSceneButton.onClick.AddListener(goToSettings);
 		ChallengesSceneButton.onClick.AddListener(goToChallenges);
-		ProfileSceneButton.onClick.AddListener(goToProfile);
+		//ProfileSceneButton.onClick.AddListener(goToProfile);
 	}
-
+		
 	void slideMenu()
 	{
 		if (menuIn == false) {
@@ -38,6 +42,15 @@ public class SlideMenu : MonoBehaviour {
 
 	}
 
+	void logout() {
+		PlayerPrefs.DeleteAll ();
+		SceneManager.LoadScene ("LoginScene");
+	}
+
+	void mute() {
+		// do this
+	}
+
 	/*
 	void goToShop(){
 		SlidePanelAnim.Play ("SlidePanelOut");
@@ -48,7 +61,7 @@ public class SlideMenu : MonoBehaviour {
 		}
 
 	}
-	*/
+
 
 	void goToSettings() {
 		SlidePanelAnim.Play ("SlidePanelOut");
@@ -59,6 +72,7 @@ public class SlideMenu : MonoBehaviour {
 		}
 
 	}
+	*/
 
 	void goToPlay() {
 		SlidePanelAnim.Play ("SlidePanelOut");
@@ -78,6 +92,7 @@ public class SlideMenu : MonoBehaviour {
 		}
 	}
 
+	/*
 	void goToProfile() {
 		SlidePanelAnim.Play ("SlidePanelOut");
 		menuIn = false;
@@ -86,5 +101,6 @@ public class SlideMenu : MonoBehaviour {
 			SceneManager.LoadScene ("ProfileScene");
 		}
 	}
+	*/
 
 }

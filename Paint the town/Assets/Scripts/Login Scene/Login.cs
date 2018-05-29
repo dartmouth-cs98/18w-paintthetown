@@ -93,12 +93,20 @@ public class Login : MonoBehaviour {
 			print(www.error);
 		}else{
 
+			PlayerPrefs.SetString ("ChallengeChunk", www.text);
+			PlayerPrefs.Save ();
+			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk"));
+
+
 			string[] teamInfo = Regex.Split(www.text, @"[,:{}]+");
 
 			for(int x = 0; x < teamInfo.Length - 1; x ++){
 				if(teamInfo[x].Trim('"') == "team"){
 					print("TEAM ID: " + teamInfo[x + 1]);
 					PlayerPrefs.SetString("teamID", teamInfo[x + 1].Trim('"'));
+					PlayerPrefs.Save();
+				} else if(teamInfo[x].Trim('"') == "level"){
+					PlayerPrefs.SetString("Level", teamInfo[x + 1].Trim('"'));
 					PlayerPrefs.Save();
 				}
 			}

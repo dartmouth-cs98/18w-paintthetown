@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
-	
+
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
 
 public class HighlightBuildingOnClick : MonoBehaviour
@@ -18,6 +18,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     private Vector3 mouseDownPosition;
     public string token;
     public string getBuildingIDURL; //https://paint-the-town.herokuapp.com/api/buildings/info?id=<buildingid>&fields[]=team
+	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
     public LatLongAltitude location;
     public string baseAlt;
     public string topAlt;
@@ -48,8 +49,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
       	myTB = GetComponent<ShowTextBox>();
 
 		PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "1");
-
-
     }
 
     void OnEnable()
@@ -93,7 +92,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
         }
     }
-
+		
     void checkBuildingExist(bool success, Building b){
       if(success){
         string[] array = new string[1];
@@ -196,25 +195,31 @@ public class HighlightBuildingOnClick : MonoBehaviour
       else
       {
         print(www.text);
-	
-		PlayerPrefs.SetString ("UpdateTeamData", www.text);
+
+		PlayerPrefs.SetString ("ChallengeChunk", www.text);
+		PlayerPrefs.Save ();
+		print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk"));
+
 
         string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
         for(int x =0; x < parsingString.Length; x ++){
           	if(parsingString[x].Trim('"') == "paintLeft"){
-				PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+							PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+							PlayerPrefs.SetString("SendTimerUpdate", "true");
             	print(PlayerPrefs.GetString("Energy", "nooooo"));
 			} else if(parsingString[x].Trim('"') == "level"){
 				PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
 				PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
 			}
         }
+
+		PlayerPrefs.Save ();
       }
+
     }
 
     IEnumerator createBuilding()
     {
-      //print ("You're making a building");
 
       WWWForm signupform = new WWWForm();
 
