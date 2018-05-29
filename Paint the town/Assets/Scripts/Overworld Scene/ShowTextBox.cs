@@ -50,7 +50,7 @@ public class ShowTextBox : MonoBehaviour {
 	}
 
 	void Update () {
-		if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space)){
+		if((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Space)){
 			if(image.enabled == true && textArea.enabled == true){
 				if (index == strings.Length - 1){
 					image.enabled = false;

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
-	
+
 // based on example code from https://wrld3d.com/unity/latest/docs/examples/picking-buildings/
 
 public class HighlightBuildingOnClick : MonoBehaviour
@@ -34,6 +34,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     private string sameBuildingColorMessage = "That building is already owned by your team!";
     public Camera mainCam;
     public Camera povCam;
+	public GameObject PlayerLevel;
 
     private ShowTextBox myTB;
     int index = 0;
@@ -41,10 +42,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     void Start()
     {
-      stopFlag = false;
-      textArea.enabled = false;
-      image.enabled = false;
-      myTB = GetComponent<ShowTextBox>();
+      	stopFlag = false;
+      	textArea.enabled = false;
+      	image.enabled = false;
+      	myTB = GetComponent<ShowTextBox>();
+
+		PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "1");
 
 
     }
@@ -198,19 +201,26 @@ public class HighlightBuildingOnClick : MonoBehaviour
 		PlayerPrefs.Save ();
 		print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
 
+
         string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
         for(int x =0; x < parsingString.Length; x ++){
           	if(parsingString[x].Trim('"') == "paintLeft"){
-				PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+							PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+							PlayerPrefs.SetString("SendTimerUpdate", "true");
             	print(PlayerPrefs.GetString("Energy", "nooooo"));
+			} else if(parsingString[x].Trim('"') == "level"){
+				PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
+				PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
 			}
         }
+
+		PlayerPrefs.Save ();
       }
+
     }
 
     IEnumerator createBuilding()
     {
-      //print ("You're making a building");
 
       WWWForm signupform = new WWWForm();
 
