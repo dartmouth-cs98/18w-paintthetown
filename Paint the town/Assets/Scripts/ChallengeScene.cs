@@ -23,7 +23,7 @@ public class ChallengeScene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		updateTeamData = PlayerPrefs.GetString ("UpdateTeamData", "no team data");
+		updateTeamData = PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk");
 
 		displayChallenges ();
 	}
