@@ -46,7 +46,7 @@ public class Login : MonoBehaviour {
 		SceneManager.LoadScene("SignUpScene");
 	}
 
-	// 
+	//
 	public IEnumerator SigninButton(){
 
 		WWWForm f = new WWWForm();
@@ -80,7 +80,7 @@ public class Login : MonoBehaviour {
 			PlayerPrefs.SetString("token", subStrings[3]);
 			PlayerPrefs.Save();
 			StartCoroutine("setPlayercolor");
-			StartCoroutine("getColorFromID");
+
 		}
 	}
 
@@ -113,13 +113,9 @@ public class Login : MonoBehaviour {
 					PlayerPrefs.Save();
 				}
 			}
+			StartCoroutine("getColorFromID");
 		}
-
-		//SceneManager.LoadScene("FirstScene");
-		 SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
-		 loading.enabled = true;
-		 loadingText.enabled = true;
-
+		//SceneManager.LoadScene("FirstScene")
 	}
 
 	// get the team color from the server based on team ID we have
@@ -141,6 +137,7 @@ public class Login : MonoBehaviour {
 
 				// iterate through info from server to get each color id
 				for (int i = 0; i <= teamInfoList.Length - 1; i++) {
+					print(teamInfoList[i]);
 					if(teamInfoList [i].Trim('"') == "red"){
 						redID = teamInfoList [i - 5].Trim('"');
 					} else if (teamInfoList [i].Trim('"') == "orange"){
@@ -155,11 +152,13 @@ public class Login : MonoBehaviour {
 						purpleID = teamInfoList [i - 5].Trim('"');
 					}
 				}
-				
+
+				PlayerPrefs.Save();
 				print(PlayerPrefs.GetString("teamID", "no teamID"));
 
 			// match up the ID we have with the correct color; set Player Prefs color
 				if(PlayerPrefs.GetString("teamID", "no teamID") == redID){
+
 					PlayerPrefs.SetString("color", "red");
 				} else if (PlayerPrefs.GetString("teamID", "no teamID") == orangeID) {
 					PlayerPrefs.SetString("color", "orange");
@@ -174,6 +173,11 @@ public class Login : MonoBehaviour {
 				}else{
 					print("Critical error: could not find team color");
 				}
+				PlayerPrefs.Save();
+
+				SceneManager.LoadScene("FirstScene", LoadSceneMode.Additive);
+				loading.enabled = true;
+				loadingText.enabled = true;
 			}
 	}
 
@@ -181,7 +185,7 @@ public class Login : MonoBehaviour {
 	public void workAroundSignIn() {
 		StartCoroutine("SigninButton");
 	}
-		
+
 	// grab user input constantly until they enter
 	public void Update() {
 
