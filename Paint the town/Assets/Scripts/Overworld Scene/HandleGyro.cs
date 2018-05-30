@@ -88,18 +88,41 @@ public class HandleGyro : MonoBehaviour {
 
 	private Quaternion GetRotFix()
 	{
-		if (Screen.orientation == ScreenOrientation.Portrait)
+		if (!Application.isEditor){
+			if (Screen.orientation == ScreenOrientation.Portrait)
+				return landscapeLeft;
+				//return Quaternion.identity;
+
+			if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.Landscape)
+				return upsideDown;
+				//return landscapeLeft;
+
+			if (Screen.orientation == ScreenOrientation.LandscapeRight)
+				return Quaternion.identity;
+				//return landscapeRight;
+
+			if (Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+				return landscapeRight;
+				//return upsideDown;
 			return Quaternion.identity;
+		} else{
+			if (Screen.orientation == ScreenOrientation.Portrait)
+				//return landscapeLeft;
+				return Quaternion.identity;
 
-		if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.Landscape)
-			return landscapeLeft;
+			if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.Landscape)
+				//return upsideDown;
+				return landscapeLeft;
 
-		if (Screen.orientation == ScreenOrientation.LandscapeRight)
-			return landscapeRight;
+			if (Screen.orientation == ScreenOrientation.LandscapeRight)
+				//return Quaternion.identity;
+				return landscapeRight;
 
-		if (Screen.orientation == ScreenOrientation.PortraitUpsideDown)
-			return upsideDown;
-		return Quaternion.identity;
+			if (Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+				//return landscapeRight;
+				return upsideDown;
+			return Quaternion.identity;
+		}
 	}
 
 	private void ResetBaseOrientation()
