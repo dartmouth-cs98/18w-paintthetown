@@ -45,7 +45,7 @@ public class ShowTextBox : MonoBehaviour {
 		StartCoroutine("displayTimer");
 	}
 
-	// update every frame to show the text box with the correct text for the timer
+	// update every frame to show the text box with the correct text
 	void Update () {
 		if((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Space)){
 			if(image.enabled == true && textArea.enabled == true){
