@@ -112,7 +112,7 @@ public class ParticleDecalPool : MonoBehaviour {
             plrColor = new Color(0.5f, 0.0f, 0.5f);
         }
 
-        InvokeRepeating("startSetBuildingParticles", 2.0f, 2.0f);
+        InvokeRepeating("startSetBuildingParticles", 10.0f, 10.0f);
     }
 
     //starter fuction to retrieve building data
