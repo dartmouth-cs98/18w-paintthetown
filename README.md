@@ -1,6 +1,7 @@
 # 18w-paintthetown
-Paint the town is an Augmented Reality game based around claiming landmarks and buildings for your team by painting them with your team 
-color.
+Paint the town is a mobile Virtual Reality game in which users can claim landmarks and buildings for their team around their real-time
+location by painting them with their team's color. Our vision is for users to be able to walk down their city street, hold up their phone
+to nearby buildings, and compete with other local users for team ownership by covering them with virtual paint!
 
 # Backend
 Our server runs through Heroku, where our scripts request and send information to coordinating Heroku URLs. We use Wrld3d's API for 3d 
