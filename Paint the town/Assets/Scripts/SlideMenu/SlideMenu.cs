@@ -11,9 +11,9 @@ public class SlideMenu : MonoBehaviour {
 	public Button ReturnToPlayButton;
 	public Button ChallengesSceneButton;
 	public Button MuteButton;
-	//public Button ShopSceneButton;
-	//public Button SettingsSceneButton;
-	//public Button ProfileSceneButton;
+    //public Button ShopSceneButton;
+    //public Button SettingsSceneButton;
+    //public Button ProfileSceneButton;
 
 	public Animation SlidePanelAnim;
 	public bool menuIn = false;
@@ -49,8 +49,18 @@ public class SlideMenu : MonoBehaviour {
 	}
 
 	void mute() {
-		// do this
-	}
+        // do this
+
+        if(AudioListener.pause == true)
+        {
+            AudioListener.pause = false;
+        }
+
+        else
+        {
+            AudioListener.pause = true;
+        }
+    }
 		
 	// go to main game scene
 	void goToPlay() {
