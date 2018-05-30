@@ -1,0 +1,6 @@
+app_identifier("edu.dartmouth.cs98.PaintTheTown") # The bundle identifier of your app
+apple_id("apps@brunchlabs.com") # Your Apple email address
+
+itc_team_id("118606859") # iTunes Connect Team ID
+team_id("JQ28K6Y7JE") # Developer Portal Team ID
+
