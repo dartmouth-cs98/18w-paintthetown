@@ -3,7 +3,10 @@ Paint the town is an Augmented Reality game based around claiming landmarks and 
 color.
 
 # Backend
-We use Wrld3d's API for 3d geolocation-enabled maps and make use of our own backend solution for user authentification and login. 
+Our server runs through Heroku, where our scripts request and send information to coordinating Heroku URLs. We use Wrld3d's API for 3d 
+geolocation-enabled maps to population buildings into wide spans of our game's map. Our [backend solution](https://github.com/dartmouth-cs98/18w-paintthetown-backend) 
+handles login, authentification, all major user data (challenges, stats, states), team data, building data,
+paint data, and more. 
 
 # Frontend
 We are building our entire frontend in Unity3d, including all UI elements and features like GPS location. The frontend environment 
@@ -30,7 +33,7 @@ Build and run with Unity 5 (gpu supporting DirectX 9 or higher required) on eith
   - Back in the `Build Settings`, click `Build`. 
   - Once Unity successfully completes the build, open the `.xcodeproj` file, which will open in XCode.
   - In XCode, you may need to select your `Developer Team`. `Unity-iPhone > General > Identity > (select your account from the drop-down 
-  menu`
+  menu)`
 
 
 # Setting up the repository
