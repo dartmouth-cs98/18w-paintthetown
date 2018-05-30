@@ -28,6 +28,7 @@ public class SetPOVButtonImage : MonoBehaviour {
 
 		string color = PlayerPrefs.GetString("color", "no color");
 
+		// use the team color to choose the color of the button
 		if(color != "no color"){
 			if(color == "red"){
 				topChild.GetComponent<Image>().sprite =  red.sprite;
@@ -48,7 +49,7 @@ public class SetPOVButtonImage : MonoBehaviour {
 				topChild.GetComponent<Image>().sprite =  purple.sprite;
 				tempOverhead.sprite = purple.sprite;
 			} else {
-				print("Honestly I don't know what's going on");
+				print("Error retrieving color.");
 			}
 		} else{
 			print("ERROR RETRIEVING PLAYER COLOR: COLOR NOT SET");
