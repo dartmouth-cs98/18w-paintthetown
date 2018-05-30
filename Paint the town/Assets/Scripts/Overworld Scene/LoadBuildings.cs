@@ -146,9 +146,14 @@ public class LoadBuildings : MonoBehaviour {
 			print("Error downloading: " + www.error);
 		} else {
 
+//print(www.text);
 			parsingString = Regex.Split (www.text, @"[,:{}]+");
 
-				for(int x = 3; x < parsingString.Length - 17; x = x + 17){
+			// for(int p = 0; p < parsingString.Length; p++){
+			// 	print(parsingString[p]);
+			// }
+
+				for(int x = 3; x < parsingString.Length - 16; x = x + 16){
 				stringLnge = "";
 				team = "";
 				lnge = -1;
@@ -162,7 +167,8 @@ public class LoadBuildings : MonoBehaviour {
 				r = "";
 				g = "";
 				b = "";
-				for(int y = 0; y < 17; y ++){
+				for(int y = 0; y < 16; y ++){
+					//print( y.ToString() + " YYYYYYYYYYY " + parsingString[x + y]);
 					if(parsingString[x + y].Trim('"') == "centroidLng"){
 						stringLnge = parsingString[x + y + 1].Trim('"');
 						lnge = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
@@ -182,6 +188,7 @@ public class LoadBuildings : MonoBehaviour {
 						r = parsingString[x + y + 1].Trim('[');
 						g = parsingString[x + y + 2].Trim('"');
 						b = parsingString[x + y + 3].Trim(']');
+						//print("r " + r + " g " + g + " b " + b);
 					}
 				}
 
@@ -194,16 +201,32 @@ public class LoadBuildings : MonoBehaviour {
 
 						var key = id;
 
+						// if(id == "0e91d94e8cf9315668e31b33706787a5"){
+						// 	print(r + " " + g + " " + b + " ");
+						// }
+
 						newBuildingsD.Add(key, value);
 
 						if(oldBuildingsD.ContainsKey(key)){
+
 							if(oldBuildingsD[key] != value){
+								print("AAAAAAAAHHHH");
+								print("AAAAAAAAHHHH");
+								print("AAAAAAAAHHHH");
+								print("AAAAAAAAHHHH");
+
 									var boxLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
 									//create RGB from the list
 									Color color = new Color( (float)Convert.ToDouble(r)/255, (float)Convert.ToDouble(g)/255, (float)Convert.ToDouble(b)/255, 0.7f);
 									StartCoroutine(MakeHighlight(id, boxLocation, color));
 							}
 						} else{
+							print("1AAAAAAAAHHHH");
+							print("1AAAAAAAAHHHH");
+							print("1AAAAAAAAHHHH");
+							print("1AAAAAAAAHHHH");
+							print("1AAAAAAAAHHHH");
+							print("1AAAAAAAAHHHH");
 							var boxLocation = LatLongAltitude.FromDegrees(lnge, lat, alt);
 							//create RGB from the list
 							Color color = new Color( (float)Convert.ToDouble(r)/255, (float)Convert.ToDouble(g)/255, (float)Convert.ToDouble(b)/255, 0.5f);
@@ -320,7 +343,7 @@ public class LoadBuildings : MonoBehaviour {
             		}
           		}
         	}
-		} 
+		}
 	}
 
 	IEnumerator MakeHighlight(string id, LatLongAltitude latLongAlt, Color color){
