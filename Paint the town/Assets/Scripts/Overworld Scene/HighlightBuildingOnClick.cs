@@ -14,57 +14,46 @@ using System.Text.RegularExpressions;
 
 public class HighlightBuildingOnClick : MonoBehaviour
 {
-    public Material highlightMaterial;
     private Vector3 mouseDownPosition;
     public string token;
     public string getBuildingIDURL; //https://paint-the-town.herokuapp.com/api/buildings/info?id=<buildingid>&fields[]=team
-	public string userUrl = "https://paint-the-town.herokuapp.com/api/users";
-    public LatLongAltitude location;
-    public string baseAlt;
-    public string topAlt;
-    public string id;
+	private string getUserDataURL = "https://paint-the-town.herokuapp.com/api/users";
+	public string baseAlt;
+	public string topAlt;
+	public string id;
+	public LatLongAltitude location;
     public Text textArea;
-    public string[] strings;
-    public float speed = 0.001f;
     public Image image;
     public LatLongAltitude latLongAlt;
     public ArrayList poiList = new ArrayList(new string[] { "71a5f824a0dc35526a4b13078541adee" });
-    private Boolean isPoi;
     public Boolean stopFlag;
-    private string buildingDistanceMessage = "You must be closer to the building in order to paint it!";
-    private string sameBuildingColorMessage = "That building is already owned by your team!";
-    public Camera mainCam;
+	public Camera mainCam;
     public Camera povCam;
 	public GameObject PlayerLevel;
-
+	public GameObject TeamOwnership;
     private ShowTextBox myTB;
-    int index = 0;
-    int characterIndex = 0;
 
     void Start()
     {
+		// set inital state
       	stopFlag = false;
       	textArea.enabled = false;
       	image.enabled = false;
       	myTB = GetComponent<ShowTextBox>();
 
+		// display player level on start
 		PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "1");
     }
 
-    void OnEnable()
-    {
-
-    }
 
     void Update()
     {
-
-
+		// get mouse position if down
         if (Input.GetMouseButtonDown(0)) { mouseDownPosition = Input.mousePosition; }
 
         if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownPosition, Input.mousePosition) < 5.0f && mainCam.enabled == false)
         {
-
+			// make a ray out these positions
             var ray = povCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
@@ -72,10 +61,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
                 var viewportPoint = povCam.WorldToViewportPoint(hit.point);
                 latLongAlt = Api.Instance.CameraApi.ViewportToGeographicPoint(viewportPoint, povCam);
                 double captureDistance = .0015;
-                if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance && -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && ((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && -captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude()))){
-
+                if(((Input.location.lastData.latitude - latLongAlt.GetLatitude()) < captureDistance 
+					&& -captureDistance < (Input.location.lastData.latitude - latLongAlt.GetLatitude())) && 
+					((Input.location.lastData.longitude - latLongAlt.GetLongitude()) < captureDistance && 
+						-captureDistance < (Input.location.lastData.longitude - latLongAlt.GetLongitude())))
+				{
                     location = latLongAlt;
-
                     Api.Instance.BuildingsApi.GetBuildingAtLocation(latLongAlt.GetLatLong(), passToGetID);
                 }
                 else if(image.enabled == false){
@@ -83,16 +74,12 @@ public class HighlightBuildingOnClick : MonoBehaviour
                 }
             }
         }
-    }
 
-    void OnHighlightReceived(bool success, Highlight highlight)
-    {
-        if (success)
-        {
-
-        }
+		// display team ownership
+		TeamOwnership.GetComponent<Text>().text = "Team Ownership " + PlayerPrefs.GetString ("Ownership", "...") + "%";
     }
 		
+	// check if building exists
     void checkBuildingExist(bool success, Building b){
       if(success){
         string[] array = new string[1];
@@ -101,40 +88,35 @@ public class HighlightBuildingOnClick : MonoBehaviour
       }
     }
 
-    void OnBuildingRecieved(bool success, Building b)
-    {
-        if(success)
-        {
-            print(b.BuildingId);
-        }
-    }
-
+	// get ID and check for POI
     void passToGetID(bool success, Building b)
     {
-      if(success){
-        baseAlt = "" + b.BaseAltitude;
-        topAlt = "" + b.TopAltitude;
-        id = b.BuildingId;
-        print("THIS IS THE BUILDING'S ID: " + id);
-        StartCoroutine("checkPoi");
+    	if(success){
+	        baseAlt = "" + b.BaseAltitude;
+	        topAlt = "" + b.TopAltitude;
+	        id = b.BuildingId;
+			// check if this building is a POI
+	        StartCoroutine("checkPoi");
 
-        PlayerPrefs.SetString("bid", id);
-        PlayerPrefs.Save();
+	        PlayerPrefs.SetString("bid", id);
+	        PlayerPrefs.Save();
 
-        startGetBuildingColor(id);
-      } else {
-        print("uh oh");
-      }
+	        startGetBuildingColor(id);
+      	} else {
+        	print("uh oh");
+      	}
     }
 
-    //https://paint-the-town.herokuapp.com/api/buildings/updateTeam
-    //building - building ID
-    //team - teamID
-
-    //function to get building data
+    /*
+     * function to get building data
+     * 	https://paint-the-town.herokuapp.com/api/buildings/updateTeam
+     * building - building ID
+	 * team - teamID
+     */
     IEnumerator getBuildingColor()
     {
-      Hashtable headers = new Hashtable();
+		// send request to get building id
+      	Hashtable headers = new Hashtable();
   		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
   		WWW www = new WWW(getBuildingIDURL, null, headers);
   		yield return www;
@@ -152,8 +134,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
     //starter fuction to retrieve building data
     public void startGetBuildingColor(string buildingID)
     {
-      getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/buildings/info?id=" + buildingID + "&fields[]=team";
-      StartCoroutine("getBuildingColor");
+     	getBuildingIDURL = "https://paint-the-town.herokuapp.com/api/buildings/info?id=" + buildingID + "&fields[]=team";
+      	StartCoroutine("getBuildingColor");
     }
 
     // check if an id is that of a POI, asynchronously so threads don't lock
@@ -162,12 +144,10 @@ public class HighlightBuildingOnClick : MonoBehaviour
         foreach(string idNum in poiList){
             if (idNum.Equals(id)){
                 print("POI found!");
-                isPoi = true;
                 // open the testModelScene
                 SceneManager.LoadScene("testModelScene");
             }else{
                 print("POI not found!");
-                isPoi = false;
             }
         }
 
@@ -176,75 +156,86 @@ public class HighlightBuildingOnClick : MonoBehaviour
 
     IEnumerator captureBuilding()
     {
-      //print("You're capturing a building");
+		// create form to request for updated team data
+		WWWForm captureform = new WWWForm ();
+	    captureform.AddField("building", id);
+	    captureform.AddField("team", PlayerPrefs.GetString("teamID", "no teamID"));
 
-      WWWForm captureform = new WWWForm();
+		// send request for update team
+	    Hashtable headers = new Hashtable();
+	    headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+	    WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings/updateTeam", captureform.data, headers);
+	    yield return www;
+	    if (www.error != null)
+    	{
+	    	print("Error downloading: " + www.error);
+	    }
+	    else
+	    {
+			print(www.text);
 
-      captureform.AddField("building", id);
-      captureform.AddField("team", PlayerPrefs.GetString("teamID", "no teamID"));
+			// use server response later in challenges scene
+			PlayerPrefs.SetString ("ChallengeChunk", www.text);
+			PlayerPrefs.Save ();
 
-      Hashtable headers = new Hashtable();
-      headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+			// parse server response to get paintLeft and level
+		    string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
+		    for(int x =0; x < parsingString.Length; x ++){
+		    	if(parsingString[x].Trim('"') == "paintLeft"){
+					PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
+					PlayerPrefs.SetString("SendTimerUpdate", "true");
+				} else if(parsingString[x].Trim('"') == "level"){
+					PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
+					PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
+				}
+	        }
+			PlayerPrefs.Save ();
+	    }
+			
+		WWW www2 = new WWW(getUserDataURL, null, headers);
 
-      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings/updateTeam", captureform.data, headers);
-      yield return www;
-      if (www.error != null)
-      {
-        print("Error downloading: " + www.error);
-      }
-      else
-      {
-        print(www.text);
+		yield return www2;
 
-		PlayerPrefs.SetString ("ChallengeChunk", www.text);
-		PlayerPrefs.Save ();
-		print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk"));
+		if (www2.text == "null") {
+			print (www2.error);
+		} else {
+			// separate out server response
+			string[] subStrings = Regex.Split (www2.text, @"[,:{}]+");
 
-
-        string[] parsingString = Regex.Split(www.text, @"[,:{}]+");
-        for(int x =0; x < parsingString.Length; x ++){
-          	if(parsingString[x].Trim('"') == "paintLeft"){
-							PlayerPrefs.SetString("Energy", parsingString[x+1].Trim('"'));
-							PlayerPrefs.SetString("SendTimerUpdate", "true");
-            	print(PlayerPrefs.GetString("Energy", "nooooo"));
-			} else if(parsingString[x].Trim('"') == "level"){
-				PlayerPrefs.SetString("Level", parsingString[x+1].Trim('"'));
-				PlayerLevel.GetComponent<Text>().text = "Level " + PlayerPrefs.GetString ("Level", "?");
+			// iterate through server response to grab paintLeft and timeLeftMin/Sec
+			for (int x = 0; x < subStrings.Length; x++) {
+				if (subStrings [x].Trim ('"') == "teamOwnership") {
+					PlayerPrefs.SetString ("Ownership", subStrings [x + 1]);
+					PlayerPrefs.Save ();
+				}
 			}
-        }
-
-		PlayerPrefs.Save ();
-      }
-
+		}
     }
 
     IEnumerator createBuilding()
     {
 
-      WWWForm signupform = new WWWForm();
+		// create form to send for server update on buildings
+        WWWForm signupform = new WWWForm();
+      	signupform.AddField("name", "I am a name");
+      	string lat = "" + location.GetLatitude();
+      	string longi = "" + location.GetLongitude();
+      	List<string> array = new List<string>();
+      	array.Add(lat);
+      	array.Add(longi);
 
-      signupform.AddField("name", "I am a name");
-      //print(location);
-      string lat = "" + location.GetLatitude();
-      string longi = "" + location.GetLongitude();
-      List<string> array = new List<string>();
-      array.Add(lat);
-      array.Add(longi);
-      //print(array[0]);
-      //print(array[1]);
-      //TODO: BUG HERE
-      signupform.AddField("id", id);
-      signupform.AddField("centroid[]", array[0]);
-      signupform.AddField("centroid[]", array[1]);
-      signupform.AddField("baseAltitude", baseAlt);
-      signupform.AddField("topAltitude", topAlt);
+      	//TODO: BUG HERE
+      	signupform.AddField("id", id);
+      	signupform.AddField("centroid[]", array[0]);
+      	signupform.AddField("centroid[]", array[1]);
+      	signupform.AddField("baseAltitude", baseAlt);
+      	signupform.AddField("topAltitude", topAlt);
 
-      Hashtable headers = new Hashtable();
-      headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
-      WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings", signupform.data, headers);
-      yield return www;
-      //var signup = UnityWebRequest.Post("https://paint-the-town.herokuapp.com/api/buildings", signupform);
-      //yield return signup.SendWebRequest();
+		// send request to server
+      	Hashtable headers = new Hashtable();
+      	headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
+      	WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings", signupform.data, headers);
+      	yield return www;
 
   		if (www.error != null)
   		{
@@ -252,10 +243,8 @@ public class HighlightBuildingOnClick : MonoBehaviour
   		}
   		else
   		{
-        //print(www.text);
-  			//print("building signed up!");
-        StartCoroutine("captureBuilding");
-      }
+        	StartCoroutine("captureBuilding");
+      	}
     }
 
     IEnumerator ClearHighlight(Highlight highlight)
@@ -265,6 +254,6 @@ public class HighlightBuildingOnClick : MonoBehaviour
     }
 
     public void stopCheckingMapClicks(){
-      stopFlag = !stopFlag;
+      	stopFlag = !stopFlag;
     }
 }

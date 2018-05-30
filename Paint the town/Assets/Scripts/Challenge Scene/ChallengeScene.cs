@@ -24,20 +24,24 @@ public class ChallengeScene : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		challengeChunk = PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk");
-		print ("challengeChunk: " + challengeChunk);
 		displayChallenges ();
 	}
 
 	void displayChallenges() {
 
 		if (challengeChunk != "no challenge chunk") {
+
 			// manipulating server info to extract challenges
 			string finder = "\"challenges\":[";
-			string finder2 = "\"team\":\"";
+			string finder2 = "\"user\"";
 			int index = challengeChunk.IndexOf (finder);
 			int index2 = challengeChunk.IndexOf (finder2);
 			int toCut = index2 - index;
 			challenges = challengeChunk.Substring (index, toCut);
+			//string finder3 = "\"team\":\"";
+			//int index3 = challenges.IndexOf (finder3);
+			//challenges = challenges.Substring (0, index3);
+
 			challenges = challenges.Remove (0, finder.Length);
 			challenges = challenges.Remove (challenges.Length - 2, 2);
 
@@ -60,7 +64,7 @@ public class ChallengeScene : MonoBehaviour {
 				if (tempString [0].Equals (',')) {
 					tempString = tempString.Remove (0, 1);
 				}
-
+					
 				// cast to serializable class
 				if(tempString[0] == ']'){
 					break;
@@ -86,27 +90,24 @@ public class ChallengeScene : MonoBehaviour {
 			}
 
 		} else {
-			print ("under the else statement");
 			StartCoroutine ("getUserData");
 		}
 	}
 
 
 	IEnumerator getUserData() {
-		print ("came in this function");
+		// sending request for user data
 		Hashtable headers = new Hashtable();
-		print("You're retrieving information about the user");
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 		WWW www = new WWW(userUrl, null, headers);
 		yield return www;
 		if (www.text == "null") {
 			print (www.error);
 		} else {
-			print ("getting it here");
+			// set chunk for later parsing to get challenges
 			challengeChunk = www.text;
 			PlayerPrefs.SetString ("ChallengeChunk", www.text);
 			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
 			displayChallenges ();
 		}
 	}

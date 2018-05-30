@@ -24,9 +24,9 @@ public class SlideMenuChallenge : MonoBehaviour {
 		MenuButton.onClick.AddListener(slideMenu);
 		ReturnToPlayButton.onClick.AddListener(goToPlay);
 		MuteButton.onClick.AddListener(mute);
+		ChallengesSceneButton.onClick.AddListener(goToChallenges);
 		//ShopSceneButton.onClick.AddListener(goToShop);
 		//SettingsSceneButton.onClick.AddListener(goToSettings);
-		ChallengesSceneButton.onClick.AddListener(goToChallenges);
 		//ProfileSceneButton.onClick.AddListener(goToProfile);
 	}
 
@@ -50,8 +50,38 @@ public class SlideMenuChallenge : MonoBehaviour {
 	void mute() {
 		// do this
 	}
+		
+	void goToPlay() {
+		SlidePanelAnim.Play ("SlidePanelOutChallenge");
+		menuIn = false;
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "FirstScene") {
+			SceneManager.LoadScene ("FirstScene");
+		}
+	}
+
+	void goToChallenges() {
+		SlidePanelAnim.Play ("SlidePanelOutChallenge");
+		menuIn = false;
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "ChallengesScene") {
+			SceneManager.LoadScene ("ChallengesScene");
+		}
+	}
+
+	// DEPRECATED functions below: may implement at a later date
 
 	/*
+	void goToProfile() {
+		SlidePanelAnim.Play ("SlidePanelOut");
+		menuIn = false;
+		// if we aren't already in that scene, load it
+		if (SceneManager.GetActiveScene ().name != "ProfileScene") {
+			SceneManager.LoadScene ("ProfileScene");
+		}
+	}
+
+
 	void goToShop(){
 		SlidePanelAnim.Play ("SlidePanelOut");
 		menuIn = false;
@@ -71,35 +101,6 @@ public class SlideMenuChallenge : MonoBehaviour {
 			SceneManager.LoadScene ("SettingsScene");
 		}
 
-	}
-	*/
-
-	void goToPlay() {
-		SlidePanelAnim.Play ("SlidePanelOutChallenge");
-		menuIn = false;
-		// if we aren't already in that scene, load it
-		if (SceneManager.GetActiveScene ().name != "FirstScene") {
-			SceneManager.LoadScene ("FirstScene");
-		}
-	}
-
-	void goToChallenges() {
-		SlidePanelAnim.Play ("SlidePanelOutChallenge");
-		menuIn = false;
-		// if we aren't already in that scene, load it
-		if (SceneManager.GetActiveScene ().name != "ChallengesScene") {
-			SceneManager.LoadScene ("ChallengesScene");
-		}
-	}
-
-	/*
-	void goToProfile() {
-		SlidePanelAnim.Play ("SlidePanelOut");
-		menuIn = false;
-		// if we aren't already in that scene, load it
-		if (SceneManager.GetActiveScene ().name != "ProfileScene") {
-			SceneManager.LoadScene ("ProfileScene");
-		}
 	}
 	*/
 

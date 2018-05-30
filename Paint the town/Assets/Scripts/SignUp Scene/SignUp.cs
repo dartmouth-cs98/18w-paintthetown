@@ -24,6 +24,7 @@ public class SignUp : MonoBehaviour {
 	public string[] subReturnStrings;
 
 	void Start () {
+		PlayerPrefs.DeleteAll ();
 		GoToLoginButton.onClick.AddListener(goToLogin);
 	}
 
