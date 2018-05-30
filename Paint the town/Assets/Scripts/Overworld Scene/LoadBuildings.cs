@@ -118,7 +118,6 @@ public class LoadBuildings : MonoBehaviour {
 
 	// send update on bounding box
 	public IEnumerator sendUpdateBoundingBox(){
-
 		//****************************************
 		//request information on buildings within a bounding box
 		// uses:
@@ -140,16 +139,16 @@ public class LoadBuildings : MonoBehaviour {
 		Hashtable header = new Hashtable();
 		header.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 
-		WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=team&extraFields[3]=baseAltitude&extraFields[4]=topAltitude&extraFields[5]=rgb&teamOnly=true", null, header);
+		WWW www = new WWW("https://paint-the-town.herokuapp.com/api/buildings?bbox[0]=" + uMinLat + "&bbox[1]=" + uMinLng + "&bbox[2]=" + uMaxLat + "&bbox[3]=" + uMaxLng + "&extraFields[0]=centroidLng&extraFields[1]=centroidLat&extraFields[2]=baseAltitude&extraFields[3]=topAltitude&extraFields[4]=rgb&teamOnly=true", null, header);
 		yield return www;
 		if (www.error != null)
 		{
 			print("Error downloading: " + www.error);
 		} else {
 
-			parsingString = Regex.Split(www.text, @"[,:{}]+");
+			parsingString = Regex.Split (www.text, @"[,:{}]+");
 
-			for(int x = 3; x < parsingString.Length - 18; x = x + 38){
+				for(int x = 3; x < parsingString.Length - 17; x = x + 17){
 				stringLnge = "";
 				team = "";
 				lnge = -1;
@@ -163,7 +162,7 @@ public class LoadBuildings : MonoBehaviour {
 				r = "";
 				g = "";
 				b = "";
-				for(int y = 0; y < 18; y ++){
+				for(int y = 0; y < 17; y ++){
 					if(parsingString[x + y].Trim('"') == "centroidLng"){
 						stringLnge = parsingString[x + y + 1].Trim('"');
 						lnge = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
@@ -173,7 +172,6 @@ public class LoadBuildings : MonoBehaviour {
 					} else if (parsingString[x + y].Trim('"') == "baseAltitude"){
 						alt = Convert.ToDouble(parsingString[x + y + 1].Trim('"'));
 					} else if (parsingString[x + y].Trim('"') == "id"){
-
 						id = parsingString[x + y + 1].Trim('"');
 					} else if (parsingString[x + y].Trim('"') == "name" && parsingString[x + y + 2].Trim('"') != "color"){
 						team = parsingString[x + y + 1].Trim('"');
@@ -192,7 +190,6 @@ public class LoadBuildings : MonoBehaviour {
 				// ***********************************
 
 					var value = (float)Convert.ToDouble(r) + ((float)Convert.ToDouble(g) * 10) + ((float)Convert.ToDouble(b) * 25);
-
 					if(id != ""){
 
 						var key = id;

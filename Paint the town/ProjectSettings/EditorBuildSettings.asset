@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/LoginScene.unity
     guid: 6c87f28e57c5e4c5db8a890bce0d7f44
-  - enabled: 0
+  - enabled: 1
     path: Assets/FirstScene.unity
     guid: 91d2ef72b714ae84ab2983d51c00e098
   - enabled: 0
@@ -23,16 +23,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/ProfileScene.unity
     guid: 38286e5ee2121440c81c37dea5791b9e
-  - enabled: 0
+  - enabled: 1
     path: Assets/ChallengesScene.unity
     guid: ea44d35d3cbc4449ab9175fee14b477a
   - enabled: 0
     path: Assets/ProfileEditScene.unity
     guid: 342128301f8104353a99c47aec5b9001
-  - enabled: 0
+  - enabled: 1
     path: Assets/TeamAssignment.unity
     guid: 1bc6d84293fb44c7e8cddb4d67920b49
-  - enabled: 0
+  - enabled: 1
     path: Assets/SignUpScene.unity
     guid: a474cf539aa3e8f4d9e3bc9fcb81e7fe
   - enabled: 1

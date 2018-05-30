@@ -293,20 +293,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c0caff84549482799cb92404e1f350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userUrl: https://paint-the-town.herokuapp.com/api/users
   GoToSignUpButton: {fileID: 1059904224}
   username: {fileID: 1070525812}
   password: {fileID: 406729468}
-  userUrl: https://paint-the-town.herokuapp.com/api/users
   teamInfoList: []
+  loading: {fileID: 1413434322}
+  loadingText: {fileID: 1746190997}
   redID: 
   orangeID: 
   yellowID: 
   greenID: 
   blueID: 
   purpleID: 
-  loading: {fileID: 1413434322}
-  loadingText: {fileID: 1746190997}
-  subReturnStrings: []
 --- !u!114 &179614662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1599,7 +1598,7 @@ RectTransform:
   m_GameObject: {fileID: 1413434321}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7.723872, y: 4.2109904, z: 0.742}
+  m_LocalScale: {x: 6.410814, y: 3.495122, z: 0.61586}
   m_Children: []
   m_Father: {fileID: 179614665}
   m_RootOrder: 1
