@@ -30,13 +30,18 @@ public class ChallengeScene : MonoBehaviour {
 	void displayChallenges() {
 
 		if (challengeChunk != "no challenge chunk") {
+
 			// manipulating server info to extract challenges
 			string finder = "\"challenges\":[";
-			string finder2 = "\"team\":\"";
+			string finder2 = "\"user\"";
 			int index = challengeChunk.IndexOf (finder);
 			int index2 = challengeChunk.IndexOf (finder2);
 			int toCut = index2 - index;
 			challenges = challengeChunk.Substring (index, toCut);
+			//string finder3 = "\"team\":\"";
+			//int index3 = challenges.IndexOf (finder3);
+			//challenges = challenges.Substring (0, index3);
+
 			challenges = challenges.Remove (0, finder.Length);
 			challenges = challenges.Remove (challenges.Length - 2, 2);
 
@@ -59,7 +64,7 @@ public class ChallengeScene : MonoBehaviour {
 				if (tempString [0].Equals (',')) {
 					tempString = tempString.Remove (0, 1);
 				}
-
+					
 				// cast to serializable class
 				if(tempString[0] == ']'){
 					break;
