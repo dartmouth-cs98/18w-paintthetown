@@ -24,7 +24,6 @@ public class ChallengeScene : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		challengeChunk = PlayerPrefs.GetString ("ChallengeChunk", "no challenge chunk");
-		print ("challengeChunk: " + challengeChunk);
 		displayChallenges ();
 	}
 
@@ -86,27 +85,24 @@ public class ChallengeScene : MonoBehaviour {
 			}
 
 		} else {
-			print ("under the else statement");
 			StartCoroutine ("getUserData");
 		}
 	}
 
 
 	IEnumerator getUserData() {
-		print ("came in this function");
+		// sending request for user data
 		Hashtable headers = new Hashtable();
-		print("You're retrieving information about the user");
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 		WWW www = new WWW(userUrl, null, headers);
 		yield return www;
 		if (www.text == "null") {
 			print (www.error);
 		} else {
-			print ("getting it here");
+			// set chunk for later parsing to get challenges
 			challengeChunk = www.text;
 			PlayerPrefs.SetString ("ChallengeChunk", www.text);
 			PlayerPrefs.Save ();
-			print ("in player prefs ChallengeChunk: " + PlayerPrefs.GetString ("ChallengeChunk", "nothing"));
 			displayChallenges ();
 		}
 	}

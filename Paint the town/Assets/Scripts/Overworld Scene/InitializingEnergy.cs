@@ -11,20 +11,17 @@ public class InitializingEnergy : MonoBehaviour {
 	private DisplayTimer myDT;
 
 	IEnumerator Start () {
-
+		// send request to server for user data
 		Hashtable headers = new Hashtable();
 		headers.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 		WWW www = new WWW(getUserDataURL, null, headers);
 		myDT = gameObject.GetComponent<DisplayTimer>();
-
 		yield return www;
-
+		// got an error
 		if(www.text == "null"){
-			//the building has never been clicked before
 			print(www.error);
-
 		}else{
-
+			// parse out to get paintLeft and timeLeft
 			string[] subStrings = Regex.Split(www.text, @"[,:{}]+");
 			string MinTime = "";
 			string SecTime = "";
@@ -39,10 +36,11 @@ public class InitializingEnergy : MonoBehaviour {
 				}
 			}
 
+			// we are at the max amount of paint/energy
 			if(MinTime == "" && SecTime == ""){
 				myDT.setMax();
 			} else{
-
+				// not the max; set the mins and secs
 				int MinInt = 0;
 				Int32.TryParse(MinTime, out MinInt);
 

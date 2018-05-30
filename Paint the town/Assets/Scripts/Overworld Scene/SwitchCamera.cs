@@ -12,7 +12,6 @@ public class SwitchCamera : MonoBehaviour {
     public Camera povCam;
     public Camera setCam;
     public Button switchBtn;
-    public Button switchView;
     public Image overhead;
     public Image pov;
     public Image mainPic;
@@ -21,15 +20,10 @@ public class SwitchCamera : MonoBehaviour {
 	void Start () {
         Button btn = switchBtn.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
-        //Api.Instance.CameraApi.SetControlledCamera(null);
-        uiCam.enabled = true;
+
+		uiCam.enabled = true;
         setCam.enabled = true;
         povCam.enabled = false;
-
-	}
-
-	// Update is called once per frame
-	void Update () {
 
 	}
 
@@ -46,7 +40,7 @@ public class SwitchCamera : MonoBehaviour {
       }
 
       if(povCam.enabled){
-        mainPic.sprite = pov.sprite;
+      	mainPic.sprite = pov.sprite;
       }else{
         mainPic.sprite = overhead.sprite;
       }

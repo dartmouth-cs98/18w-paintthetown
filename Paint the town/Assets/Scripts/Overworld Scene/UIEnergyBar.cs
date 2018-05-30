@@ -7,11 +7,8 @@ using System;
 public class UIEnergyBar : MonoBehaviour {
 
 	//private Transform energy;
-
 	public Slider Energy;
-
 	private float MAX_ENERGY = 25000.0f;
-
 	private Color sliderColor;
 
 	public Image red;
@@ -34,6 +31,7 @@ public class UIEnergyBar : MonoBehaviour {
 
 		string color = PlayerPrefs.GetString("color", "no color");
 
+		// use team color to set slider color
 		if(color != "no color"){
 			if(color == "red"){
 				red.enabled = true;
@@ -54,26 +52,20 @@ public class UIEnergyBar : MonoBehaviour {
 				purple.enabled = true;
 				sliderColor = new Color(160.0F/255F, 32.0F/255F, 240.0F/255F);
 			} else {
-				print("Honestly I don't know what's going on");
+				print("Error loading color.");
 			}
 		} else{
 			print("ERROR RETRIEVING PLAYER COLOR: COLOR NOT SET");
 		}
 
 		Transform topChild = gameObject.transform.Find("Energy");
-
 		Transform FillArea = topChild.Find("Fill Area");
-
 		Transform Fill = FillArea.Find("Fill");
-
 		Fill.gameObject.GetComponent<Image>().color = sliderColor;
 
 		Transform HandleSlideArea = topChild.Find("Handle Slide Area");
-
 		Transform Handle = HandleSlideArea.Find("Handle");
-
 		Handle.gameObject.GetComponent<Image>().color = sliderColor;
-
 	}
 
 	// Update is called once per frame

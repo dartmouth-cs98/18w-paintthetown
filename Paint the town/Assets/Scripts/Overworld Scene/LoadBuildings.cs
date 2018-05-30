@@ -12,18 +12,18 @@ using UnityEngine.Networking;
 
 public class LoadBuildings : MonoBehaviour {
 
-  double topAlt;
-  string stringLnge;
-  double lnge;
-  string stringTopAlt;
-  string id;
-  string stringLat;
-  double lat;
-  double alt;
-  string team;
-  string r;
-  string g;
-  string b;
+	double topAlt;
+	string stringLnge;
+	double lnge;
+	string stringTopAlt;
+	string id;
+	string stringLat;
+	double lat;
+	double alt;
+	string team;
+	string r;
+	string g;
+	string b;
 	private float time = 0.25f;
 	public string[] parsingString;
 	public ArrayList poiList;
@@ -37,43 +37,43 @@ public class LoadBuildings : MonoBehaviour {
 	double uMaxLat;
 
 	public Material highlightMaterialRed;
-  public Material highlightOuter;
+  	public Material highlightOuter;
 	public static Mesh highlightMesh;
 	public Camera setCam;
 
-  private List<Material> materialList = new List<Material>();
+  	private List<Material> materialList = new List<Material>();
 
-  Dictionary<string, float> oldBuildingsD = new Dictionary<string, float>();
-  Dictionary<string, float> newBuildingsD = new Dictionary<string, float>();
+  	Dictionary<string, float> oldBuildingsD = new Dictionary<string, float>();
+  	Dictionary<string, float> newBuildingsD = new Dictionary<string, float>();
 
-  Dictionary<GameObject, Color> HighlightsColors = new Dictionary<GameObject, Color>();
+  	Dictionary<GameObject, Color> HighlightsColors = new Dictionary<GameObject, Color>();
 
-  HashSet<BuildingPOIStuff> oldBuildings = new HashSet<BuildingPOIStuff>();
-  HashSet<BuildingPOIStuff> newBuildings = new HashSet<BuildingPOIStuff>();
+  	HashSet<BuildingPOIStuff> oldBuildings = new HashSet<BuildingPOIStuff>();
+  	HashSet<BuildingPOIStuff> newBuildings = new HashSet<BuildingPOIStuff>();
 
-  HashSet<BuildingStuff> oldBuildingsColor = new HashSet<BuildingStuff>();
-  HashSet<BuildingStuff> newBuildingsColor = new HashSet<BuildingStuff>();
+  	HashSet<BuildingStuff> oldBuildingsColor = new HashSet<BuildingStuff>();
+  	HashSet<BuildingStuff> newBuildingsColor = new HashSet<BuildingStuff>();
 
 
 	struct BuildingStuff
 	{
-			public string id;
-			public float Lat;
-			public float Longe;
-			public float alt;
-			public float r;
-			public float g;
-			public float b;
+		public string id;
+		public float Lat;
+		public float Longe;
+		public float alt;
+		public float r;
+		public float g;
+		public float b;
 
-			public override bool Equals( object ob ){
-				if( ob is BuildingStuff ) {
-					BuildingStuff c = (BuildingStuff) ob;
-					return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt && r==c.r && g==c.g && b==c.b;
-				}
-				else {
-					return false;
-				}
+		public override bool Equals( object ob ){
+			if( ob is BuildingStuff ) {
+				BuildingStuff c = (BuildingStuff) ob;
+				return id==c.id && Lat==c.Lat && Longe==c.Longe && alt==c.alt && r==c.r && g==c.g && b==c.b;
 			}
+			else {
+				return false;
+			}
+		}
 	};
 
 	struct BuildingPOIStuff
@@ -102,6 +102,7 @@ public class LoadBuildings : MonoBehaviour {
 		InvokeRepeating("updateMap", 2.0f, time);
 	}
 
+	// update the map with last lat and long to send update to bounding box
 	public void updateMap(){
 
 		double lat = Input.location.lastData.latitude;
@@ -115,6 +116,7 @@ public class LoadBuildings : MonoBehaviour {
 		StartCoroutine("sendUpdateBoundingBox");
 	}
 
+	// send update on bounding box
 	public IEnumerator sendUpdateBoundingBox(){
 
 		//****************************************
@@ -134,6 +136,7 @@ public class LoadBuildings : MonoBehaviour {
 		// * rgb
 		//****************************************
 
+		// send request to server for bounding box update
 		Hashtable header = new Hashtable();
 		header.Add("Authorization", "JWT " + PlayerPrefs.GetString("token", "no token"));
 
@@ -234,13 +237,13 @@ public class LoadBuildings : MonoBehaviour {
 
 			foreach(KeyValuePair<string, float> entry in oldBuildingsD){
 
-					if(newBuildingsD.ContainsKey(entry.Key)){
-						if(newBuildingsD[entry.Key] != entry.Value){
-							 StartCoroutine(destroyColor(entry.Key));
-						}
-					} else{
-						StartCoroutine(destroyColor(entry.Key));
+				if(newBuildingsD.ContainsKey(entry.Key)){
+					if(newBuildingsD[entry.Key] != entry.Value){
+						 StartCoroutine(destroyColor(entry.Key));
 					}
+				} else{
+					StartCoroutine(destroyColor(entry.Key));
+				}
 			}
 			oldBuildingsD = new Dictionary<string, float>(newBuildingsD);
 			newBuildingsD.Clear();
@@ -271,58 +274,56 @@ public class LoadBuildings : MonoBehaviour {
 
 	void OnHighlightReceived(bool success, Highlight highlight)
 	{
-			if (success){
-        var Highlights = transform.Find("Highlights");
-        var HighlightContainer = GameObject.Find("HighlightContainer");
+		if (success){
+        	var Highlights = transform.Find("Highlights");
+        	var HighlightContainer = GameObject.Find("HighlightContainer");
 
-				foreach (Transform child in Highlights.transform){
-          if(child.name != "do not" && child.localRotation[0] != 0 && child.localRotation[1] != 0 && child.localRotation[2] != 0){
-            if(child.name.Substring(child.name.Length - 2) != "do"){  //&& child.name != "do"
+			foreach (Transform child in Highlights.transform){
+          		if(child.name != "do not" && child.localRotation[0] != 0 && child.localRotation[1] != 0 && child.localRotation[2] != 0){
+            		if(child.name.Substring(child.name.Length - 2) != "do"){  //&& child.name != "do"
 
-              GameObject newHighlight = new GameObject();
-              newHighlight.name = "do not";
+              			GameObject newHighlight = new GameObject();
+              			newHighlight.name = "do not";
 
-              Mesh mesh = child.gameObject.GetComponent<MeshFilter>().mesh;
-              MeshFilter filter = newHighlight.AddComponent<MeshFilter>();
-              MeshRenderer renderer = newHighlight.AddComponent<MeshRenderer>();
-              filter.mesh = mesh;
+              			Mesh mesh = child.gameObject.GetComponent<MeshFilter>().mesh;
+              			MeshFilter filter = newHighlight.AddComponent<MeshFilter>();
+              			MeshRenderer renderer = newHighlight.AddComponent<MeshRenderer>();
+              			filter.mesh = mesh;
 
-              clonedHighlight clonedH = newHighlight.AddComponent<clonedHighlight>();
-              clonedH.originalHighlight = child.gameObject;
+              			clonedHighlight clonedH = newHighlight.AddComponent<clonedHighlight>();
+              			clonedH.originalHighlight = child.gameObject;
 
-              Renderer matRend = newHighlight.GetComponent<Renderer>();
+              			Renderer matRend = newHighlight.GetComponent<Renderer>();
 
-              child.name = child.name + "do";
+              			child.name = child.name + "do";
 
-              newHighlight.transform.position = child.position;
-              newHighlight.transform.localRotation = child.localRotation;
+              			newHighlight.transform.position = child.position;
+              			newHighlight.transform.localRotation = child.localRotation;
 
-              newHighlight.transform.SetParent(Highlights.transform);
+              			newHighlight.transform.SetParent(Highlights.transform);
 
-              Mesh mesh2 = filter.mesh;
-              mesh2.RecalculateNormals();
-              matRend.material = new Material(highlightMaterialRed);
-              Vector3[] vertices = mesh2.vertices;
-              Vector3[] normals = mesh2.normals;
+              			Mesh mesh2 = filter.mesh;
+              			mesh2.RecalculateNormals();
+              			matRend.material = new Material(highlightMaterialRed);
+              			Vector3[] vertices = mesh2.vertices;
+              			Vector3[] normals = mesh2.normals;
 
-              for (int i = 0; i < vertices.Length; i++) {
-                  vertices[i] += normals [i] * .8f;
-              }
+              			for (int i = 0; i < vertices.Length; i++) {
+                  			vertices[i] += normals [i] * .8f;
+              			}
 
-              mesh2.vertices = vertices;
+              			mesh2.vertices = vertices;
 
-              filter.mesh.RecalculateBounds();
+              			filter.mesh.RecalculateBounds();
 
-              filter.mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 2000);
+              			filter.mesh.bounds = new Bounds(Vector3.zero, Vector3.one * 2000);
 
-              child.GetComponent<MeshRenderer>().enabled = false;
+              			child.GetComponent<MeshRenderer>().enabled = false;
 
-            }
-          }
-        }
-			} else{
-        print("why tho");
-			}
+            		}
+          		}
+        	}
+		} 
 	}
 
 	IEnumerator MakeHighlight(string id, LatLongAltitude latLongAlt, Color color){
@@ -332,7 +333,7 @@ public class LoadBuildings : MonoBehaviour {
 		Api.Instance.BuildingsApi.HighlightBuildingAtLocation(latLongAlt, Highlight, OnHighlightReceived);
 		Highlight.name = id + "0_INDEX0";
 
-    materialList.Add(Highlight);
+    	materialList.Add(Highlight);
 
 		yield return null;
 	}
@@ -346,11 +347,11 @@ public class LoadBuildings : MonoBehaviour {
 
   IEnumerator MakeBox(string id, LatLongAltitude latLongAlt){
 
-      var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
-      var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
-      GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
-      cloneMarker.name = id;
-      yield return null;
+     	var viewpoint = Api.Instance.CameraApi.GeographicToViewportPoint(latLongAlt);
+     	var worldpoint = setCam.ViewportToWorldPoint(viewpoint);
+     	GameObject cloneMarker = Instantiate(prefab, worldpoint, Quaternion.Euler(45, 0, 0)) as GameObject;;
+      	cloneMarker.name = id;
+      	yield return null;
   }
 
 	IEnumerator destroy(string id){
@@ -361,14 +362,13 @@ public class LoadBuildings : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-    var Highlights = transform.Find("Highlights");
+    	var Highlights = transform.Find("Highlights");
 
-    foreach (Transform child in Highlights.transform){
-      if(child.name == "do not"){
-        child.position = child.GetComponent<clonedHighlight>().getOriginalCenter();
-        child.GetComponent<Renderer>().material.color = child.GetComponent<clonedHighlight>().originalHighlight.GetComponent<Renderer>().material.color;
-      }
-    }
-  }
-
+    	foreach (Transform child in Highlights.transform){
+      		if(child.name == "do not"){
+        		child.position = child.GetComponent<clonedHighlight>().getOriginalCenter();
+        		child.GetComponent<Renderer>().material.color = child.GetComponent<clonedHighlight>().originalHighlight.GetComponent<Renderer>().material.color;
+      		}
+    	}
+  	}
 }

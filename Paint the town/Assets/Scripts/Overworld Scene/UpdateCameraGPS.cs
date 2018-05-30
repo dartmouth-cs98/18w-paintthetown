@@ -25,12 +25,10 @@ public class UpdateCameraGPS : MonoBehaviour {
     private LatLong lastCorrectHeightLatLong;
     private LatLongAltitude lastCorrectHeightLatLongAlt;
     private ShowTextBox myTB;
-    private bool plop;
 
     IEnumerator Start()
     {
         mapCentered = false;
-        plop = false;
         myTB = GetComponent<ShowTextBox>();
 
         // wait for the unity remote to connect, if applicable
@@ -104,9 +102,7 @@ public class UpdateCameraGPS : MonoBehaviour {
         return (rad / Math.PI * 180.0);
     }
 
-    // void OnPostRender(){
-    //   print("DONE");
-    // }
+
 
     public void centerCam(){
       LatLong centerLoc = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);  LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
@@ -114,72 +110,72 @@ public class UpdateCameraGPS : MonoBehaviour {
     }
 
     void Update () {
-            if (Input.touchCount == 2 && setCam.enabled)
-            {
-                //print("Pinch gesture detected!");
+    	if (Input.touchCount == 2 && setCam.enabled)
+        {
+            //print("Pinch gesture detected!");
 
-                // store them
-                Touch touch0 = Input.GetTouch(0);
-                Touch touch1 = Input.GetTouch(1);
+            // store them
+            Touch touch0 = Input.GetTouch(0);
+            Touch touch1 = Input.GetTouch(1);
 
-                // find the positions of those touches in the previous frame
-                Vector2 touch0PrevPos = touch0.position - touch0.deltaPosition;
-                Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
+            // find the positions of those touches in the previous frame
+            Vector2 touch0PrevPos = touch0.position - touch0.deltaPosition;
+            Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
 
-                // find magnitude of the distance between the touches, both current and in the previous frame
-                float touchDistanceMag = (touch0.position - touch1.position).magnitude;
-                float prevTouchDistanceMag = (touch0PrevPos - touch1PrevPos).magnitude;
+            // find magnitude of the distance between the touches, both current and in the previous frame
+            float touchDistanceMag = (touch0.position - touch1.position).magnitude;
+            float prevTouchDistanceMag = (touch0PrevPos - touch1PrevPos).magnitude;
 
-                // find the difference in magnitude between the two distances
-                float distMagnitudeDiff = prevTouchDistanceMag - touchDistanceMag;
+            // find the difference in magnitude between the two distances
+            float distMagnitudeDiff = prevTouchDistanceMag - touchDistanceMag;
+        }
+
+        LatLong currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
+        LatLongAltitude currentLatLongAlt = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 500);
+
+        Api.Instance.CameraApi.GeographicToWorldPoint(currentLatLongAlt,setCam);
+        Api.Instance.StreamResourcesForCamera(setCam);
+        Api.Instance.Update();
+
+        // Runs on first time user GPS is received
+        if (!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f)
+        {
+            mapCentered = true;
+            Api.Instance.CameraApi.AnimateTo(currentLatLong, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
+
+        }
+
+        // Snaps user back to current location if they stray too far VERTICALLY
+        RaycastHit hit;
+        if ( Physics.Raycast(setCam.transform.position,Vector3.down,out hit, 2000) )
+        {
+	    	if (setCam.transform.position.y - hit.point.y > OverworldGlobals.MAX_CAMERA_HEIGHT){
+            	string[] array = new string[1];
+                array[0] = OverworldGlobals.ERROR_CAMERA_TOO_HIGH;
+                myTB.show(array);
+                Api.Instance.CameraApi.AnimateTo(lastCorrectHeightLatLong,lastCorrectHeightLatLongAlt,null,true);
+            }else{
+                lastCorrectHeightLatLong = currentLatLong;
+                lastCorrectHeightLatLongAlt = currentLatLongAlt;
             }
+		}
 
-            LatLong currentLatLong = LatLong.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude);
-            LatLongAltitude currentLatLongAlt = LatLongAltitude.FromDegrees(Input.location.lastData.latitude, Input.location.lastData.longitude, 500);
+        if(!Api.Instance.CameraApi.IsTransitioning && mapCentered){
+    	    //transition has ended therefore the map is ready to be shown
+            PlayerPrefs.SetString("main scene loaded", "happy");
+        }
 
-            Api.Instance.CameraApi.GeographicToWorldPoint(currentLatLongAlt,setCam);
-            Api.Instance.StreamResourcesForCamera(setCam);
-            Api.Instance.Update();
-
-            // Runs on first time user GPS is received
-            if (!mapCentered && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f)
-            {
-                mapCentered = true;
-                Api.Instance.CameraApi.AnimateTo(currentLatLong, distance, headingDegrees: Input.compass.trueHeading, tiltDegrees: 0);
-
-            }
-
-            // Snaps user back to current location if they stray too far VERTICALLY
-            RaycastHit hit;
-            if ( Physics.Raycast(setCam.transform.position,Vector3.down,out hit, 2000) )
-            {
-                  if (setCam.transform.position.y - hit.point.y > OverworldGlobals.MAX_CAMERA_HEIGHT){
+        //Snaps user back to current location if they stray too far HORIZONTALLY
+        if(!Api.Instance.CameraApi.IsTransitioning && mapCentered){
+            LatLong setCamToLatLong = Api.Instance.CameraApi.WorldToGeographicPoint(setCam.transform.position,setCam).GetLatLong();
+            if( setCamToLatLong.GetLatitude() > 0.0f && setCamToLatLong.GetLongitude() != 0.0f && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f ){
+                if ( distanceFromLatLong(setCamToLatLong.GetLatitude(),setCamToLatLong.GetLongitude(),currentLatLong.GetLatitude(),currentLatLong.GetLongitude()) > OverworldGlobals.MAX_CAMERA_DISTANCE){
                     string[] array = new string[1];
-                    array[0] = OverworldGlobals.ERROR_CAMERA_TOO_HIGH;
+                    array[0] = OverworldGlobals.ERROR_CAMERA_TOO_FAR;
                     myTB.show(array);
-                    Api.Instance.CameraApi.AnimateTo(lastCorrectHeightLatLong,lastCorrectHeightLatLongAlt,null,true);
-                  }else{
-                    lastCorrectHeightLatLong = currentLatLong;
-                    lastCorrectHeightLatLongAlt = currentLatLongAlt;
-                  }
-            }
-
-            if(!Api.Instance.CameraApi.IsTransitioning && mapCentered){
-              //transition has ended therefore the map is ready to be shown
-              PlayerPrefs.SetString("main scene loaded", "happy");
-            }
-
-            //Snaps user back to current location if they stray too far HORIZONTALLY
-            if(!Api.Instance.CameraApi.IsTransitioning && mapCentered){
-                LatLong setCamToLatLong = Api.Instance.CameraApi.WorldToGeographicPoint(setCam.transform.position,setCam).GetLatLong();
-                if( setCamToLatLong.GetLatitude() > 0.0f && setCamToLatLong.GetLongitude() != 0.0f && currentLatLong.GetLatitude() != 0.0f && currentLatLong.GetLongitude() != 0.0f ){
-                    if ( distanceFromLatLong(setCamToLatLong.GetLatitude(),setCamToLatLong.GetLongitude(),currentLatLong.GetLatitude(),currentLatLong.GetLongitude()) > OverworldGlobals.MAX_CAMERA_DISTANCE){
-                        string[] array = new string[1];
-                        array[0] = OverworldGlobals.ERROR_CAMERA_TOO_FAR;
-                        myTB.show(array);
-                        Api.Instance.CameraApi.AnimateTo(currentLatLong,lastCorrectHeightLatLongAlt,null,true);
-                    }
+                    Api.Instance.CameraApi.AnimateTo(currentLatLong,lastCorrectHeightLatLongAlt,null,true);
                 }
             }
-    	}
+        }
+	}
 }
