@@ -15,6 +15,7 @@ public class SwitchCamera : MonoBehaviour {
     public Image overhead;
     public Image pov;
     public Image mainPic;
+    public Button centerCamButton;
 
 	// Use this for initialization
 	void Start () {
@@ -33,9 +34,13 @@ public class SwitchCamera : MonoBehaviour {
       setCam.enabled = !setCam.enabled;
 
       if(povCam.enabled == true){
+        centerCamButton.enabled = false;
+        centerCamButton.image.enabled = false;
         Api.Instance.CameraApi.SetControlledCamera(null);
 
       }else{
+        centerCamButton.enabled = true;
+        centerCamButton.image.enabled = true;
         Api.Instance.CameraApi.SetControlledCamera(setCam);
       }
 
