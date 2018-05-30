@@ -17,6 +17,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
     private Vector3 mouseDownPosition;
     public string token;
     public string getBuildingIDURL; //https://paint-the-town.herokuapp.com/api/buildings/info?id=<buildingid>&fields[]=team
+	private string getUserDataURL = "https://paint-the-town.herokuapp.com/api/users";
 	public string baseAlt;
 	public string topAlt;
 	public string id;
@@ -29,6 +30,7 @@ public class HighlightBuildingOnClick : MonoBehaviour
 	public Camera mainCam;
     public Camera povCam;
 	public GameObject PlayerLevel;
+	public GameObject TeamOwnership;
     private ShowTextBox myTB;
 
     void Start()
@@ -72,6 +74,9 @@ public class HighlightBuildingOnClick : MonoBehaviour
                 }
             }
         }
+
+		// display team ownership
+		TeamOwnership.GetComponent<Text>().text = "Team Ownership " + PlayerPrefs.GetString ("Ownership", "...") + "%";
     }
 		
 	// check if building exists
@@ -186,6 +191,25 @@ public class HighlightBuildingOnClick : MonoBehaviour
 	        }
 			PlayerPrefs.Save ();
 	    }
+			
+		WWW www2 = new WWW(getUserDataURL, null, headers);
+
+		yield return www2;
+
+		if (www2.text == "null") {
+			print (www2.error);
+		} else {
+			// separate out server response
+			string[] subStrings = Regex.Split (www2.text, @"[,:{}]+");
+
+			// iterate through server response to grab paintLeft and timeLeftMin/Sec
+			for (int x = 0; x < subStrings.Length; x++) {
+				if (subStrings [x].Trim ('"') == "teamOwnership") {
+					PlayerPrefs.SetString ("Ownership", subStrings [x + 1]);
+					PlayerPrefs.Save ();
+				}
+			}
+		}
     }
 
     IEnumerator createBuilding()

@@ -32,6 +32,8 @@ public class Login : MonoBehaviour {
 
 	// set our initial state; add listener for signup button
 	void Start () {
+		PlayerPrefs.DeleteAll ();
+
 		GoToSignUpButton.onClick.AddListener(goToSignUp);
 		PlayerPrefs.SetString("main scene loaded", "false");
 
