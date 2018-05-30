@@ -30,8 +30,15 @@ public class Login : MonoBehaviour {
 	public string blueID;
 	public string purpleID;
 
+	public Image TitleCard;
+
 	// set our initial state; add listener for signup button
 	void Start () {
+
+		System.Threading.Thread.Sleep(4000);
+
+		StartCoroutine(FadeImage(true));
+
 		PlayerPrefs.DeleteAll ();
 
 		GoToSignUpButton.onClick.AddListener(goToSignUp);
@@ -39,6 +46,21 @@ public class Login : MonoBehaviour {
 
 		loadingText.enabled = false;
 		loading.enabled = false;
+	}
+
+	IEnumerator FadeImage(bool fadeAway){
+		// fade from opaque to transparent
+		if (fadeAway)
+		{
+				// loop over 1 second backwards
+				for (float i = 1; i >= 0; i -= Time.deltaTime)
+				{
+						// set color with i as alpha
+						TitleCard.color = new Color(1, 1, 1, i);
+						yield return null;
+				}
+				TitleCard.enabled = false;
+		}
 	}
 
 	// load the signup scene if player does not have account
