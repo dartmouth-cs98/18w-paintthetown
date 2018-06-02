@@ -1,4 +1,12 @@
-Our feedback from users was very positive. Many people seemed pretty excited about the game. We would definitely need to add more features to build the app out and make it more enticing for users to continue to use. If we had more time, we would have built out the challenges scene and shop scene and added in the functionality of adding friends and connecting people through the game. What definitely worked with our group is that we stayed very committed to checking in and making sure our milestones and issues page reflected the work everyone was doing. People felt very comfortable sharing their ideas and opinions on how to move forward. 
+Last term was all about setting up the foundation for our game in Unity, so this term, we focused on all of the necessary functionality 
+and appropriate user flows to produce a concrete game app. What worked this term was staying committed to checking in and making sure our
+milstones/issues page reflected the work everyone was doing. What didn't work was making continual forward progress; we sometimes got 
+stuck on the same tasks for multiple milestones. Higher accountability for our deadlines could have made this a better experience so that 
+we stayed on track. Our feedback from users were generally very positive and exciting. We had multiple people return to our final demo 
+who had seen it at the end of our winter term, and they were very impressed with our progress. If we could take this further and had more
+time, we would definitely add more features to build the app out and make it more enticing for users to continue to play. We would have 
+added much more to the Challenges Scene, completed a Shop Scene, and added more of social interaction aspect amongst users. Overall, we 
+are very happy with what we produced and how much we accomplished.
 
 
 What tim's looking for:
