@@ -61,7 +61,7 @@ Build and run with Unity 5 (gpu supporting DirectX 9 or higher required) on eith
   https://blog.forrestthewoods.com/managing-meta-files-in-unity-713166ee3d30
   
   In addition to using a .gitignore file to avoid Git collisions, we use Git Hooks that ensure Assets and their respective meta files are
-  playing nicely. This ensures that there is no catastrophic failure of the Unity repository.
+  playing nicely. This ensures that there is no catastrophic failure of the Unity repository. If you import the files directly into the hooks folder, you do not need to run the script provided, as it merely moves them for you. Doing so otherwise would simply erase your hooks.
   
   ### How Asset and Meta files interact
   Every asset file stored in Unity has a meta file associated with it. Because such information cannot be contained in the asset 
