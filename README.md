@@ -1,7 +1,7 @@
-# 18w-paintthetown
-Paint the town is a mobile Virtual Reality game in which users can claim landmarks and buildings for their team around their real-time
-location by painting them with their team's color. Our vision is for users to be able to walk down their city street, hold up their phone
-to nearby buildings, and compete with other local users for team ownership by covering them with virtual paint!
+# Paint The Town
+Welcome to Paint the Town!
+
+Paint the town is a mobile Virtual Reality game centerd around urban exploration in which you can claim landmarks and buildings for your team! After joining either the Red, Orange, Yellow, Green, Blue, or Purple team, you can see models of the buildings around your location and claim them for your team by painting them with the team's color. Our vision is for users to be able to walk down their city street, hold up their phone to nearby buildings, and compete with other local users for team ownership by covering them with virtual paint! In a way we aspire to influence people to go outside and explore places they normally wouldn't,
 
 # Backend
 Our server runs through Heroku, where our scripts request and send information to coordinating Heroku URLs. We use Wrld3d's API for 3d 
@@ -36,7 +36,7 @@ Build and run with Unity 5 (gpu supporting DirectX 9 or higher required) on eith
   - In XCode, you may need to select your `Developer Team`. `Unity-iPhone > General > Identity > (select your account from the drop-down 
   menu)`
 
-
+ 
 # Setting up the repository
   ## .gitignore
   Many Unity files are only meant to remain in the local environment, as pushing them to the github repo will cause a wide range of 
